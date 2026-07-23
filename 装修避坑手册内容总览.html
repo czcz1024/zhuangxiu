@@ -1,0 +1,173 @@
+<h2 class="sr-only">装修避坑手册全部内容模块总览表，包含选公司、报价单、合同、付款、施工监督、厨房、卫生间、踢脚线、灯具、门、地面共11个模块</h2>
+<style>
+  .mod-table{width:100%;border-collapse:collapse;font-size:13px;line-height:1.5}
+  .mod-table th{background:var(--color-background-secondary);text-align:left;padding:8px 10px;font-weight:500;font-size:12px;color:var(--color-text-secondary);border-bottom:1px solid var(--color-border-secondary);white-space:nowrap}
+  .mod-table td{padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top}
+  .mod-group td{background:var(--color-background-info);font-weight:500;font-size:13px;color:var(--color-text-info);padding:6px 10px;border-bottom:1px solid var(--color-border-secondary)}
+  .mod-table tr:hover td{background:var(--color-background-secondary)}
+  .mod-table tr.mod-group:hover td{background:var(--color-background-info)}
+  .chk{text-align:center;width:40px}
+  .chk input{width:16px;height:16px;cursor:pointer;accent-color:var(--color-text-info,#185FA5)}
+  .item-col{width:140px;font-weight:500}
+  .param-col{color:var(--color-text-secondary)}
+  .legend{display:flex;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary);align-items:center;flex-wrap:wrap}
+  .legend strong{font-size:13px;color:var(--color-text-primary)}
+  .count-badge{background:var(--color-background-info);color:var(--color-text-info);padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500}
+</style>
+
+<div class="legend">
+  <strong>装修避坑手册 — 内容总览</strong>
+  <span>共 <span class="count-badge" id="totalCount">0</span> 项已勾选 / <span id="allCount">0</span> 项总计</span>
+  <span style="margin-left:auto;display:flex;gap:8px">
+    <button onclick="toggleAll(true)" style="font-size:12px;padding:4px 10px">全选</button>
+    <button onclick="toggleAll(false)" style="font-size:12px;padding:4px 10px">全不选</button>
+  </span>
+</div>
+
+<div style="overflow:auto;max-height:560px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md)">
+<table class="mod-table" id="modTable">
+  <thead>
+    <tr>
+      <th class="chk">要</th>
+      <th class="item-col">条目</th>
+      <th class="param-col">关键参数 / 要点</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="mod-group"><td colspan="3">一、选装修公司（筛选资质）</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>查资质</td><td>营业执照 + 装修资质证书；查行政处罚、经营异常</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>看年限规模</td><td>本地经营3年以上、有固定办公场所</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>实地看工地</td><td>看正在施工的工地，查水电走线、瓷砖平整度</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>问老业主</td><td>朋友推荐 / 业主群问同小区，重点听差评</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>警惕话术</td><td>"先装修后付款""零利润""超低价全包"都是套路</td></tr>
+
+    <tr class="mod-group"><td colspan="3">二、报价单检查（5大陷阱）</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>漏项报价</td><td>故意漏防水/找平/垃圾清运，施工中加钱</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>模糊计价</td><td>只写单价不写品牌型号，施工时偷换便宜货</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>低开高走</td><td>报价远低于市场价，签约后各种增项</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>面积猫腻</td><td>多算面积或同一面墙重复计算</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>不含辅料</td><td>主材含了，水泥/沙子/胶水/美缝剂另算且虚高</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>报价单怎么看</td><td>要求分项明细；对比3家以上；要"闭口合同"增项不超5%</td></tr>
+
+    <tr class="mod-group"><td colspan="3">三、合同必查条款</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>材料明细</td><td>品牌/型号/规格/环保等级写进附件，进场亲自核对</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>施工工期</td><td>100平一般90个工作日内，写清起止日期</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>延期赔付</td><td>违约金约总价万分之五/天</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>增项上限</td><td>非业主原因增项不超总价5%，超出公司承担</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>付款节点</td><td>分期付款，写清每节点比例（见付款模块）</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>验收标准</td><td>每道工序完工双方签字验收才进下一步</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>保修期</td><td>防水≥5年，其他≥2年；写清响应时间</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>安全责任</td><td>工人工伤由装修公司全责</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>变更流程</td><td>任何变更签书面补充协议，口头承诺不算</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>定金 vs 订金</td><td>"定金"不退/"订金"可退；金额不超总价20%</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>口头承诺落纸面</td><td>送的智能门锁/升级台面等全部写进补充条款</td></tr>
+
+    <tr class="mod-group"><td colspan="3">四、付款方式</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>分期比例（全包）</td><td>签约60% → 水电验收20% → 木工进场15% → 竣工尾款5%</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>分期比例（半包）</td><td>签约30% → 水电验收50% → 木工15% → 竣工5%</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>尾款留5-10%</td><td>验收合格后付，最好压一段时间当质保金</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>必须转公账</td><td>保留转账凭证，不给现金/不转个人账户</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>索要发票</td><td>每次付款要正规发票</td></tr>
+
+    <tr class="mod-group"><td colspan="3">五、谈判与沟通技巧</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>别被逼单</td><td>"今天定优惠2万"是话术，多对比再决定</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>带懂行的人</td><td>有懂装修的朋友陪同看报价单</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>关键承诺要书面</td><td>影响钱和效果的承诺必须签字盖章</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>增项必须签字</td><td>不签补充协议就不付，工人说"必须加"找项目经理</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>全程留证据</td><td>合同/报价单/发票/聊天记录/工地照片全部留存</td></tr>
+
+    <tr class="mod-group"><td colspan="3">六、施工过程监督</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>材料进场核对</td><td>品牌型号规格对合同，查合格证/检测报告</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>隐蔽工程验收</td><td>水电/防水每道工序签字才进下一步</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>定期去工地</td><td>每周至少1-2次看进度和质量</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>变更走书面</td><td>注明费用增减和工期调整</td></tr>
+
+    <tr class="mod-group"><td colspan="3">七、厨房避坑</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>台面高度</td><td>身高÷2+5cm；炒菜区低8-10cm，水槽区高5cm</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>插座</td><td>台面6-8个带开关；水槽下2个（净水+垃圾处理器）；防溅盒</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>烟道止逆阀</td><td>贴砖前装好，玻璃胶密封</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>吊顶</td><td>用铝扣板，不用石膏板</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>台面材质</td><td>石英石性价比最高；挡水条做圆弧</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>橱柜五金</td><td>铰链选百隆/海蒂诗，滑轨用托底缓冲款</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>水槽</td><td>大单槽+抽拉龙头，台下盆好打理</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>灯光</td><td>吊柜下方加灯带照亮切菜区</td></tr>
+
+    <tr class="mod-group"><td colspan="3">八、卫生间避坑</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>防水</td><td>淋浴区1.8m（最好到顶）；其他30cm；地面2-3遍；闭水≥48h，去楼下看</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>地漏</td><td>装最低点，坡度2-3%；防臭地漏芯；玻璃球3秒到地漏</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>干湿分离</td><td>玻璃隔断≥1.9m；小户型用浴帘+止水条</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>台盆</td><td>小户型选台下盆；台面85-90cm；防溅起泡器</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>插座</td><td>洗漱台2个防溅盖；马桶旁1个；镜柜内1个；距地≥1.2m</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>存水弯</td><td>所有下水口装U型存水弯防反味</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>通风</td><td>强排风机+止逆阀；吊顶可加活性炭</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>灯光</td><td>主灯+镜前灯；显色指数>90Ra；防水IP65+</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>瓷砖</td><td>哑光防滑砖；别选太深色（显脏显水垢）</td></tr>
+
+    <tr class="mod-group"><td colspan="3">九、踢脚线</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>材质</td><td>实木复合/密度板性价比高；现代风可选铝合金</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>高度</td><td>5-8cm最合适</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>颜色</td><td>跟门套同色最协调，或跟地板同色</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>安装方式</td><td>明装好修；暗装颜值高但贵，水电阶段就要规划</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>安装时机</td><td>门套装好→地板铺完→再装踢脚线</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>墙面平整度</td><td>缝隙大要提前找平</td></tr>
+
+    <tr class="mod-group"><td colspan="3">十、灯具</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>分层布光</td><td>主灯+辅助灯（灯带/射灯/落地灯），别只装主灯</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>色温</td><td>客厅/厨卫4000K；卧室3000K</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>显色指数</td><td>Ra>90，尤其餐厅/卫生间镜前灯</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>厨房操作灯</td><td>吊柜下方加灯带</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>卧室双控</td><td>门口+床头双控开关；走廊装感应灯</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>智能灯留零线</td><td>水电阶段提前留零线</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>射灯数量</td><td>重点打装饰画/背景墙，别贪多</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>层高限制</td><td>层高<2.6m别吊大灯，用吸顶灯/筒灯</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>灯带品质</td><td>选高压灯带或品牌低压款，别贪便宜</td></tr>
+
+    <tr class="mod-group"><td colspan="3">十一、门</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>厨卫门材质</td><td>用钛镁合金门/玻璃门，防水</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>定制周期</td><td>生产30-45天，水电阶段就量门洞提前下单</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>门锁五金</td><td>静音锁体；卧室门加隔音条；不锈钢合页</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>入户门锁芯</td><td>选C级锁芯（防盗最高）</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>门套与踢脚线</td><td>同色系不割裂</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>卫生间门通风</td><td>无干湿分离门下方留缝或装百叶</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>谷仓门/推拉门</td><td>隔音极差，卧室慎用</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>门吸位置</td><td>模拟开门轨迹，避开家具和动线</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>门框缝隙</td><td>打胶密封防透风漏音进虫</td></tr>
+
+    <tr class="mod-group"><td colspan="3">十二、地面</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>区域选材</td><td>客餐厅瓷砖；卧室木地板；厨卫防滑瓷砖</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>地面找平</td><td>2米靠尺误差<3mm才算合格</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>瓷砖留缝</td><td>留缝1-2mm，别听"无缝好"</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>瓷砖损耗</td><td>多买5-10%同批次同色号</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>木地板伸缩缝</td><td>墙边留8-10mm，踢脚线盖住</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>材质交界</td><td>用压条/收边条过渡，别直接拼</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>地暖房</td><td>选专用地暖地板，别铺纯实木</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>阳台地砖</td><td>选户外防滑砖，抗紫外线</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>防滑</td><td>厨卫选哑光防滑砖</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>通铺高度差</td><td>过渡处用压条找平</td></tr>
+
+    <tr class="mod-group"><td colspan="3">十三、全屋通用（容易忽略）</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>水电布线</td><td>横平竖直，强弱电间距>30cm；完工拍照存档贴衣柜里</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>插座规划</td><td>客厅沙发两侧各2个、电视墙4-5个；床头各1个+USB；玄关1个</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>墙面施工顺序</td><td>铲腻子→墙固→挂网格布→2-3遍腻子→底漆→2遍面漆</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>瓷砖空鼓</td><td>空鼓率<5%（厨卫<3%），超标返工</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>美缝</td><td>用环氧彩砂/真瓷胶，别用免费填缝剂</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>门窗密封</td><td>三元乙丙密封条；A4纸夹门缝抽不出为合格</td></tr>
+    <tr><td class="chk"><input type="checkbox" checked></td><td>靠墙柜体防潮</td><td>柜体背面墙刷防潮涂料</td></tr>
+  </tbody>
+</table>
+</div>
+
+<script>
+function updateCount(){
+  var cbs=document.querySelectorAll('#modTable input[type=checkbox]');
+  var checked=0;cbs.forEach(function(c){if(c.checked)checked++});
+  document.getElementById('totalCount').textContent=checked;
+  document.getElementById('allCount').textContent=cbs.length;
+}
+function toggleAll(state){
+  document.querySelectorAll('#modTable input[type=checkbox]').forEach(function(c){c.checked=state});
+  updateCount();
+}
+document.querySelectorAll('#modTable input[type=checkbox]').forEach(function(c){c.addEventListener('change',updateCount)});
+updateCount();
+</script>

@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>太原装修公司对比指南 — 旧房翻新专属</title>
+<style>
+  :root {
+    --bg: #f8f7f4;
+    --card-bg: #ffffff;
+    --text: #2c2c2c;
+    --muted: #6b6b6b;
+    --border: #e8e4dc;
+    --accent: #2c7a4b;
+    --accent-light: #e8f5e9;
+    --warn: #c0392b;
+    --warn-light: #fdf0ee;
+    --blue: #2471a3;
+    --blue-light: #eaf2f8;
+    --gold: #b8860b;
+    --gold-light: #fdf6e7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-hover: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 2rem 1rem;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 2rem 0 2.5rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  .header h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 0.5rem;
+  }
+  .header .subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+  }
+  .header .meta {
+    margin-top: 0.6rem;
+    font-size: 0.85rem;
+    color: #999;
+  }
+
+  /* Section title */
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 2.5rem 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 2px solid var(--accent);
+  }
+  .section-title .num {
+    display: inline-block;
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 28px;
+    font-size: 0.85rem;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
+  /* Relationship diagram */
+  .relation-box {
+    background: var(--blue-light);
+    border: 1px solid #c5d9ed;
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+  .relation-box b { color: var(--blue); }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  thead th {
+    background: #f0ede6;
+    padding: 0.75rem 0.85rem;
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+    border-bottom: 2px solid var(--border);
+  }
+  tbody td {
+    padding: 0.7rem 0.85rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: #fafaf7; }
+  .highlight { background: var(--accent-light) !important; font-weight: 600; }
+  .text-green { color: var(--accent); font-weight: 600; }
+  .text-red { color: var(--warn); }
+  .text-muted { color: var(--muted); font-size: 0.85rem; }
+
+  /* Company card */
+  .company-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    margin-bottom: 1.8rem;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .company-card:hover { box-shadow: var(--shadow-hover); }
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+  }
+  .card-header:hover { background: #fafaf7; }
+  .card-header .name {
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+  .card-header .badge {
+    display: inline-block;
+    font-size: 0.78rem;
+    padding: 2px 10px;
+    border-radius: 12px;
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }
+  .badge-local { background: var(--accent-light); color: var(--accent); }
+  .badge-chain { background: var(--blue-light); color: var(--blue); }
+  .badge-high { background: var(--gold-light); color: var(--gold); }
+  .card-arrow { font-size: 0.8rem; color: #aaa; transition: transform 0.2s; }
+  .card-header.open .card-arrow { transform: rotate(90deg); }
+
+  .card-body { padding: 1.2rem 1.5rem; display: none; }
+  .card-header.open + .card-body, .card-body.open { display: block; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .info-item { display: flex; }
+  .info-label {
+    color: var(--muted);
+    font-size: 0.85rem;
+    min-width: 4.5rem;
+    flex-shrink: 0;
+  }
+  .info-value { font-size: 0.9rem; }
+
+  .card-body h4 {
+    font-size: 0.95rem;
+    margin: 1rem 0 0.5rem;
+    color: var(--accent);
+  }
+  .card-body .pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin: 0.5rem 0;
+  }
+  .pros, .cons {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.88rem;
+  }
+  .pros { background: #f0faf1; border: 1px solid #c8e6c9; }
+  .cons { background: #fef8f7; border: 1px solid #f5c6cb; }
+  .pros .label { color: var(--accent); font-weight: 700; margin-bottom: 0.3rem; }
+  .cons .label { color: var(--warn); font-weight: 700; margin-bottom: 0.3rem; }
+  .pros ul, .cons ul { list-style: none; padding: 0; }
+  .pros li::before { content: "✓ "; color: var(--accent); }
+  .cons li::before { content: "✗ "; color: var(--warn); }
+
+  .address-block {
+    background: #fafaf7;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    margin: 0.8rem 0;
+    font-size: 0.9rem;
+  }
+  .address-block .addr-title {
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .address-block .addr-line {
+    padding: 0.15rem 0;
+    display: flex;
+    align-items: flex-start;
+  }
+  .address-block .pin { color: var(--warn); margin-right: 0.4rem; flex-shrink: 0; }
+  .address-block .tel { color: var(--blue); margin-left: 0.8rem; font-size: 0.85rem; }
+
+  /* Summary section */
+  .summary-box {
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .summary-box h3 {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+  }
+  .summary-box .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    margin: 0.2rem 0.4rem 0.2rem 0;
+    background: #f0f0ec;
+  }
+
+  @media (max-width: 640px) {
+    .info-grid { grid-template-columns: 1fr; }
+    .pros-cons { grid-template-columns: 1fr; }
+    .header h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- Header -->
+<div class="header">
+  <h1>太原装修公司对比指南</h1>
+  <div class="subtitle">旧房翻新场景 · 12万预算 · 家具家电保留 · 三代同堂</div>
+  <div class="meta">整理日期：2026年7月23日 &nbsp;|&nbsp; 数据来源：土巴兔、齐家网、装一网、腾讯地图、天眼查等</div>
+</div>
+
+<!-- Section 1: Brand Relationship -->
+<h2 class="section-title"><span class="num">一</span>品牌关系速览</h2>
+
+<div class="relation-box">
+  <b>独特装饰集团</b>（2008年成立，太原本土）是山西本地大型装饰集团，旗下包含两个主要品牌：
+  <br><b>独特壹家装饰</b> — 主品牌，面向刚需到改善型客户，主打整装
+  <br><b>独特优乐美居</b> — 旗下高中端全案设计子品牌，服务和选材更高一档
+  <br><br>
+  两者<b>是同一家集团</b>，共享设计团队、施工资源和售后体系。全省7家门店（太原、长治、大同、临汾、运城、吕梁），总面积超过25000㎡。
+</div>
+
+<!-- Section 2: Comparison Table -->
+<h2 class="section-title"><span class="num">二</span>四家公司核心参数对比</h2>
+
+<div class="table-wrap">
+<table>
+  <thead>
+    <tr>
+      <th style="min-width:130px">对比维度</th>
+      <th style="min-width:200px">独特装饰集团</th>
+      <th style="min-width:180px">今朝装饰</th>
+      <th style="min-width:180px">以恒装饰</th>
+      <th style="min-width:180px">中骄家居</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>成立时间</b></td>
+      <td>2008年（14年）</td>
+      <td>1999年北京总部<br><span class="text-muted">2010年进驻太原（16年）</span></td>
+      <td class="highlight">2008年（18年）</td>
+      <td>2014年（12年）</td>
+    </tr>
+    <tr>
+      <td><b>企业性质</b></td>
+      <td>太原本土集团</td>
+      <td>北京连锁直营</td>
+      <td>太原本土老牌</td>
+      <td>太原本土品牌</td>
+    </tr>
+    <tr>
+      <td><b>资质</b></td>
+      <td>室内装饰资质等级证书</td>
+      <td>全国连锁，设计施工资质齐全</td>
+      <td>设计乙级+施工二级</td>
+      <td>设计+施工双乙级</td>
+    </tr>
+    <tr>
+      <td><b>核心定位</b></td>
+      <td>中高端整装<br>高中端线"优乐美居"</td>
+      <td class="highlight">旧房翻新全国标杆<br>旧改专利技术</td>
+      <td class="highlight">高性价比整装<br>旧房改造专精</td>
+      <td>设计施工一体化<br>本土综合口碑王</td>
+    </tr>
+    <tr>
+      <td><b>全包参考价</b></td>
+      <td>1500-2500元/㎡<br><span class="text-muted">80㎡≈12-20万</span></td>
+      <td class="text-green">899-1399元/㎡<br><span class="text-muted">80㎡≈7.2-11.2万</span></td>
+      <td class="text-green">920-1480元/㎡<br><span class="text-muted">80㎡≈7.4-11.8万</span></td>
+      <td>1200-2500元/㎡<br><span class="text-muted">80㎡≈9.6-20万</span></td>
+    </tr>
+    <tr>
+      <td><b>半包参考价</b></td>
+      <td>—（主营全包）</td>
+      <td>约500-800元/㎡</td>
+      <td class="text-green">500-780元/㎡</td>
+      <td>约600-900元/㎡</td>
+    </tr>
+    <tr>
+      <td><b>适合你的预算</b></td>
+      <td class="text-red">偏贵，80㎡全包≥12万</td>
+      <td class="text-green">半包有空间，全包也可能</td>
+      <td class="text-green">预算内最宽裕的选择</td>
+      <td>中规中矩，看方案</td>
+    </tr>
+    <tr>
+      <td><b>施工团队</b></td>
+      <td>江苏工队直管，不转包</td>
+      <td>自有工人，不外包<br>太原60人团队</td>
+      <td class="text-green">300+自有持证工人<br>平均从业12年</td>
+      <td>自有班组，数千人团队</td>
+    </tr>
+    <tr>
+      <td><b>闭口合同</b></td>
+      <td>✅ "客户不增项，总价不改变"</td>
+      <td class="text-green">✅ 增项率2.1%（全城最低）</td>
+      <td class="text-green">✅ 零增项，超额双倍赔付<br>履约率99.7%</td>
+      <td>✅ 闭口零增项</td>
+    </tr>
+    <tr>
+      <td><b>付款方式</b></td>
+      <td>常规分期</td>
+      <td>分期付款</td>
+      <td class="text-green">"3331"机制<br>节点验收再付款</td>
+      <td>常规分期</td>
+    </tr>
+    <tr>
+      <td><b>旧房专长</b></td>
+      <td>有但不主推</td>
+      <td class="text-green">⭐ 核心赛道<br>专利：墙体防裂/降噪/防水<br>太原470+套旧改案例</td>
+      <td class="text-green">⭐ 核心赛道<br>"三防工艺"（防裂/防渗/防腐）<br>12000+户累计服务</td>
+      <td>旧改占比较大<br>非纯专家</td>
+    </tr>
+    <tr>
+      <td><b>转介绍率</b></td>
+      <td>48%</td>
+      <td>高</td>
+      <td class="text-green">64% – 76%</td>
+      <td>42%</td>
+    </tr>
+    <tr>
+      <td><b>口碑评分</b></td>
+      <td>9.9/10（土巴兔）<br>投诉率0.8%</td>
+      <td>9.7/10<br>太原消协零有效投诉</td>
+      <td class="text-green">9.85/10<br>投诉率0.17‰（全城最低）</td>
+      <td class="text-green">9.92/10<br>85%业主主动选择</td>
+    </tr>
+    <tr>
+      <td><b>售后质保</b></td>
+      <td>10年质保+终身维护<br>8小时响应</td>
+      <td>终身维护<br>8小时响应</td>
+      <td class="text-green">隐蔽工程20年<br>整体终身质保+年检</td>
+      <td>24项终身维护</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<!-- Section 3: Company Details -->
+<h2 class="section-title"><span class="num">三</span>各公司详细档案</h2>
+
+<!-- 独特装饰 -->
+<div class="company-card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div>
+      <span class="name">独特装饰集团</span>
+      <span class="badge badge-local">太原本土</span>
+      <span class="badge badge-high">中高端</span>
+    </div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="info-grid">
+      <div class="info-item"><span class="info-label">全称</span><span class="info-value">山西独特装饰工程有限公司</span></div>
+      <div class="info-item"><span class="info-label">成立</span><span class="info-value">2008年</span></div>
+      <div class="info-item"><span class="info-label">规模</span><span class="info-value">全省7家门店，25000+㎡展厅，300+员工</span></div>
+      <div class="info-item"><span class="info-label">口碑</span><span class="info-value">土巴兔 9.9/10，太原消协零有效投诉（2025）</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="label">优势</div>
+        <ul>
+          <li>太原本土大牌，规模大，实力有保障</li>
+          <li>江苏工队直管，手艺稳定</li>
+          <li>15%-20%材料直供成本优势</li>
+          <li>闭口合同，10年质保+终身维护</li>
+          <li>不满意砸掉重做承诺</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="label">注意</div>
+        <ul>
+          <li>定位中高端，全包1500元/㎡起，12万预算偏紧</li>
+          <li>主要做全包，半包非主营方向</li>
+          <li>营销宣传多，合同条款要仔细核对</li>
+          <li>旧房翻新经验有但不是主推方向</li>
+        </ul>
+      </div>
+    </div>
+    <div class="address-block">
+      <div class="addr-title">📍 门店地址</div>
+      <div class="addr-line"><span class="pin">📍</span><b>独特壹家装饰总部</b> — 太原市万柏林区千峰南路南内环街口鸿峰商务大厦5、6、7层<span class="tel">0351-8611202</span></div>
+      <div class="addr-line"><span class="pin">📍</span><b>独特壹家装饰（世贸中心店）</b> — 太原市小店区长治路111号山西世贸中心A座5层<span class="tel">0351-7558888</span></div>
+      <div class="addr-line"><span class="pin">📍</span><b>独特装饰集团总部 / 优乐美居体验馆</b> — 太原市万柏林区长风西街旧晋祠路往北800米<span class="tel">0351-2910119</span></div>
+      <div class="addr-line" style="margin-top:0.4rem;color:var(--muted);font-size:0.82rem;">独特优乐美居是独特壹家的高中端子品牌，地址同上（集团总部），设计团队和施工资源共用。</div>
+    </div>
+    <div class="relation-box" style="margin-top:0.8rem;">
+      <b>对你来说</b>：如果选择全包+预算可上浮到15万，独特优乐美居的设计能力值得一看。12万预算建议去独特壹家主品牌，问清楚能否做半包+保留旧家具的方案。
+    </div>
+  </div>
+</div>
+
+<!-- 今朝装饰 -->
+<div class="company-card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div>
+      <span class="name">今朝装饰</span>
+      <span class="badge badge-chain">全国连锁</span>
+      <span class="badge badge-local">旧房专家</span>
+    </div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="info-grid">
+      <div class="info-item"><span class="info-label">全称</span><span class="info-value">山西今朝英迈装饰设计有限公司（北京今朝装饰太原直营分公司）</span></div>
+      <div class="info-item"><span class="info-label">成立</span><span class="info-value">1999年北京，2010年进驻太原</span></div>
+      <div class="info-item"><span class="info-label">规模</span><span class="info-value">太原60人自有施工队，10万㎡英迈木业基地</span></div>
+      <div class="info-item"><span class="info-label">口碑</span><span class="info-value">9.7/10，增项率2.1%（全城最低）</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="label">优势</div>
+        <ul>
+          <li>全国旧房翻新标杆品牌，专利技术（墙体防裂/降噪/防水）</li>
+          <li>太原470+套旧房改造案例</li>
+          <li>增项率全城最低，价格透明</li>
+          <li>自有木作工厂，橱柜衣柜定制成本可控</li>
+          <li>全包899元/㎡起，卡在你的预算线内</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="label">注意</div>
+        <ul>
+          <li>连锁品牌，设计风格偏标准化，个性化不如本土公司</li>
+          <li>12万预算做全包比较紧张，建议走半包</li>
+          <li>施工队规模（60人）小于本土头部公司</li>
+        </ul>
+      </div>
+    </div>
+    <div class="address-block">
+      <div class="addr-title">📍 门店地址</div>
+      <div class="addr-line"><span class="pin">📍</span><b>太原总部</b> — 太原市迎泽区并州北路31号<span class="tel">0351-8234617</span></div>
+      <div class="addr-line"><span class="pin">📍</span><b>并州东街店</b> — 太原市迎泽区并州东街62号（卷烟厂往东200米）</div>
+      <div class="addr-line"><span class="pin">📍</span><b>茂业中心店</b> — 太原市小店区体育路茂业中心北101</div>
+      <div class="addr-line"><span class="pin">📍</span><b>居然之家工作室</b> — 太原市小店区平阳路街道长治路居然之家3层<span class="tel">15034052435</span></div>
+    </div>
+    <div class="relation-box" style="margin-top:0.8rem;">
+      <b>对你来说</b>：旧房翻新专业度最高的选择。重点是和他们确认——12万半包+保留家具电器的场景接不接单，报价能不能控制在预算内。
+    </div>
+  </div>
+</div>
+
+<!-- 以恒装饰 -->
+<div class="company-card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div>
+      <span class="name">以恒装饰</span>
+      <span class="badge badge-local">太原本土</span>
+      <span class="badge badge-local" style="background:#fff3cd;color:#856404;">高性价比</span>
+    </div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="info-grid">
+      <div class="info-item"><span class="info-label">全称</span><span class="info-value">太原以恒装饰</span></div>
+      <div class="info-item"><span class="info-label">成立</span><span class="info-value">2008年（18年）</span></div>
+      <div class="info-item"><span class="info-label">规模</span><span class="info-value">300+自有持证工人，2800㎡数字展厅</span></div>
+      <div class="info-item"><span class="info-label">口碑</span><span class="info-value">9.85/10，投诉率0.17‰，转介绍64%+</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="label">优势</div>
+        <ul>
+          <li>18年本土深耕，最懂太原老房的结构特点</li>
+          <li>独创"三防工艺"：防墙面开裂、防厨卫渗漏、防木质变形</li>
+          <li>"铁腕闭口合同"——非业主变更导致的增项，公司全额承担+双倍赔付</li>
+          <li>"3331"付款机制：签约仅2000元定金，节点验收再付款</li>
+          <li>F2C工厂直采，同等配置比市场均价低15-20%</li>
+          <li>半包500-780元/㎡，在12万预算内最宽裕</li>
+          <li>累计12000+户太原家庭，经验最深厚</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="label">注意</div>
+        <ul>
+          <li>天眼查显示2023年注册新实体，可能公司重组/变更过</li>
+          <li>知名度小于独特壹家（主要靠口碑传播而非大幅广告）</li>
+          <li>设计实力中规中矩，不是卖设计而是卖施工品质</li>
+          <li>高端定制不是强项</li>
+        </ul>
+      </div>
+    </div>
+    <div class="address-block">
+      <div class="addr-title">📍 门店地址</div>
+      <div class="addr-line"><span class="pin">📍</span><b>红星美凯龙店</b> — 太原市小店区坞城街道长风街红星美凯龙负一层北面</div>
+      <div class="addr-line"><span class="pin">📍</span><b>并州南路店</b> — 太原市小店区坞城街道并州南路137号4幢1层商场一AB1</div>
+      <div class="addr-line"><span class="pin">📍</span><b>数字展厅</b> — 太原市（2800㎡全景数字化直营展厅，设计+选材+实景一体化）</div>
+    </div>
+    <div class="relation-box" style="margin-top:0.8rem;">
+      <b>对你来说</b>：预算友好度最高，"先装修后付款"极大降低资金风险。旧改经验深厚，三防工艺很适合太原老房。半包500-780元/㎡意味着如果面积80㎡，半包大约4-6.2万，剩下6-8万用于主材采购，12万预算会比较从容。
+    </div>
+  </div>
+</div>
+
+<!-- 中骄家居 -->
+<div class="company-card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div>
+      <span class="name">中骄家居</span>
+      <span class="badge badge-local">太原本土</span>
+      <span class="badge badge-local" style="background:#e8e0f0;color:#6c3483;">口碑标杆</span>
+    </div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="info-grid">
+      <div class="info-item"><span class="info-label">全称</span><span class="info-value">山西中骄家居有限公司</span></div>
+      <div class="info-item"><span class="info-label">成立</span><span class="info-value">2014年（12年）</span></div>
+      <div class="info-item"><span class="info-label">规模</span><span class="info-value">近百人设计团队、数千人施工团队、大型体验馆</span></div>
+      <div class="info-item"><span class="info-label">口碑</span><span class="info-value">9.92/10（全城最高），85%业主主动选择</span></div>
+    </div>
+    <div class="pros-cons">
+      <div class="pros">
+        <div class="label">优势</div>
+        <ul>
+          <li>全城最高口碑评分，业主选择率极高</li>
+          <li>16项创新施工工艺（防开裂/防潮/防霉等）</li>
+          <li>24项终身维护服务，售后无忧</li>
+          <li>设计施工双乙级资质，正规可查</li>
+          <li>欧洲辅材引进（德国可耐福石膏板等），环保标准高</li>
+          <li>闭口零增项合同</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <div class="label">注意</div>
+        <ul>
+          <li>成立时间（2014年）短于前三家</li>
+          <li>定位偏中高端，全包1700元/㎡起超出预算</li>
+          <li>旧房翻新非核心专长（多案例是品质新房装修）</li>
+          <li>一些报道显示报价偏高，12万预算可能需要走半包</li>
+        </ul>
+      </div>
+    </div>
+    <div class="address-block">
+      <div class="addr-title">📍 门店地址</div>
+      <div class="addr-line"><span class="pin">📍</span><b>南内环翡翠店</b> — 太原市小店区南内环并州路翡翠商铺1层</div>
+      <div class="addr-line"><span class="pin">📍</span><b>华邦国际店</b> — 太原市小店区营盘街道南内环街华邦国际<span class="tel">15235360390</span></div>
+      <div class="addr-line"><span class="pin">📍</span><b>万国体验中心</b> — 太原市万柏林区长风西街16号万国汽贸园内中骄家居体验中心<span class="tel">0351-6868888</span></div>
+      <div class="addr-line"><span class="pin">📍</span><b>富基翡翠郡办公区</b> — 太原市小店区营盘街道富基翡翠郡-B栋中骄家居4层</div>
+    </div>
+    <div class="relation-box" style="margin-top:0.8rem;">
+      <b>对你来说</b>：口碑最稳的选择。如果前三家在旧房翻新或预算上不合适，中骄是兜底的安全牌。但需要确认他们愿接旧房半包+保留旧家具的项目，以及12万预算能否覆盖。
+    </div>
+  </div>
+</div>
+
+<!-- Section 4: Summary -->
+<h2 class="section-title"><span class="num">四</span>针对你的情况：推荐考察顺序</h2>
+
+<div class="summary-box">
+  <h3>🎯 你的核心需求回顾</h3>
+  <p style="color:var(--muted);margin-bottom:1rem;">
+    旧房全翻 · 12万硬装预算 · 不砸墙 · 家具电器保留 · 三代同堂 · 适老化+学习环境 · 太原 · 集中供热地暖
+  </p>
+
+  <h3>💡 建议面谈顺序</h3>
+  <table style="margin:0.8rem 0 1.5rem;">
+    <thead>
+      <tr><th style="width:50px">顺序</th><th style="width:130px">公司</th><th>重点考察方向</th><th>关键问题</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>1</b></td>
+        <td><b style="color:var(--accent)">以恒装饰</b></td>
+        <td>性价比最高 + 旧改最深 + 付款最友好</td>
+        <td>旧房半包500-780元/㎡能做吗？保留的家具怎么保护？三防工艺具体怎么施工？"3331"付款怎么分节点？</td>
+      </tr>
+      <tr>
+        <td><b>2</b></td>
+        <td><b style="color:var(--blue)">今朝装饰</b></td>
+        <td>旧房翻新全国标杆 + 自有木作</td>
+        <td>旧改专利技术对我的老房有多大用？半包报价能做到多少？太原470套旧改案例有没有类似我家的？</td>
+      </tr>
+      <tr>
+        <td><b>3</b></td>
+        <td><b>中骄家居</b></td>
+        <td>口碑最稳 + 售后最强</td>
+        <td>旧房半包接不接？12万预算能覆盖吗？16项工艺哪些对老房最有用？24项终身维护具体包含什么？</td>
+      </tr>
+      <tr>
+        <td><b>4</b></td>
+        <td><b>独特壹家</b></td>
+        <td>作为高端对标参考</td>
+        <td>全包最低报价多少？半包做吗？设计能力值不值多出的钱？</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>⚠️ 面谈时必问的5个问题（每家都问）</h3>
+  <ol style="margin:0.5rem 0;padding-left:1.2rem;line-height:2.2;">
+    <li><b>"旧房翻新、家具电器保留、12万预算、半包——你们接不接？"</b>（先筛门槛）</li>
+    <li><b>"闭口合同具体条款是什么？拆除中发现暗病（空鼓、锈穿、裂缝）算不算增项？"</b>（旧房最大变数）</li>
+    <li><b>"装修期间原家具电器怎么保护？搬运和保管费谁出？损坏赔偿标准？"</b>（保留物品多，必写入合同）</li>
+    <li><b>"能不能指定工长？工长是固定团队还是临时调配？"</b>（工长比公司品牌更重要）</li>
+    <li><b>"地暖铺设后地面抬高8-10cm，马桶/入户门/室内门高度受影响怎么处理？"</b>（你的核心工程地暖带来的连锁问题）</li>
+  </ol>
+
+  <h3>🏠 数据备注</h3>
+  <p style="font-size:0.85rem;color:var(--muted);">
+    以上价格为网上公开渠道搜集的参考报价区间，实际价格以到店面谈和量房后报价为准。
+    <br>以恒装饰工商信息显示2023年注册新实体，可能与公司重组有关，面谈时可顺便核实。
+    <br>各公司评分来自土巴兔、齐家网、装一网等第三方平台，仅供参考。
+  </p>
+</div>
+
+</div>
+</body>
+</html>

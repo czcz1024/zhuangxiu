@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>装修细节选项对比大全 — 11大项目逐一剖析</title>
+<style>
+  :root {
+    --bg: #f8f7f4; --card-bg: #fff; --text: #2c2c2c; --muted: #6b6b6b;
+    --border: #e8e4dc; --accent: #2c7a4b; --accent-light: #e8f5e9;
+    --warn: #c0392b; --warn-light: #fef0ee; --blue: #2471a3; --blue-light: #eaf2f8;
+    --gold: #b8860b; --gold-light: #fef9e7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:2rem 1rem;
+  }
+  .container { max-width:1100px; margin:0 auto; }
+
+  .header { text-align:center; padding:2rem 0 2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+  .header h1 { font-size:2rem; font-weight:700; }
+  .header .subtitle { color:var(--muted); font-size:1rem; margin-top:0.3rem; }
+  .header .meta { font-size:0.82rem; color:#999; margin-top:0.5rem; }
+
+  .nav { position:sticky; top:0; z-index:100; background:var(--card-bg); border-bottom:1px solid var(--border); padding:0.6rem 0; margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; }
+  .nav a { font-size:0.82rem; text-decoration:none; color:var(--muted); padding:4px 10px; border-radius:14px; white-space:nowrap; transition:all 0.15s; }
+  .nav a:hover, .nav a.active { background:var(--accent-light); color:var(--accent); font-weight:600; }
+
+  .sec { margin-bottom:2rem; }
+  .sec h2 { font-size:1.2rem; font-weight:700; padding-bottom:0.4rem; border-bottom:2px solid var(--accent); margin-bottom:1rem; }
+  .sec h2 .num { display:inline-block; width:26px; height:26px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:26px; font-size:0.8rem; margin-right:0.5rem; }
+
+  .card { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); margin-bottom:1rem; overflow:hidden; }
+  .card-header { display:flex; align-items:center; justify-content:space-between; padding:0.85rem 1.2rem; cursor:pointer; user-select:none; border-bottom:1px solid transparent; }
+  .card-header:hover { background:#fafaf7; }
+  .card-header.open { border-bottom-color:var(--border); }
+  .card-header .title { font-weight:700; font-size:0.95rem; }
+  .card-header .tag { display:inline-block; font-size:0.72rem; padding:2px 8px; border-radius:10px; margin-left:0.5rem; font-weight:500; }
+  .tag-best { background:var(--accent-light); color:var(--accent); }
+  .tag-warn { background:var(--warn-light); color:var(--warn); }
+  .tag-info { background:var(--blue-light); color:var(--blue); }
+  .tag-gold { background:var(--gold-light); color:var(--gold); }
+  .card-arrow { font-size:0.7rem; color:#aaa; transition:transform 0.2s; }
+  .card-header.open .card-arrow { transform:rotate(90deg); }
+
+  .card-body { display:none; padding:1rem 1.2rem; }
+  .card-header.open + .card-body, .card-body.open { display:block; }
+
+  .compare-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin:0.5rem 0 1rem; }
+  .compare-table thead th { background:#f0ede6; padding:0.5rem 0.6rem; text-align:left; font-weight:600; border-bottom:2px solid var(--border); white-space:nowrap; }
+  .compare-table tbody td { padding:0.5rem 0.6rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .compare-table tbody tr:last-child td { border-bottom:none; }
+  .compare-table tbody tr.best-row { background:#f6fcf7; }
+  .compare-table tbody tr.best-row td:first-child { font-weight:700; color:var(--accent); }
+
+  .pros-cons { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:0.5rem 0; }
+  .pros, .cons { padding:0.7rem 0.9rem; border-radius:8px; font-size:0.85rem; }
+  .pros { background:#f0faf1; border:1px solid #c8e6c9; }
+  .cons { background:#fef8f7; border:1px solid #f5c6cb; }
+  .pros .lbl, .cons .lbl { font-weight:700; margin-bottom:0.3rem; }
+  .pros .lbl { color:var(--accent); }
+  .cons .lbl { color:var(--warn); }
+  .pros ul, .cons ul { list-style:none; padding:0; }
+  .pros li::before { content:"✓ "; color:var(--accent); }
+  .cons li::before { content:"✗ "; color:var(--warn); }
+
+  .verdict { background:var(--accent-light); border-left:3px solid var(--accent); padding:0.7rem 1rem; border-radius:0 8px 8px 0; margin-top:0.8rem; font-size:0.88rem; }
+  .verdict b { color:var(--accent); }
+
+  .price-tag { font-size:0.8rem; color:var(--muted); background:#f5f5f0; padding:2px 6px; border-radius:4px; white-space:nowrap; }
+  .text-green { color:var(--accent); font-weight:600; }
+  .text-red { color:var(--warn); }
+
+  @media (max-width:640px) {
+    .pros-cons { grid-template-columns:1fr; }
+    .nav { gap:0.2rem; }
+    .nav a { font-size:0.75rem; padding:3px 7px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>装修细节选项对比大全</h1>
+  <div class="subtitle">11个关键项目 · 网上用户真实评价 · 逐一剖析优缺点和最佳选择</div>
+  <div class="meta">整理日期：2026年7月23日 &nbsp;|&nbsp; 数据来源：土巴兔、齐家网、今日头条、搜狐家居、知乎等综合平台</div>
+</div>
+
+<nav class="nav">
+  <a href="#s1">厨卫吊顶</a>
+  <a href="#s2">橱柜台面</a>
+  <a href="#s3">橱柜柜体</a>
+  <a href="#s4">厨房水槽</a>
+  <a href="#s5">墙面材料</a>
+  <a href="#s6">地面材料</a>
+  <a href="#s7">踢脚线</a>
+  <a href="#s8">美缝剂</a>
+  <a href="#s9">窗帘</a>
+  <a href="#s10">淋浴区</a>
+  <a href="#s11">开关插座</a>
+</nav>
+
+<!-- ============ 一、厨卫吊顶 ============ -->
+<div class="sec" id="s1">
+<h2><span class="num">1</span>厨房&卫生间吊顶</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">方案对比：铝扣板 vs 石膏板 vs 蜂窝大板 vs PVC</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th style="width:16%">对比项</th><th>铝扣板(300×600)</th><th>防水石膏板</th><th>蜂窝大板</th><th>PVC扣板</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格</b></td><td class="price-tag">50-160元/㎡</td><td class="price-tag">125-300元/㎡</td><td class="price-tag">300-500元/㎡</td><td class="price-tag">20-50元/㎡</td></tr>
+        <tr><td><b>防水防潮</b></td><td class="text-green">优秀，金属不吸水</td><td class="text-red">即使防水款也怕持久潮湿</td><td class="text-green">优秀，铝材防水</td><td>一般，长期接触水汽老化</td></tr>
+        <tr><td><b>防油污</b></td><td class="text-green">一擦即净</td><td class="text-red">油污渗透难清理</td><td class="text-green">一擦即净</td><td>可用但易老化变黄</td></tr>
+        <tr><td><b>颜值</b></td><td>中等，有接缝</td><td class="text-green">高，无缝整体感强</td><td class="text-green">高，缝隙少、现代感</td><td class="text-red">低，塑料感明显</td></tr>
+        <tr><td><b>可维修性</b></td><td class="text-green">极佳，单块拆卸</td><td class="text-red">需整体破坏，代价大</td><td>可拆但不如铝扣板方便</td><td>一般</td></tr>
+        <tr><td><b>寿命</b></td><td>15-20年</td><td>5-8年(厨卫)</td><td>15-20年</td><td>3-5年</td></tr>
+        <tr class="best-row"><td><b>网上共识</b></td><td colspan="4">
+          <b>厨卫首选铝扣板</b> — 全网95%的装修攻略一致推荐。石膏板虽然高级好看，但"楼上一漏水就要拆整顶"是高频吐槽点。
+          蜂窝大板是趋势，但预算至少多2-3倍。PVC千万不要选厨卫，用两年就黄了。
+        </td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议：</b>厨房和卫生间都用 <b>铝扣板(300×600mm)</b>，厚度≥0.6mm，表面选烤漆/覆膜抗油污工艺。纯色哑光最耐看，慎选花哨图案（过时快）。色温选4000K自然白，不要太黄或太白。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 二、橱柜台面 ============ -->
+<div class="sec" id="s2">
+<h2><span class="num">2</span>橱柜台面</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">石英石 vs 岩板 vs 不锈钢 vs 天然大理石</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th style="width:16%">对比项</th><th>石英石</th><th>岩板</th><th>不锈钢</th><th>天然大理石</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格</b></td><td class="price-tag">300-800元/米</td><td class="price-tag">800-2000元/米</td><td class="price-tag">400-900元/米</td><td class="price-tag">600-2000元/米</td></tr>
+        <tr><td><b>硬度/耐刮</b></td><td class="text-green">莫氏6-7级，耐刮</td><td class="text-green">莫氏7-8级，极耐刮</td><td>中等，易有划痕</td><td class="text-red">莫氏3-4级，易刮花</td></tr>
+        <tr><td><b>耐高温</b></td><td>150-200℃（勿放热锅）</td><td class="text-green">600℃+，可直接放</td><td class="text-green">800℃，不怕热</td><td>一般，会烫变色</td></tr>
+        <tr><td><b>防渗色</b></td><td class="text-green">好（石英含量≥90%）</td><td class="text-green">极佳，零渗透</td><td class="text-green">完全不渗</td><td class="text-red">差，酱油醋必渗</td></tr>
+        <tr><td><b>维护</b></td><td>零维护</td><td>零维护</td><td>擦拭即可，但留指纹</td><td class="text-red">需每年封釉保养</td></tr>
+        <tr><td><b>缺点</b></td><td>拼缝可见</td><td>脆，边缘易崩</td><td>冷硬、划痕、噪音</td><td>贵、娇气、渗色</td></tr>
+        <tr class="best-row"><td><b>网上共识</b></td><td colspan="4">
+          <b>90%家庭选石英石</b> — "万金油"选择。网上高频口号："石英石就是厨房台面的标准答案"。岩板好但价位太高且边缘怕磕。
+          不锈钢适合极端实用主义（天天爆炒）。大理石已被主流淘汰，"谁用谁后悔"是知乎热帖。
+        </td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议：</b>直接上 <b>石英石台面</b>（厚度≥20mm），注意千万避开"岗石"（假石英石，三个月渗色）。用钥匙划不出白痕的就是真石英石。台下盆工艺+背面加固，加200-500元也值得。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 三、橱柜柜体 ============ -->
+<div class="sec" id="s3">
+<h2><span class="num">3</span>橱柜柜体材质</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">多层实木 vs 颗粒板 vs 不锈钢 vs 石材</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th style="width:16%">对比项</th><th>多层实木板</th><th>颗粒板(刨花板)</th><th>不锈钢柜体</th><th>石材/砖砌</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格</b></td><td class="price-tag">800-1500元/延米</td><td class="price-tag">500-900元/延米</td><td class="price-tag">1200-2000元/延米</td><td class="price-tag">800-1500元/延米</td></tr>
+        <tr><td><b>防潮性</b></td><td class="text-green">好，胶合结构稳定</td><td class="text-red">差，怕水膨胀</td><td class="text-green">极佳，完全不吸水</td><td class="text-green">极佳</td></tr>
+        <tr><td><b>握钉力/承重</b></td><td class="text-green">强，合页不易松动</td><td>一般</td><td class="text-green">强</td><td>强但无法打钉</td></tr>
+        <tr><td><b>环保</b></td><td>选ENF/E0级即可</td><td>选ENF/E0级即可</td><td class="text-green">零甲醛</td><td class="text-green">零甲醛</td></tr>
+        <tr><td><b>缺点</b></td><td>劣质品胶水多</td><td>水槽柜底部必烂</td><td>冰冷、贵、风格受限</td><td>重、不能打钉、安装难</td></tr>
+        <tr class="best-row"><td><b>网上共识</b></td><td colspan="4">
+          <b>多层实木是柜体的"标准答案"</b> — 行业内默认配置。关键是一定要确认水槽柜底部额外贴防水铝箔。
+          颗粒板便宜但水槽柜用三年必然膨胀。不锈钢柜体厨卫皆可但太贵像饭店后厨。
+          网上流行"混合配置"：柜体多层实木 + 水槽柜不锈钢。
+        </td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议：</b>柜体选 <b>ENF级多层实木板</b>，水槽柜底部贴防水铝箔（或加钱换不锈钢水槽柜）。封边工艺比板材品牌更重要——PUR封边或激光封边远好于EVA封边。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 四、厨房水槽 ============ -->
+<div class="sec" id="s4">
+<h2><span class="num">4</span>厨房水槽</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">材质：不锈钢 vs 石英石 &nbsp;|&nbsp; 槽型：单槽 vs 双槽 &nbsp;|&nbsp; 安装：台上盆 vs 台下盆</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <h4 style="margin:0.5rem 0;color:var(--accent)">材质选择</h4>
+    <table class="compare-table">
+      <thead><tr><th>材质</th><th>304不锈钢</th><th>石英石</th><th>陶瓷</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格</b></td><td class="price-tag">200-800元</td><td class="price-tag">1500-5000元</td><td class="price-tag">300-1000元</td></tr>
+        <tr><td><b>优点</b></td><td>耐造、便宜、易清洁</td><td>颜值高、耐刮、不怕烫</td><td>复古好看</td></tr>
+        <tr><td><b>缺点</b></td><td>用久有划痕、噪音</td><td>重(20kg+)、贵、怕重物砸</td><td>脆、怕磕、款式老</td></tr>
+        <tr class="best-row"><td><b>共识</b></td><td colspan="3"><b>304不锈钢是绝对主流</b>，市场占比超70%。认准"304食品级"，磁铁吸不住的就是正品。</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin:0.8rem 0 0.5rem;color:var(--accent)">单槽 vs 双槽</h4>
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">大单槽（推荐）</div><ul>
+        <li>能整个放进炒锅、蒸锅</li>
+        <li>台面占用少，小厨房福音</li>
+        <li>可配沥水篮灵活分区</li>
+        <li>下水结构简单不易堵</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">双槽</div><ul>
+        <li>两个槽都小，大锅放不下</li>
+        <li>占用台面面积大</li>
+        <li>论优点是"一边洗菜一边洗碗"分区</li>
+        <li>前提是台面≥1.8m才驾驭得了</li>
+      </ul></div>
+    </div>
+    <div class="verdict">
+      <b>★ 建议：</b>选 <b>304不锈钢大单槽 + 台下盆安装</b>。深度≥20cm防溅水但不要＞22cm（弯腰累）。表面拉丝工艺（耐磨耐刮），不要镜面（水渍指纹全显）。台下盆安装虽然加200-500，但台面水渍一抹即入槽，值。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 五、墙面材料 ============ -->
+<div class="sec" id="s5">
+<h2><span class="num">5</span>墙面材料</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">乳胶漆 vs 墙布 vs 艺术漆 vs 硅藻泥</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th style="width:14%">对比项</th><th>乳胶漆</th><th>墙布</th><th>艺术漆</th><th>硅藻泥</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格</b></td><td class="price-tag">30-80元/㎡</td><td class="price-tag">60-150元/㎡</td><td class="price-tag">150-500元/㎡</td><td class="price-tag">80-300元/㎡</td></tr>
+        <tr><td><b>环保</b></td><td class="text-green">水性漆最安全</td><td class="text-red">胶水是污染源</td><td class="text-green">优质品环保好</td><td>吸附但不分解甲醛</td></tr>
+        <tr><td><b>耐用</b></td><td>8-15年，会开裂</td><td>5-10年，易翘边发霉</td><td class="text-green">15-25年，硬度高</td><td>10-20年，怕磕碰</td></tr>
+        <tr><td><b>颜值</b></td><td>纯色简洁</td><td class="text-green">纹理丰富、温馨</td><td class="text-green">质感高级、可定制</td><td>粗犷自然风</td></tr>
+        <tr><td><b>耐擦洗</b></td><td>优质品好、低端差</td><td class="text-red">污渍渗透不可逆</td><td class="text-green">极佳，湿布一擦</td><td class="text-red">不能擦洗！</td></tr>
+        <tr><td><b>维修</b></td><td class="text-green">局部补刷容易</td><td class="text-red">需整幅更换</td><td>整面重做，有色差</td><td class="text-red">损坏难修补</td></tr>
+        <tr class="best-row"><td><b>网上共识</b></td><td colspan="4">
+          <b>乳胶漆是90%家庭的最终选择</b>。墙布南方梅雨季"发霉翘边"是高频投诉，北方干燥地区较友好但整体不推荐厨房卫生间附近。
+          艺术漆好看但"三分材料七分师傅"，找到一个靠谱的艺术漆师傅比材料本身更难。
+          硅藻泥广告吹的"吸甲醛"已被多次打假（只吸附不分解，饱和后释放），加上不能擦洗，实用性和智商税边界模糊。
+        </td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议：</b>全屋 <b>品牌乳胶漆</b>（多乐士/立邦/三棵树等）。选大牌中端系列（抗甲醛/净味），别选最低端（耐擦洗次数太差）。颜色选奶油白/暖灰/浅米色等经典色，不容易过时。如果客厅想做一面背景墙提升质感，可以局部用艺术漆。墙面基层才是真正的质量生命线——全屋挂网+耐水腻子，比漆的品牌重要10倍。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 六、地面材料 ============ -->
+<div class="sec" id="s6">
+<h2><span class="num">6</span>地面材料</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">瓷砖 vs 木地板 vs SPC石塑地板 &nbsp;|&nbsp; 各空间怎么选</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th style="width:14%">对比项</th><th>瓷砖</th><th>实木复合地板</th><th>强化复合地板</th><th>SPC石塑地板</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格(含施工)</b></td><td class="price-tag">100-300元/㎡</td><td class="price-tag">150-500元/㎡</td><td class="price-tag">80-200元/㎡</td><td class="price-tag">40-120元/㎡</td></tr>
+        <tr><td><b>铺地暖</b></td><td class="text-green">最佳，导热最好</td><td class="text-green">好，稳定性好</td><td>好</td><td>好，但薄款可能变形</td></tr>
+        <tr><td><b>防水</b></td><td class="text-green">完全防水</td><td class="text-red">怕水泡</td><td class="text-red">怕水泡</td><td class="text-green">完全防水</td></tr>
+        <tr><td><b>脚感</b></td><td class="text-red">硬、冰冷（无地暖）</td><td class="text-green">温润舒适</td><td>偏硬但可接受</td><td>偏硬偏凉</td></tr>
+        <tr><td><b>耐磨</b></td><td class="text-green">最强</td><td>中等，怕刮</td><td class="text-green">强</td><td>中等偏上</td></tr>
+        <tr><td><b>适老化</b></td><td>注意防滑选R10以上</td><td class="text-green">摔倒伤害较小</td><td>摔倒伤害较小</td><td>防滑好</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin:0.8rem 0 0.5rem;color:var(--accent)">各空间推荐</h4>
+    <table class="compare-table">
+      <thead><tr><th>空间</th><th>推荐</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr class="best-row"><td>客厅</td><td>瓷砖（柔光/哑光砖）</td><td>地暖传导最佳、耐磨耐造、老人防滑更安全</td></tr>
+        <tr><td>卧室</td><td>实木复合地板</td><td>脚感温暖、摔倒伤害小（适老化）、隔音好</td></tr>
+        <tr class="best-row"><td>厨卫阳台</td><td>瓷砖（防滑）</td><td>必须防水，防滑等级R10以上</td></tr>
+        <tr><td>全屋统一</td><td>瓷砖通铺</td><td>整体感强、好打理、地暖效果好</td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议（你家情况）：</b>你铺了地暖，所以 <b>客厅+走廊+厨卫全部瓷砖通铺</b>是最优解——导热好、耐用、防滑选R10以上。
+      卧室如果妈妈怕冷可以铺实木复合地板（地暖专用款），脚感温暖，摔倒也不会像瓷砖那么疼。
+      SPC石塑地板适合预算极致压缩，但脚感偏硬，不适合卧室。
+      注意：旧房铲掉原地砖后一定要做水泥自流平找平（20-30元/㎡），老房地不平很常见。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 七、踢脚线 ============ -->
+<div class="sec" id="s7">
+<h2><span class="num">7</span>踢脚线</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">铝合金 vs 实木 vs 瓷砖 vs PVC vs 石材</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th>材质</th><th>价格(元/米)</th><th>防水</th><th>耐用</th><th>颜值</th><th>推荐场景</th></tr></thead>
+      <tbody>
+        <tr class="best-row"><td><b>铝合金</b></td><td>15-40</td><td class="text-green">极佳</td><td class="text-green">15年+</td><td>现代极简</td><td class="text-green">全屋通用首选</td></tr>
+        <tr><td>实木</td><td>20-60</td><td class="text-red">怕潮</td><td>5-8年</td><td class="text-green">温润自然</td><td>干燥区域+原木风</td></tr>
+        <tr><td>瓷砖</td><td>10-30</td><td class="text-green">极佳</td><td class="text-green">15年+</td><td>厚重</td><td>全瓷砖房+厨卫</td></tr>
+        <tr><td>PVC</td><td>5-15</td><td>好</td><td class="text-red">3-5年发黄</td><td class="text-red">塑料感</td><td>出租房/过渡</td></tr>
+        <tr><td>石材</td><td>30-80</td><td class="text-green">好</td><td class="text-green">15年+</td><td>高级</td><td>别墅/大平层</td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议：</b>选 <b>铝合金踢脚线</b>，宽度6cm。防水防潮不变形，太原干燥气候更不用担心。颜色跟门框同色（最不出错），不要跟地板同色（容易有色差翻车）。选圆弧顶造型，不积灰。安装注意：墙面必须刮平直，铝合金先装卡扣再扣板子，最后打玻璃胶收边。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 八、美缝剂 ============ -->
+<div class="sec" id="s8">
+<h2><span class="num">8</span>美缝剂</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">环氧彩砂 vs 聚脲美缝剂 &nbsp;|&nbsp; 防霉、变色、价格全方位对比</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th style="width:14%">对比项</th><th>普通环氧</th><th>环氧彩砂</th><th>聚脲美缝剂</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格(全屋)</b></td><td class="price-tag">1500-3000元</td><td class="price-tag">2000-4000元</td><td class="price-tag">3000-6000元</td></tr>
+        <tr><td><b>质感</b></td><td>亮面</td><td class="text-green">哑光磨砂，最自然</td><td>亮面/哑光可选</td></tr>
+        <tr><td><b>耐黄变</b></td><td class="text-red">3-6个月发黄</td><td class="text-red">3-5年发黄(阳光区)</td><td class="text-green">0级耐黄变，30年不黄</td></tr>
+        <tr><td><b>防霉</b></td><td>中等</td><td class="text-green">好（0级防霉）</td><td class="text-green">最好，致密不吸水</td></tr>
+        <tr><td><b>耐污</b></td><td>一般</td><td>好，但颗粒面藏污</td><td class="text-green">1级耐污，最好擦</td></tr>
+        <tr><td><b>施工难度</b></td><td>低</td><td>较高（需压缝器）</td><td class="text-red">高，干太快需两人</td></tr>
+        <tr><td><b>适用区域</b></td><td>—</td><td>客卧干燥区</td><td>厨卫阳台+阳光区</td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议：</b>分区搭配最省钱，这已经是网上公认的"最佳策略"：
+      <br>• <b>厨房、卫生间、阳台、靠窗区域 → 用聚脲</b>（防黄变、防霉最强，这些区域最需要）
+      <br>• <b>客厅、卧室 → 用环氧彩砂</b>（哑光质感好，没有阳光直射不太会黄变，省钱）
+      <br>• 不要用普通环氧彩砂在阳台或阳光直射区——"三个月变黄"是全网最高频翻车现场。
+      <br>• 浅色砖配聚脲是刚需（白色美缝变黄最明显），深色砖配环氧彩砂就足够。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 九、窗帘 ============ -->
+<div class="sec" id="s9">
+<h2><span class="num">9</span>窗帘</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">窗帘盒 vs 罗马杆 &nbsp;|&nbsp; 布艺 vs 卷帘 vs 百叶 vs 蜂窝帘</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <h4 style="margin:0.5rem 0;color:var(--accent)">两种安装方式</h4>
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">窗帘盒（推荐）</div><ul>
+        <li>顶部完全不漏光，睡眠好</li>
+        <li>隐藏轨道，视觉干净极简</li>
+        <li>电动窗帘必须用窗帘盒</li>
+        <li>防尘，轨道藏在盒子里</li>
+        <li>需提前在吊顶时预留（单层15cm深，双层20cm）</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">罗马杆</div><ul>
+        <li>顶部一定漏光！睡眠敏感的慎选</li>
+        <li>便宜、安装简单、不依赖吊顶</li>
+        <li>杆长超3.5m容易弯</li>
+        <li>拉窗帘容易卡顿</li>
+        <li>适合不吊顶、层高矮、租房/精装房</li>
+      </ul></div>
+    </div>
+
+    <h4 style="margin:0.8rem 0 0.5rem;color:var(--accent)">帘子类型</h4>
+    <table class="compare-table">
+      <thead><tr><th>类型</th><th>价格</th><th>遮光</th><th>适用</th><th>注意事项</th></tr></thead>
+      <tbody>
+        <tr class="best-row"><td><b>布艺窗帘</b></td><td>中</td><td>好</td><td>客厅、卧室</td><td>选高精密/雪尼尔面料，遮光率＞90%</td></tr>
+        <tr><td>卷帘</td><td>低</td><td>中</td><td>厨卫小窗</td><td>防水款适合潮湿区域</td></tr>
+        <tr class="best-row"><td><b>百叶帘</b></td><td>中</td><td>差</td><td>厨房/书房</td><td>铝合金百叶防水耐油，但积灰不好擦</td></tr>
+        <tr><td>蜂窝帘</td><td>高</td><td>好</td><td>卧室</td><td>隔热隔音好，但积灰难洗</td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议（你家情况）：</b>
+      <br>• <b>客厅+卧室 → 做窗帘盒 + 布艺窗帘</b>，遮光率卧室选90%+、客厅70-80%。妈妈房间可以考虑电动窗帘（老人拉帘方便，水电阶段留电源即可）。
+      <br>• <b>厨房 → 铝合金百叶帘</b>（防水耐油）或免打孔卷帘。
+      <br>• <b>儿子房间 → 窗帘盒+布艺帘</b>，重点确保遮光好、隔音好。
+      <br>• 如果没做吊顶、层高又低，选罗马杆也可以，但要选金属头（不要塑料头），长度超3.5米加中间支撑。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 十、淋浴区 ============ -->
+<div class="sec" id="s10">
+<h2><span class="num">10</span>卫生间淋浴区（干湿分离）</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">浴帘 vs 玻璃隔断 vs 淋浴房 vs 半墙+玻璃 &nbsp;|&nbsp; 适老化要点</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th style="width:14%">对比项</th><th>浴帘+挡水条</th><th>玻璃隔断(半高)</th><th>淋浴房(全封闭)</th><th>半墙+玻璃</th></tr></thead>
+      <tbody>
+        <tr><td><b>价格</b></td><td class="price-tag">100-300元</td><td class="price-tag">800-2000元</td><td class="price-tag">1500-5000元</td><td class="price-tag">1500-4000元</td></tr>
+        <tr><td><b>防水效果</b></td><td class="text-red">一般，会溅水</td><td>较好</td><td class="text-green">最好</td><td>好</td></tr>
+        <tr><td><b>适合面积</b></td><td>≤3㎡也够</td><td>≥3㎡</td><td>≥3.5㎡</td><td>≥4㎡</td></tr>
+        <tr><td><b>适老化</b></td><td class="text-green">无门槛、灵活</td><td>注意玻璃边角</td><td class="text-red">有轨道门槛，绊脚</td><td>半墙可当扶手</td></tr>
+        <tr><td><b>清洁</b></td><td>勤换浴帘</td><td>擦玻璃水垢</td><td>擦玻璃+清理轨道</td><td>擦玻璃+半墙台面</td></tr>
+        <tr><td><b>通风</b></td><td class="text-green">最好</td><td>好</td><td class="text-red">闷，需排气扇</td><td>好</td></tr>
+      </tbody>
+    </table>
+    <div class="verdict">
+      <b>★ 建议（你家情况——重点考虑妈妈）：</b>
+      <br>• <b>最推荐：浴帘+挡水条 或 半玻璃隔断（无门槛款）</b>
+      <br>• <b>不推荐传统淋浴房</b>：底部有轨道门槛，老人抬脚绊倒风险大。轮椅进不去。
+      <br>• 如果用玻璃隔断：选 <b>钢化玻璃+防爆膜</b>，厚度≥8mm，边角圆角处理。选透明或超白玻（不要磨砂，老人洗澡时家人能看到情况更安全）。
+      <br>• 淋浴区地面用长条形地漏，防滑砖选R10-R11级别，不可用光滑瓷砖。
+      <br>• 墙上预埋/预留 <b>扶手安装位</b>（现在不装但背后加木工板加固，以后随时能装）。
+      <br>• 挡水条如果要做，埋入地面而不是贴在地面上（减少绊脚）。
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 十一、开关插座 ============ -->
+<div class="sec" id="s11">
+<h2><span class="num">11</span>开关插座</h2>
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">品牌选择 &nbsp;|&nbsp; 型号推荐 &nbsp;|&nbsp; 关键避坑点</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <h4 style="margin:0.5rem 0;color:var(--accent)">品牌梯队</h4>
+    <table class="compare-table">
+      <thead><tr><th>梯队</th><th>品牌</th><th>五孔插座价格</th><th>适合</th></tr></thead>
+      <tbody>
+        <tr><td>国际高端</td><td>施耐德、西门子、罗格朗</td><td class="price-tag">20-60元</td><td>预算充足、追求手感颜值</td></tr>
+        <tr class="best-row"><td><b>国产首选</b></td><td><b>公牛、德力西</b></td><td class="price-tag">8-25元</td><td class="text-green">性价比最高、品质靠谱</td></tr>
+        <tr><td>经济实用</td><td>正泰、鸿雁</td><td class="price-tag">5-15元</td><td>预算紧张</td></tr>
+      </tbody>
+    </table>
+
+    <h4 style="margin:0.8rem 0 0.5rem;color:var(--accent)">型号关键选择</h4>
+    <table class="compare-table">
+      <thead><tr><th>类型</th><th>推荐</th><th>理由</th></tr></thead>
+      <tbody>
+        <tr class="best-row"><td><b>五孔插座</b></td><td>斜五孔</td><td>两孔和三孔错开，两个插头不打架</td></tr>
+        <tr class="best-row"><td><b>厨房插座</b></td><td>带开关五孔</td><td>不用拔插头，开关控制通断电，安全又方便</td></tr>
+        <tr><td>空调/热水器</td><td>16A三孔</td><td>必须匹配，不能用10A替代</td></tr>
+        <tr class="best-row"><td><b>床头/沙发旁</b></td><td>带USB/Type-C</td><td>选PD快充款（20W+），老式5V1A的不要</td></tr>
+        <tr><td>卫生间</td><td>防水盒+防溅盖</td><td>所有靠近水的插座必须装</td></tr>
+        <tr class="best-row"><td><b>开关</b></td><td>大翘板无边框</td><td>手感好、好看、好清洁</td></tr>
+      </tbody>
+    </table>
+
+    <div class="verdict">
+      <b>★ 建议：</b>选 <b>公牛G12或德力西821系列</b>（斜五孔+无边框设计），性价比最高。
+      <br>• <b>全屋统一斜五孔</b>，不要正五孔（两孔三孔打架是全网最高频吐槽）。
+      <br>• 厨房台面每个位置留独立带开关五孔。
+      <br>• 电视墙、书桌各留至少4个五孔。
+      <br>• 马桶旁留防水插座（以后装智能马桶盖）。
+      <br>• 窗帘盒旁预留电源（以后装电动窗帘）。
+      <br>• 绝不买杂牌！无3C认证=定时炸弹。
+      <br>• <b>你家的特别提醒：</b>全屋水电重做，开关底盒加零线（智能开关需要），成本几乎为零，以后想上智能家居随时能用。
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+</body>
+</html>
