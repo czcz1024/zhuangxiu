@@ -14,11 +14,27 @@ body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f0f0;h
 .toolbar button.accent:hover{background:#0e4a85}
 .toolbar .sep{width:1px;height:22px;background:#ddd;margin:0 4px}
 .toolbar .info{font-size:12px;color:#888;margin-left:auto}
+.opacity-label{font-size:12px;color:#555;display:flex;align-items:center;gap:4px}
+.opacity-label input[type=range]{width:60px;accent-color:#185FA5}
 .preset-bar{padding:6px 12px;display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid #eee;max-height:120px;overflow-y:auto;align-items:center}
 .preset-bar button{padding:3px 10px;border:1px solid #ddd;background:#fff;border-radius:12px;cursor:pointer;font-size:12px;white-space:nowrap;color:#555}
 .preset-bar button:hover{background:#e3f0ff;border-color:#185FA5;color:#185FA5}
 .preset-bar .group-label{font-size:11px;color:#999;font-weight:600;padding:0 8px 0 2px;white-space:nowrap;letter-spacing:1px}
 .canvas-wrap{flex:1;position:relative;overflow:hidden;cursor:grab}
+.side-panel{position:absolute;right:0;top:0;bottom:0;width:220px;background:#fff;box-shadow:-2px 0 12px rgba(0,0,0,0.1);z-index:30;display:none;flex-direction:column;padding:16px;gap:6px;overflow-y:auto;border-left:1px solid #e0e0e0}
+.side-panel.show{display:flex}
+.side-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.side-title{font-size:15px;font-weight:500}
+.side-close{width:26px;height:26px;border:1px solid #ddd;background:#fff;border-radius:50%;cursor:pointer;font-size:14px;line-height:1;color:#888;display:flex;align-items:center;justify-content:center}
+.side-close:hover{background:#f5f5f5;color:#333}
+.side-panel label{font-size:12px;color:#666;display:block;margin-bottom:2px}
+.side-panel input[type=text],.side-panel input[type=number]{width:100%;padding:7px 9px;border:1px solid #ccc;border-radius:6px;font-size:13px;outline:none}
+.side-panel input:focus{border-color:#185FA5}
+.side-row{display:flex;gap:8px}
+.side-row>div{flex:1}
+.side-row input[type=color]{width:100%;height:32px;border:1px solid #ccc;border-radius:6px;cursor:pointer;padding:2px}
+.side-del{width:100%;padding:8px;border:1px solid #e74c3c;background:#fff;color:#e74c3c;border-radius:6px;cursor:pointer;font-size:13px;margin-top:8px}
+.side-del:hover{background:#e74c3c;color:#fff}
 .canvas-wrap:active{cursor:grabbing}
 .canvas-wrap.dragging{cursor:grabbing}
 .canvas-wrap.calibrating{cursor:crosshair}
@@ -67,6 +83,7 @@ canvas{display:block;position:absolute;top:0;left:0}
   <button onclick="exportJSON()">导出存档</button>
   <button onclick="document.getElementById('jsonInput').click()">导入存档</button>
   <span class="sep"></span>
+  <label class="opacity-label">透明 <input type="range" id="opacitySlider" min="15" max="100" value="50" oninput="onOpacityChange()"></label>
   <span class="info" id="info">请先导入户型图</span>
 </div>
 
@@ -75,6 +92,23 @@ canvas{display:block;position:absolute;top:0;left:0}
 <div class="canvas-wrap" id="canvasWrap">
   <canvas id="canvas"></canvas>
   <div class="hint" id="hint"></div>
+  <div class="side-panel" id="sidePanel">
+    <div class="side-head">
+      <span class="side-title" id="sideTitle">家具设置</span>
+      <button class="side-close" onclick="deselectAll()">✕</button>
+    </div>
+    <label>名称</label>
+    <input type="text" id="sideName" oninput="onSideName()">
+    <div class="side-row">
+      <div><label>宽度(mm)</label><input type="number" id="sideW" oninput="onSideSize()"></div>
+      <div><label>深度(mm)</label><input type="number" id="sideH" oninput="onSideSize()"></div>
+    </div>
+    <div class="side-row">
+      <div><label>方块颜色</label><input type="color" id="sideColor" oninput="onSideColor()"></div>
+      <div><label>文字颜色</label><input type="color" id="sideTextColor" value="#ffffff" oninput="onSideColor()"></div>
+    </div>
+    <button class="side-del" onclick="deleteSelected()">删除此家具</button>
+  </div>
   <div class="calib-panel" id="calibPanel">
     <h3>校准比例尺</h3>
     <div class="txt">在户型图上找一段已知尺寸的墙，依次点击它的<strong>两个端点</strong>，然后输入实际长度。</div>
@@ -156,6 +190,7 @@ let pixelsPerMm = null;
 let furniture = [];
 let nextId = 1;
 let selectedId = null;
+let globalOpacity = 0.5;
 let mode = 'idle';
 let calibPoints = [];
 let dragData = null;
@@ -268,7 +303,7 @@ function render() {
     ctx.save();
     ctx.translate(f.x, f.y);
 
-    ctx.fillStyle=f.color+'50';
+    ctx.fillStyle = f.color + Math.round(globalOpacity*255).toString(16).padStart(2,'0');
     ctx.strokeStyle=f.color;
     ctx.lineWidth=(selectedId===f.id?3:1.5)/viewScale;
     ctx.fillRect(-pw/2, -ph/2, pw, ph);
@@ -282,7 +317,7 @@ function render() {
       ctx.setLineDash([]);
     }
 
-    ctx.fillStyle='#222';
+    ctx.fillStyle = f.textColor || '#ffffff';
     let fs=Math.max(11, pixelsPerMm?Math.min(14, pw*0.12):12)/viewScale;
     ctx.font=`500 ${fs}px sans-serif`;
     ctx.textAlign='center';
@@ -416,6 +451,7 @@ function bindEvents() {
         } else {
           // 点另一个家具 → 切换选中
           selectedId = furniture[i].id;
+          updateSidebar();
           mode = 'idle';
           let f = furniture.splice(i,1)[0];
           furniture.push(f);
@@ -427,6 +463,7 @@ function bindEvents() {
 
     // 点击空白 → 取消选中 + 画布拖动
     selectedId = null;
+    updateSidebar();
     mode = 'panning';
     panData = {sx, sy, vx: viewX, vy: viewY};
     wrap.style.cursor = 'grabbing';
@@ -482,6 +519,7 @@ function bindEvents() {
       if (hitTest(furniture[i], world.x, world.y)) {
         furniture[i].rot = !furniture[i].rot;
         selectedId = furniture[i].id;
+        updateSidebar();
         render();
         return;
       }
@@ -540,8 +578,9 @@ function addPreset(room, p) {
 function addFurniture(name, w, h) {
   let color = COLORS[(nextId-1)%COLORS.length];
   let center = screenToWorld(canvas.width/2, canvas.height/2);
-  furniture.push({id:nextId++, name, w, h, x:center.x, y:center.y, rot:false, color});
+  furniture.push({id:nextId++, name, w, h, x:center.x, y:center.y, rot:false, color, textColor:'#ffffff'});
   selectedId = nextId-1;
+  updateSidebar();
   updateInfo();
   render();
   autoSave();
@@ -697,9 +736,67 @@ function deleteSelected() {
   if (selectedId===null) return;
   furniture = furniture.filter(f=>f.id!==selectedId);
   selectedId = null;
+  updateSidebar();
   updateInfo();
   render();
   autoSave();
+}
+
+function deselectAll() {
+  selectedId = null;
+  updateSidebar();
+  render();
+}
+
+function onOpacityChange() {
+  globalOpacity = parseInt(document.getElementById('opacitySlider').value)/100;
+  render();
+  autoSave();
+}
+
+function onSideName() {
+  let f = furniture.find(f=>f.id===selectedId);
+  if (!f) return;
+  f.name = document.getElementById('sideName').value || '未命名';
+  render();
+  autoSave();
+}
+
+function onSideSize() {
+  let f = furniture.find(f=>f.id===selectedId);
+  if (!f) return;
+  let w = parseFloat(document.getElementById('sideW').value);
+  let h = parseFloat(document.getElementById('sideH').value);
+  if (w>0) f.w = w;
+  if (h>0) f.h = h;
+  render();
+  autoSave();
+}
+
+function onSideColor() {
+  let f = furniture.find(f=>f.id===selectedId);
+  if (!f) return;
+  f.color = document.getElementById('sideColor').value;
+  f.textColor = document.getElementById('sideTextColor').value;
+  render();
+  autoSave();
+}
+
+function updateSidebar() {
+  let panel = document.getElementById('sidePanel');
+  if (selectedId===null) {
+    panel.classList.remove('show');
+    return;
+  }
+  let f = furniture.find(f=>f.id===selectedId);
+  if (!f) { panel.classList.remove('show'); return; }
+  panel.classList.add('show');
+  document.getElementById('sideTitle').textContent = '编辑：'+f.name;
+  document.getElementById('sideName').value = f.name;
+  document.getElementById('sideW').value = f.w;
+  document.getElementById('sideH').value = f.h;
+  document.getElementById('sideColor').value = f.color;
+  document.getElementById('sideTextColor').value = f.textColor || '#ffffff';
 }
 
 function resetView() {
@@ -732,7 +829,7 @@ function compressImage(img, maxDim, quality) {
 
 function getProjectData(fullImg) {
   return {
-    version: 1,
+    version: 2,
     savedAt: new Date().toISOString(),
     pixelsPerMm,
     calibPoints,
@@ -740,6 +837,7 @@ function getProjectData(fullImg) {
     measure,
     furniture,
     nextId,
+    globalOpacity,
     viewScale, viewX, viewY,
     bgDataUrl: bgImage ? (fullImg ? bgDataUrl : compressImage(bgImage, 1600, 0.7)) : null
   };
@@ -767,6 +865,8 @@ function loadFromStorage() {
     measure = data.measure || {p1:null,p2:null};
     furniture = data.furniture || [];
     nextId = data.nextId || 1;
+    globalOpacity = data.globalOpacity != null ? data.globalOpacity : 0.5;
+    document.getElementById('opacitySlider').value = Math.round(globalOpacity*100);
     viewScale = data.viewScale || 1;
     viewX = data.viewX || 0;
     viewY = data.viewY || 0;
@@ -808,10 +908,13 @@ function importJSON(e) {
       measure = data.measure || {p1:null,p2:null};
       furniture = data.furniture || [];
       nextId = data.nextId || 1;
+      globalOpacity = data.globalOpacity != null ? data.globalOpacity : 0.5;
+      document.getElementById('opacitySlider').value = Math.round(globalOpacity*100);
       viewScale = data.viewScale || 1;
       viewX = data.viewX || 0;
       viewY = data.viewY || 0;
       selectedId = null;
+      updateSidebar();
       if (data.bgDataUrl) {
         bgDataUrl = data.bgDataUrl;
         bgImage = new Image();
