@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>橱柜材料优缺点大全 — 台面·柜体·板材·饰面·封边·表面处理</title>
+<style>
+  :root {
+    --bg: #f8f7f4; --card-bg: #fff; --text: #2c2c2c; --muted: #6b6b6b;
+    --border: #e8e4dc; --accent: #2c7a4b; --accent-light: #e8f5e9;
+    --warn: #c0392b; --warn-light: #fef0ee; --blue: #2471a3; --blue-light: #eaf2f8;
+    --gold: #b8860b; --gold-light: #fef9e7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:2rem 1rem;
+  }
+  .container { max-width:1100px; margin:0 auto; }
+
+  .header { text-align:center; padding:2rem 0 2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+  .header h1 { font-size:2rem; font-weight:700; }
+  .header .subtitle { color:var(--muted); font-size:1rem; margin-top:0.3rem; }
+  .header .meta { font-size:0.82rem; color:#999; margin-top:0.5rem; }
+
+  .nav { position:sticky; top:0; z-index:100; background:var(--card-bg); border-bottom:1px solid var(--border); padding:0.6rem 0; margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; }
+  .nav a { font-size:0.82rem; text-decoration:none; color:var(--muted); padding:4px 10px; border-radius:14px; white-space:nowrap; transition:all 0.15s; }
+  .nav a:hover { background:var(--accent-light); color:var(--accent); font-weight:600; }
+
+  .sec { margin-bottom:2rem; scroll-margin-top:60px; }
+  .sec h2 { font-size:1.2rem; font-weight:700; padding-bottom:0.4rem; border-bottom:2px solid var(--accent); margin-bottom:1rem; }
+  .sec h2 .num { display:inline-block; width:26px; height:26px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:26px; font-size:0.8rem; margin-right:0.5rem; }
+  .sec .intro { font-size:0.88rem; color:var(--muted); margin-bottom:1rem; }
+
+  .card { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); margin-bottom:1rem; overflow:hidden; }
+  .card-header { display:flex; align-items:center; justify-content:space-between; padding:0.85rem 1.2rem; cursor:pointer; user-select:none; border-bottom:1px solid transparent; }
+  .card-header:hover { background:#fafaf7; }
+  .card-header.open { border-bottom-color:var(--border); }
+  .card-header .title { font-weight:700; font-size:0.95rem; }
+  .card-header .tag { display:inline-block; font-size:0.72rem; padding:2px 8px; border-radius:10px; margin-left:0.5rem; font-weight:500; }
+  .tag-best { background:var(--accent-light); color:var(--accent); }
+  .tag-warn { background:var(--warn-light); color:var(--warn); }
+  .tag-info { background:var(--blue-light); color:var(--blue); }
+  .tag-gold { background:var(--gold-light); color:var(--gold); }
+  .card-arrow { font-size:0.7rem; color:#aaa; transition:transform 0.2s; }
+  .card-header.open .card-arrow { transform:rotate(90deg); }
+
+  .card-body { display:none; padding:1rem 1.2rem; }
+  .card-header.open + .card-body, .card-body.open { display:block; }
+
+  .compare-table { width:100%; border-collapse:collapse; font-size:0.82rem; margin:0.5rem 0 1rem; }
+  .compare-table thead th { background:#f0ede6; padding:0.5rem 0.6rem; text-align:left; font-weight:600; border-bottom:2px solid var(--border); white-space:nowrap; }
+  .compare-table tbody td { padding:0.5rem 0.6rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .compare-table tbody tr:last-child td { border-bottom:none; }
+
+  .pros-cons { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:0.5rem 0; }
+  .pros, .cons { padding:0.7rem 0.9rem; border-radius:8px; font-size:0.85rem; }
+  .pros { background:#f0faf1; border:1px solid #c8e6c9; }
+  .cons { background:#fef8f7; border:1px solid #f5c6cb; }
+  .pros .lbl, .cons .lbl { font-weight:700; margin-bottom:0.3rem; }
+  .pros .lbl { color:var(--accent); }
+  .cons .lbl { color:var(--warn); }
+  .pros ul, .cons ul { list-style:none; padding:0; }
+  .pros li, .cons li { padding:1px 0; }
+  .pros li::before { content:"✓ "; color:var(--accent); }
+  .cons li::before { content:"✗ "; color:var(--warn); }
+
+  .specs { background:#f9f8f3; border:1px solid var(--border); border-radius:8px; padding:0.7rem 1rem; margin-top:0.6rem; font-size:0.84rem; }
+  .specs .lbl { font-weight:600; color:var(--blue); margin-right:0.3rem; }
+
+  .price-tag { font-size:0.78rem; color:var(--muted); background:#f5f5f0; padding:2px 6px; border-radius:4px; white-space:nowrap; }
+  .text-green { color:var(--accent); font-weight:600; }
+  .text-red { color:var(--warn); }
+  .text-amber { color:var(--gold); font-weight:600; }
+
+  .note { font-size:0.82rem; color:var(--muted); margin-top:0.5rem; padding-left:0.8rem; border-left:2px solid var(--border); }
+
+  @media (max-width:640px) {
+    .pros-cons { grid-template-columns:1fr; }
+    .nav { gap:0.2rem; }
+    .nav a { font-size:0.75rem; padding:3px 7px; }
+    .compare-table { font-size:0.76rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>橱柜材料优缺点大全</h1>
+  <div class="subtitle">台面 · 柜体 · 板材基材 · 饰面工艺 · 封边工艺 · 不锈钢表面处理 — 六大维度逐项剖析</div>
+  <div class="meta">整理日期：2026年7月24日 &nbsp;|&nbsp; 仅列优缺点供选型参考，不含结论</div>
+</div>
+
+<nav class="nav">
+  <a href="#s1">台面材质</a>
+  <a href="#s2">柜体材质</a>
+  <a href="#s3">板材基材</a>
+  <a href="#s4">饰面工艺</a>
+  <a href="#s5">封边工艺</a>
+  <a href="#s6">不锈钢表面处理</a>
+</nav>
+
+<!-- ============ 一、台面材质 ============ -->
+<div class="sec" id="s1">
+<h2><span class="num">1</span>橱柜台面材质</h2>
+<div class="intro">台面是厨房使用频率最高的表面，直接接触刀具、热锅、油污、水。每种材质都有无法回避的硬伤，没有完美款。</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">总览对比表</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th>材质</th><th>价格</th><th>硬度</th><th>耐高温</th><th>防渗色</th><th>接缝</th><th>主要硬伤</th></tr></thead>
+      <tbody>
+        <tr><td><b>石英石</b></td><td class="price-tag">800-1500/延米</td><td class="text-green">极高(莫氏7)</td><td class="text-red">怕骤热炸裂</td><td class="text-green">好</td><td>有</td><td>热锅直接放可能裂</td></tr>
+        <tr><td><b>花岗岩</b></td><td class="price-tag">600-1200/延米</td><td class="text-green">极高</td><td class="text-green">最好</td><td class="text-red">差(微孔渗油)</td><td>明显</td><td>需定期封油养护</td></tr>
+        <tr><td><b>不锈钢</b></td><td class="price-tag">1000-2500/延米</td><td>中等</td><td class="text-green">极好</td><td class="text-green">最好</td><td class="text-green">可无</td><td>怕划不可修复</td></tr>
+        <tr><td><b>岩板</b></td><td class="price-tag">2000-4000+/延米</td><td class="text-green">高</td><td class="text-green">极好(1200℃)</td><td class="text-green">最好</td><td>有</td><td>脆，磕碰崩边不可逆</td></tr>
+        <tr><td><b>人造石/亚克力</b></td><td class="price-tag">500-1500/延米</td><td class="text-red">低</td><td class="text-red">差(150℃变形)</td><td class="text-red">差</td><td class="text-green">可无缝</td><td>软、怕烫、渗色</td></tr>
+        <tr><td><b>实木</b></td><td class="price-tag">800-2000/延米</td><td class="text-red">低</td><td class="text-red">差(留印)</td><td class="text-red">差</td><td>有</td><td>怕水怕潮会发霉</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">石英石</span><span class="tag tag-best">主流首选</span><span class="price-tag" style="margin-left:0.5rem">800-1500/延米</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>硬度极高（莫氏7），耐刮耐磨</li>
+        <li>致密无孔，防渗色（酱油咖啡擦掉即可）</li>
+        <li>花色多颜值中高，性价比最佳</li>
+        <li>耐酸碱</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>怕骤热——热锅直接放可能炸裂（热胀冷缩不均），必须垫隔热垫</li>
+        <li>有接缝，两块拼接留缝</li>
+        <li>劣质款树脂多会发黄渗色</li>
+        <li>划痕不可修复</li>
+      </ul></div>
+    </div>
+    <div class="specs"><span class="lbl">选购参数：</span>厚度≥15mm、石英砂含量≥90%、认准压制成型（非浇注）、纯色或细颗粒花色接缝最不明显</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">花岗岩（天然石材）</span><span class="tag tag-warn">老派选择</span><span class="price-tag" style="margin-left:0.5rem">600-1200/延米</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>硬度极高，耐刮耐烫最好</li>
+        <li>天然纹理独一无二</li>
+        <li>寿命极长</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>微孔会渗油渗色，要每半年做一次封油养护</li>
+        <li>有放射性争议（检测达标即可但心里膈应）</li>
+        <li>花色偏老气，接缝明显</li>
+        <li>基本已被石英石和岩板取代</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">不锈钢</span><span class="tag tag-info">防霉首选</span><span class="price-tag" style="margin-left:0.5rem">1000-2500/延米</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>防水防霉防渗，最卫生</li>
+        <li>与柜体一体成型可无接缝</li>
+        <li>耐高温极好</li>
+        <li>好清洁，油污一擦净</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>怕划——钢丝球、砂锅底一划永久留痕，无法修复</li>
+        <li>颜值冷工业感，银白色冷冰冰</li>
+        <li>指纹水渍明显</li>
+        <li>温差异响（热胀冷缩噼啪响）</li>
+        <li>市场乱：201冒充304，板材偷薄</li>
+      </ul></div>
+    </div>
+    <div class="specs"><span class="lbl">选购参数：</span>SUS304（最好316）、台面板厚≥1.0mm、满焊非点焊、带检测液验货（30秒变红即201）</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">岩板</span><span class="tag tag-gold">近年新贵</span><span class="price-tag" style="margin-left:0.5rem">2000-4000+/延米</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>颜值最高，现代高级感</li>
+        <li>耐高温极好（1200℃烧制，热锅直接放无压力）</li>
+        <li>硬度高耐刮</li>
+        <li>零孔洞防渗色</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>脆！磕碰就崩边崩角，不可逆</li>
+        <li>加工难，开孔开槽极易裂，需水刀专业加工</li>
+        <li>价格贵，石英石的2-3倍</li>
+        <li>有接缝</li>
+      </ul></div>
+    </div>
+    <div class="specs"><span class="lbl">选购参数：</span>厚度≥12mm、认准品牌（拉米娜、德赛斯）、加工必须找专业厂家</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">人造石 / 亚克力（如杜邦可丽耐）</span><span class="tag tag-warn">缺点多</span><span class="price-tag" style="margin-left:0.5rem">500-1500/延米</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>可无缝拼接</li>
+        <li>造型圆弧无死角好清洁</li>
+        <li>颜值高花色均匀</li>
+        <li>可打磨修复</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>硬度低，指甲都能留痕</li>
+        <li>怕烫，150℃就变形</li>
+        <li>会渗色</li>
+        <li>要定期打磨</li>
+        <li>现在用的人越来越少</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">实木</span><span class="tag tag-warn">不适合厨房</span><span class="price-tag" style="margin-left:0.5rem">800-2000/延米</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>温润自然颜值高，适合原木风</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>怕水怕潮会发霉变形</li>
+        <li>怕烫留印</li>
+        <li>怕划</li>
+        <li>要定期上油保养</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 二、柜体材质 ============ -->
+<div class="sec" id="s2">
+<h2><span class="num">2</span>橱柜柜体材质</h2>
+<div class="intro">柜体是橱柜的骨架，决定防霉、承重、寿命。材质之间的防霉能力差距极大。</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">总览对比表</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th>材质</th><th>防霉防水</th><th>寿命</th><th>甲醛</th><th>颜值</th><th>价格</th><th>主要短板</th></tr></thead>
+      <tbody>
+        <tr><td><b>不锈钢</b></td><td class="text-green">结构性防霉</td><td class="text-green">20-30年</td><td class="text-green">零</td><td class="text-red">冷工业感</td><td class="price-tag">高</td><td>怕划、市场乱</td></tr>
+        <tr><td><b>多层实木板</b></td><td class="text-amber">较好</td><td class="text-amber">10-15年</td><td class="text-amber">低</td><td class="text-green">好</td><td class="price-tag">中高</td><td>仍有接缝渗水隐患</td></tr>
+        <tr><td><b>颗粒板</b></td><td class="text-red">差(截面吸水即胀)</td><td class="text-amber">8-12年</td><td class="text-amber">中</td><td class="text-green">好</td><td class="price-tag">低</td><td>怕水，发霉主因</td></tr>
+        <tr><td><b>铝合金框架+嵌板</b></td><td class="text-green">好</td><td class="text-green">长</td><td class="text-green">零</td><td class="text-amber">一般</td><td class="price-tag">中</td><td>嵌板处仍有缝隙</td></tr>
+        <tr><td><b>砖砌+瓷砖贴面</b></td><td class="text-green">最好</td><td class="text-green">最长</td><td class="text-green">零</td><td class="text-red">老气</td><td class="price-tag">中</td><td>占空间、无法调节</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">不锈钢柜体</span><span class="tag tag-best">防霉彻底</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>彻底防霉——不存在发霉，结构性解决</li>
+        <li>防水防潮——不会烂不会胀</li>
+        <li>零甲醛零胶水</li>
+        <li>寿命长20-30年</li>
+        <li>好清洁，防蟑螂</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>怕划（最大槽点）——划痕不可修复</li>
+        <li>颜值冷冰冰，工业食堂感</li>
+        <li>指纹水渍明显</li>
+        <li>温差异响（热胀冷缩噼啪响）</li>
+        <li>市场鱼龙混杂——201冒304、板材偷薄</li>
+        <li>不好改造——定型后改尺寸换家电受限</li>
+        <li>很多"不锈钢橱柜"只是外壳不锈钢，内胆是木板或铝合金贴皮</li>
+      </ul></div>
+    </div>
+    <div class="specs"><span class="lbl">避坑要点：</span>合同写明SUS304拒201 · 板厚柜体≥0.8mm门板≥0.6mm · 选满焊非点焊 · 确认全不锈钢非内胆贴皮 · 配品牌五金(海蒂诗/百隆/DTC) · 带检测液验货</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">多层实木板（胶合板）柜体</span><span class="tag tag-info">木质防霉首选</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>胶合层交叉结构，不易吸水，是厨房唯一推荐的木质基材</li>
+        <li>握钉力好，承重强</li>
+        <li>甲醛含量低（选E0/E1级）</li>
+        <li>颜值温润，可配各种饰面</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>仍有接缝——板材拼接处是渗水隐患</li>
+        <li>背板靠墙面防潮差，墙体返潮会侵入</li>
+        <li>寿命10-15年，仍可能局部受潮变形</li>
+        <li>比颗粒板贵</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">颗粒板（刨花板 / 爱格板）柜体</span><span class="tag tag-warn">发霉主因</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>便宜，市场占有率最高</li>
+        <li>握钉力好</li>
+        <li>爱格板/克诺斯邦等高端颗粒板性能更好</li>
+        <li>花色选择最多</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>怕水——截面一旦吸水就膨胀，胀了就发霉</li>
+        <li>绝大多数"发霉橱柜"就是颗粒板+封边老化</li>
+        <li>受潮后强度下降不可逆</li>
+        <li>寿命8-12年</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">铝合金框架 + 嵌板</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>铝合金不生锈不腐烂</li>
+        <li>零甲醛</li>
+        <li>比不锈钢便宜</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>嵌板（铝蜂窝板/塑料板）处仍有缝隙</li>
+        <li>颜值一般，有组装感</li>
+        <li>市场认可度低，品牌少</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">砖砌 + 瓷砖贴面</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>防霉防水最好，瓷砖一擦净</li>
+        <li>寿命最长，几乎与房子同寿命</li>
+        <li>零甲醛</li>
+        <li>材料便宜</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>占空间——砖砌比板材厚，柜内空间缩水</li>
+        <li>无法调节层板高度</li>
+        <li>颜值老气，与现代风格难搭</li>
+        <li>施工周期长，人工费高</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 三、板材基材详解 ============ -->
+<div class="sec" id="s3">
+<h2><span class="num">3</span>板材基材详解</h2>
+<div class="intro">板材基材（芯板）决定防潮能力。同一种饰面下，基材不同防霉能力天差地别。厨房防霉的核心在基材。</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">总览对比表</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th>基材</th><th>防潮性</th><th>握钉力</th><th>平整度</th><th>环保</th><th>价格</th><th>厨房适用</th></tr></thead>
+      <tbody>
+        <tr><td><b>多层实木板</b></td><td class="text-green">好</td><td class="text-green">好</td><td class="text-amber">中</td><td class="text-amber">E0/E1</td><td class="price-tag">600-1000/张</td><td class="text-green">推荐</td></tr>
+        <tr><td><b>颗粒板</b></td><td class="text-red">差</td><td class="text-green">好</td><td class="text-green">好</td><td class="text-amber">E1</td><td class="price-tag">200-500/张</td><td class="text-red">不推荐(湿区)</td></tr>
+        <tr><td><b>中纤板MDF</b></td><td class="text-red">最差</td><td class="text-amber">中</td><td class="text-green">最好</td><td class="text-amber">E1</td><td class="price-tag">300-600/张</td><td class="text-red">不推荐</td></tr>
+        <tr><td><b>细木工板</b></td><td class="text-amber">中</td><td class="text-green">好</td><td class="text-amber">中</td><td class="text-amber">E1</td><td class="price-tag">300-600/张</td><td class="text-amber">少用</td></tr>
+        <tr><td><b>指接板</b></td><td class="text-red">差</td><td class="text-green">好</td><td class="text-amber">中</td><td class="text-green">E0</td><td class="price-tag">500-900/张</td><td class="text-red">不推荐</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">多层实木板（胶合板）</span><span class="tag tag-best">厨房首选</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>一层层薄木片交叉胶合，结构本身抗水</li>
+        <li>胶合层不易吸水，受潮后变形概率低</li>
+        <li>握钉力好，承重强</li>
+        <li>是厨房唯一推荐的木质基材</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>贵，比颗粒板贵一倍以上</li>
+        <li>平整度不如颗粒板，做造型门板受限</li>
+        <li>仍有胶水，需选E0/E1级</li>
+        <li>截面仍需严密封边保护</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">颗粒板（刨花板 / 爱格板）</span><span class="tag tag-warn">怕水</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>便宜，市场占有率最高</li>
+        <li>握钉力好</li>
+        <li>平整度好，适合各种饰面</li>
+        <li>爱格板/克诺斯邦等进口高端颗粒板性能优秀</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>怕水——截面吸水即膨胀，胀了即发霉</li>
+        <li>是橱柜发霉的最主要基材</li>
+        <li>受潮后强度不可逆下降</li>
+        <li>胶水用量大，需关注甲醛等级</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">中纤板 MDF（密度板）</span><span class="tag tag-warn">最怕水</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>木纤维打成浆再压，最细腻平整</li>
+        <li>可雕刻造型，做欧式凹凸门板首选</li>
+        <li>表面光滑，饰面附着力好</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>最怕水——一泡即鼓包，不可逆</li>
+        <li>握钉力差（纤维短，螺丝咬不住）</li>
+        <li>只适合做造型门板，不能做柜体</li>
+        <li>胶水用量最大，甲醛风险最高</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">细木工板（大芯板）</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>芯板是实木条拼接，握钉力好</li>
+        <li>老式板材，木工现场施工常用</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>防潮一般，实木条间缝隙易藏水</li>
+        <li>现在橱柜基本不用了</li>
+        <li>平整度差</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">指接板 / 集成材</span><span class="tag tag-warn">不建议厨房</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>实木拼接，环保性最好</li>
+        <li>天然木纹质感</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>易变形开裂</li>
+        <li>怕水怕潮</li>
+        <li>厨房不建议用</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 四、饰面工艺 ============ -->
+<div class="sec" id="s4">
+<h2><span class="num">4</span>表面饰面工艺</h2>
+<div class="intro">饰面是门板和侧板表面那层，只管颜值和耐磨，和发霉关系不大（发霉是从截面和背面开始的）。</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">总览对比表</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th>工艺</th><th>可造型</th><th>耐磨</th><th>耐高温</th><th>颜值</th><th>价格</th><th>主要短板</th></tr></thead>
+      <tbody>
+        <tr><td><b>双饰面(三聚氰胺)</b></td><td class="text-red">仅平板</td><td class="text-green">好</td><td class="text-green">好</td><td class="text-amber">中</td><td class="price-tag">最低</td><td>无法做造型</td></tr>
+        <tr><td><b>吸塑PVC</b></td><td class="text-green">可凹凸</td><td class="text-amber">中</td><td class="text-red">差</td><td class="text-green">高</td><td class="price-tag">中低</td><td>近热源起皮</td></tr>
+        <tr><td><b>烤漆</b></td><td class="text-green">可造型</td><td class="text-red">差</td><td class="text-amber">中</td><td class="text-green">最高</td><td class="price-tag">中高</td><td>磕碰掉漆难修</td></tr>
+        <tr><td><b>PET膜/亚克力</b></td><td class="text-red">仅平板</td><td class="text-green">好</td><td class="text-green">好</td><td class="text-green">高</td><td class="price-tag">中高</td><td>仅平板</td></tr>
+        <tr><td><b>实木贴皮+清漆</b></td><td class="text-amber">有限</td><td class="text-amber">中</td><td class="text-amber">中</td><td class="text-green">最高</td><td class="price-tag">高</td><td>贵需保养</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">双饰面（三聚氰胺免漆板）</span><span class="tag tag-best">最主流</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>最便宜，性价比最高</li>
+        <li>耐磨耐刮，表面硬度高</li>
+        <li>免漆，无漆面甲醛</li>
+        <li>花色选择极多</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>只能做平板直边，无法做造型门</li>
+        <li>封边处是薄弱环节（看封边工艺）</li>
+        <li>质感偏普通</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">吸塑（PVC 真空吸塑）</span><span class="tag tag-info">造型首选</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>可做造型门（欧式凹凸门、罗马线）</li>
+        <li>整面包覆，无封边线</li>
+        <li>颜值高，欧式美式风格首选</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>靠近灶台高温易起皮脱胶</li>
+        <li>PVC膜耐磨性一般</li>
+        <li>膜比板材软，会被划破</li>
+        <li>使用寿命5-8年</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">烤漆（喷漆高温烤）</span><span class="tag tag-gold">颜值最高</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>颜值最高，光泽度好</li>
+        <li>可做各种颜色</li>
+        <li>表面光滑好清洁</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>怕磕碰，一磕就掉漆</li>
+        <li>掉漆后修补困难，色差明显</li>
+        <li>烤漆面硬度不如双饰面</li>
+        <li>价格中高</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">PET膜 / 亚克力面板</span><span class="tag tag-info">较新工艺</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>高光或哑光质感，现代感强</li>
+        <li>耐磨耐刮，硬度高</li>
+        <li>指纹好打理</li>
+        <li>耐高温好</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>只能做平板，无法造型</li>
+        <li>价格中高</li>
+        <li>高光款仍会留指纹</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">实木贴皮 + 清漆</span><span class="tag tag-gold">高级感</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>天然木纹，高级质感</li>
+        <li>可打磨翻新</li>
+        <li>适合原木/新中式风格</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>贵</li>
+        <li>需定期保养上油</li>
+        <li>受潮易起皮</li>
+        <li>清漆面耐磨一般</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 五、封边工艺 ============ -->
+<div class="sec" id="s5">
+<h2><span class="num">5</span>封边工艺（防霉命门）</h2>
+<div class="intro">封边是板材截面的保护层，是防霉真正的命门。基材再好，封边不行一样废——封边不严→截面吸水→发霉膨胀→恶性循环。</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">总览对比表</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th>工艺</th><th>防水性</th><th>胶线</th><th>耐高温</th><th>寿命</th><th>价格</th><th>适用场景</th></tr></thead>
+      <tbody>
+        <tr><td><b>EVA热熔胶</b></td><td class="text-red">差</td><td class="text-red">明显</td><td class="text-red">差</td><td class="text-red">短</td><td class="price-tag">最低</td><td>干燥区</td></tr>
+        <tr><td><b>PUR热熔胶</b></td><td class="text-green">好</td><td class="text-amber">极细</td><td class="text-green">好</td><td class="text-green">长</td><td class="price-tag">中</td><td class="text-green">厨房推荐</td></tr>
+        <tr><td><b>激光封边</b></td><td class="text-green">最好</td><td class="text-green">无</td><td class="text-green">最好</td><td class="text-green">最长</td><td class="price-tag">最高</td><td>高端品牌</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">EVA热熔胶封边</span><span class="tag tag-warn">普通款</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>最便宜，使用最广泛</li>
+        <li>加工速度快，普通厂家都能做</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>防水差——受潮易开缝</li>
+        <li>胶线明显，有黑边</li>
+        <li>耐高温差，灶台旁易软化</li>
+        <li>寿命短，2-3年可能开胶</li>
+        <li>是橱柜发霉的帮凶</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">PUR热熔胶封边</span><span class="tag tag-best">厨房推荐</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>反应型聚氨酯，与空气水分反应固化</li>
+        <li>防水耐高温性能远超EVA</li>
+        <li>胶线极细，几乎看不见</li>
+        <li>寿命长，不易开胶</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>比EVA贵30-50%</li>
+        <li>需要专业设备，小厂做不了</li>
+        <li>固化时间长，加工周期慢</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">激光封边</span><span class="tag tag-gold">最好最贵</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>无胶线，完全无缝效果</li>
+        <li>防水防潮最好</li>
+        <li>耐高温最好</li>
+        <li>寿命最长，基本不开胶</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>最贵，一般高端品牌才有</li>
+        <li>需要专用激光封边带和设备</li>
+        <li>普通定制厂不具备</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ============ 六、不锈钢表面处理 ============ -->
+<div class="sec" id="s6">
+<h2><span class="num">6</span>不锈钢表面处理方式</h2>
+<div class="intro">针对不锈钢柜体"怕划"和"冷冰冰"两个痛点，市面上有四种表面处理方式。核心问题是：不锈钢表面光滑致密无孔，膜和漆都附不住。</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">总览对比表</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <table class="compare-table">
+      <thead><tr><th>方式</th><th>附着力</th><th>硬度</th><th>不掉色</th><th>寿命</th><th>价格</th><th>能否现场做</th></tr></thead>
+      <tbody>
+        <tr><td><b>贴膜PVC</b></td><td class="text-red">差</td><td class="text-red">低</td><td class="text-red">差</td><td class="text-red">2-5年</td><td class="price-tag">低</td><td class="text-green">能</td></tr>
+        <tr><td><b>自喷漆</b></td><td class="text-red">最差</td><td class="text-red">低</td><td class="text-red">最差</td><td class="text-red">1-3年</td><td class="price-tag">最低</td><td class="text-green">能</td></tr>
+        <tr><td><b>烤漆(粉末喷涂)</b></td><td class="text-amber">中</td><td class="text-amber">中</td><td class="text-amber">中</td><td class="text-amber">5-8年</td><td class="price-tag">中</td><td class="text-red">否(需高温炉)</td></tr>
+        <tr><td><b>PVD镀钛</b></td><td class="text-green">冶金级</td><td class="text-green">极高</td><td class="text-green">最好</td><td class="text-green">10-15年+</td><td class="price-tag">高</td><td class="text-red">否(需真空炉)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header open" onclick="this.classList.toggle('open')">
+    <div><span class="title">贴膜（PVC装饰膜）</span><span class="tag tag-warn">不推荐</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body open">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>便宜，可现场施工</li>
+        <li>花色选择多（含木纹）</li>
+        <li>短期过渡可行</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>不锈钢无孔，膜靠胶粘附，边角最薄弱处半年到一年翘边</li>
+        <li>灶台旁高温让胶软化，膜鼓泡</li>
+        <li>油污渗进胶层，发黄发黑</li>
+        <li>膜比钢软，贴了反而膜会被划破，破了更难看</li>
+        <li>寿命2-5年，到期撕掉重贴，残胶极难清</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">自喷漆</span><span class="tag tag-warn">最不推荐</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>最便宜</li>
+        <li>可现场施工</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>不锈钢有钝化膜（防锈就靠它），普通漆根本挂不住</li>
+        <li>要附得住得先打磨掉钝化膜或上专用底漆，现场做不专业</li>
+        <li>喷完颜色不均、流挂、起皮是常态</li>
+        <li>寿命1-3年，斑驳脱落比没处理还难看</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">烤漆（静电粉末喷涂）</span><span class="tag tag-info">工厂做可行</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>静电把粉末吸附到不锈钢上，200℃高温炉烤融形成涂层</li>
+        <li>附着力比自喷漆强很多</li>
+        <li>颜色选择较多</li>
+        <li>寿命5-8年</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>必须工厂做，现场没法喷（没高温炉）</li>
+        <li>仍是物理附着，硬磕会崩漆</li>
+        <li>崩边后边缘持续剥落，修补困难</li>
+        <li>颜色选择不如PVD多</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header" onclick="this.classList.toggle('open')">
+    <div><span class="title">PVD镀钛</span><span class="tag tag-best">真正解决方案</span></div>
+    <span class="card-arrow">▶</span>
+  </div>
+  <div class="card-body">
+    <div class="pros-cons">
+      <div class="pros"><div class="lbl">优点</div><ul>
+        <li>真空环境下电离钛金属离子，沉积到不锈钢表面形成钛化合物层（氮化钛等）</li>
+        <li>与不锈钢冶金级结合，不是粘上去的——撕不掉不掉漆</li>
+        <li>硬度极高，接近金属本身，耐磨耐刮比原不锈钢还强</li>
+        <li>颜色丰富：香槟金、玫瑰金、黑钛、枪灰、古铜都能做</li>
+        <li>寿命10-15年以上，几乎与柜体同寿命</li>
+      </ul></div>
+      <div class="cons"><div class="lbl">缺点</div><ul>
+        <li>贵——比素色不锈钢贵30-50%</li>
+        <li>颜色有局限——只能做金属质感色，做不出木纹、纯白、纯黑</li>
+        <li>只能工厂做——现场没法补做，后期磕坏想重新镀得拆下来寄回厂</li>
+        <li>磕碰会崩边——重物撞击、锐器刻划仍可能崩掉一小块，崩口边缘会沿层继续剥落，无法现场修复</li>
+        <li>色差——不同批次有轻微色差，分两次下订单补做可能对不上</li>
+        <li>指纹——镜面PVD照样留指纹，拉丝PVD好一些但也不算彻底解决</li>
+        <li>加工顺序锁定——PVD是最后一道工序，所有开孔、折弯、焊接都得在镀之前完成，定型后改不了</li>
+      </ul></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<div style="text-align:center; padding:2rem 0; color:#999; font-size:0.82rem; border-top:1px solid var(--border); margin-top:2rem;">
+  以上为材料优缺点客观梳理，选型需结合预算、使用习惯、家庭情况综合判断
+</div>
+
+</div>
+</body>
+</html>

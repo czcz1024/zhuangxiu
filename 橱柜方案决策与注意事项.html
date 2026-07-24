@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>橱柜方案决策与选购注意事项</title>
+<style>
+  :root {
+    --bg: #f8f7f4; --card-bg: #fff; --text: #2c2c2c; --muted: #6b6b6b;
+    --border: #e8e4dc; --accent: #2c7a4b; --accent-light: #e8f5e9;
+    --warn: #c0392b; --warn-light: #fef0ee; --blue: #2471a3; --blue-light: #eaf2f8;
+    --gold: #b8860b; --gold-light: #fef9e7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:2rem 1rem;
+  }
+  .container { max-width:1000px; margin:0 auto; }
+
+  .header { text-align:center; padding:2rem 0 2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+  .header h1 { font-size:2rem; font-weight:700; }
+  .header .subtitle { color:var(--muted); font-size:1rem; margin-top:0.3rem; }
+  .header .meta { font-size:0.82rem; color:#999; margin-top:0.5rem; }
+
+  .nav { position:sticky; top:0; z-index:100; background:var(--card-bg); border-bottom:1px solid var(--border); padding:0.6rem 0; margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; }
+  .nav a { font-size:0.82rem; text-decoration:none; color:var(--muted); padding:4px 10px; border-radius:14px; white-space:nowrap; transition:all 0.15s; }
+  .nav a:hover { background:var(--accent-light); color:var(--accent); font-weight:600; }
+
+  .sec { margin-bottom:2rem; scroll-margin-top:60px; }
+  .sec h2 { font-size:1.2rem; font-weight:700; padding-bottom:0.4rem; border-bottom:2px solid var(--accent); margin-bottom:1rem; }
+  .sec h2 .num { display:inline-block; width:26px; height:26px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:26px; font-size:0.8rem; margin-right:0.5rem; }
+  .sec .intro { font-size:0.88rem; color:var(--muted); margin-bottom:1rem; }
+
+  .card { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); margin-bottom:1rem; overflow:hidden; }
+  .card-body { padding:1.2rem; }
+
+  .compare-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin:0.5rem 0 1rem; }
+  .compare-table thead th { background:#f0ede6; padding:0.6rem 0.7rem; text-align:left; font-weight:600; border-bottom:2px solid var(--border); }
+  .compare-table tbody td { padding:0.6rem 0.7rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .compare-table tbody tr:last-child td { border-bottom:none; }
+
+  .verdict-box { background:var(--accent-light); border:1px solid var(--accent); border-radius:10px; padding:1.2rem 1.5rem; margin:1rem 0; }
+  .verdict-box .lbl { font-size:0.78rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:1px; }
+  .verdict-box .main { font-size:1.1rem; font-weight:700; color:#1a5e3a; margin-top:0.3rem; }
+
+  .warn-box { background:var(--warn-light); border:1px solid #f5c6cb; border-radius:10px; padding:1rem 1.2rem; margin:1rem 0; }
+  .warn-box .lbl { font-weight:700; color:var(--warn); }
+  .warn-box ul { margin:0.3rem 0 0 1.2rem; font-size:0.88rem; }
+  .warn-box li { padding:2px 0; }
+
+  .check-list { list-style:none; padding:0; }
+  .check-list li { padding:0.5rem 0 0.5rem 1.8rem; position:relative; font-size:0.9rem; border-bottom:1px dashed var(--border); }
+  .check-list li:last-child { border-bottom:none; }
+  .check-list li::before { content:"☐"; position:absolute; left:0.3rem; top:0.5rem; font-size:1.1rem; color:var(--accent); }
+  .check-list li .key { font-weight:700; color:var(--text); }
+  .check-list li .desc { color:var(--muted); font-size:0.82rem; display:block; margin-top:0.2rem; }
+
+  .timeline { position:relative; padding-left:2rem; margin:1rem 0; }
+  .timeline::before { content:""; position:absolute; left:0.5rem; top:0; bottom:0; width:2px; background:var(--border); }
+  .timeline .step { position:relative; margin-bottom:1rem; }
+  .timeline .step::before { content:""; position:absolute; left:-1.6rem; top:0.4rem; width:12px; height:12px; border-radius:50%; background:var(--accent); border:2px solid #fff; box-shadow:0 0 0 1px var(--accent); }
+  .timeline .step .step-title { font-weight:600; font-size:0.9rem; }
+  .timeline .step .step-desc { font-size:0.83rem; color:var(--muted); margin-top:0.2rem; }
+
+  .text-green { color:var(--accent); font-weight:600; }
+  .text-red { color:var(--warn); }
+  .text-amber { color:var(--gold); font-weight:600; }
+  .text-muted { color:var(--muted); }
+
+  .specs { background:#f9f8f3; border:1px solid var(--border); border-radius:8px; padding:0.8rem 1.1rem; margin-top:0.6rem; font-size:0.85rem; }
+  .specs .lbl { font-weight:600; color:var(--blue); }
+
+  .note { font-size:0.83rem; color:var(--muted); margin-top:0.6rem; padding-left:0.8rem; border-left:3px solid var(--gold); }
+
+  .tag { display:inline-block; font-size:0.72rem; padding:2px 8px; border-radius:10px; font-weight:500; }
+  .tag-best { background:var(--accent-light); color:var(--accent); }
+  .tag-warn { background:var(--warn-light); color:var(--warn); }
+  .tag-info { background:var(--blue-light); color:var(--blue); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>橱柜方案决策与选购注意事项</h1>
+  <div class="subtitle">旧房翻新 · 厨房橱柜最终方案 · 决策依据 · 选购盯死清单 · 施工注意事项</div>
+  <div class="meta">记录日期：2026年7月24日　|　项目：山西太原旧房翻新</div>
+</div>
+
+<div class="nav">
+  <a href="#verdict">最终方案</a>
+  <a href="#background">决策背景</a>
+  <a href="#checklist">选购盯死清单</a>
+  <a href="#construction">施工注意事项</a>
+  <a href="#timeline">施工时间线</a>
+  <a href="#water-elec">水电关联事项</a>
+  <a href="#changed">方案变更记录</a>
+</div>
+
+<!-- 一、最终方案 -->
+<div class="sec" id="verdict">
+  <h2><span class="num">1</span>最终方案</h2>
+  <div class="intro">经多轮讨论后敲定的橱柜方案，核心是"统一颗粒板 + 石英石台面"。</div>
+
+  <div class="verdict-box">
+    <div class="lbl">橱柜最终决策</div>
+    <div class="main">全柜统一颗粒板柜体 + 石英石台面</div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <table class="compare-table">
+        <thead>
+          <tr><th style="width:28%">部件</th><th style="width:42%">材质</th><th style="width:30%">关键参数</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>柜体（全柜统一）</strong></td>
+            <td><span class="text-green">颗粒板</span><br><span class="text-muted">品牌板（爱格 / 可丽芙级别），非杂牌</span></td>
+            <td>基材甲醛释放E0级以上<br>认准品牌授权书</td>
+          </tr>
+          <tr>
+            <td><strong>台面</strong></td>
+            <td><span class="text-green">石英石</span><br><span class="text-muted">嵌入式灶开大洞卡灶，整板承重稳耐热</span></td>
+            <td>厚度≥15mm<br>石英砂含量≥90%<br>压制成型（非浇注）<br>纯色或细颗粒花色（接缝最不明显）</td>
+          </tr>
+          <tr>
+            <td><strong>灶具</strong></td>
+            <td>嵌入式燃气灶<br><span class="text-muted">与石英石台面绑定（整板开洞，稳+耐热）</span></td>
+            <td>开孔尺寸按灶具说明书<br>验收检查开孔边缘是否打磨光滑</td>
+          </tr>
+          <tr>
+            <td><strong>门板饰面</strong></td>
+            <td><span class="text-amber">待定</span><br><span class="text-muted">双饰面 / PET / 烤漆 / PVD镀钛（聊过未确认）</span></td>
+            <td>—</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">台面与灶具是绑定决策：嵌入式灶必须配石英石等整板台面，不锈钢薄板开大洞边缘易变形。台式灶+不锈钢台面路线已否决。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 二、决策背景 -->
+<div class="sec" id="background">
+  <h2><span class="num">2</span>决策背景与依据</h2>
+  <div class="intro">为什么从"分区域不锈钢"改为"统一颗粒板"——记录完整思考过程。</div>
+
+  <div class="card">
+    <div class="card-body">
+      <p><strong>起点：发霉</strong></p>
+      <p style="margin:0.5rem 0; font-size:0.9rem;">现住老房木板橱柜受潮发霉，这是翻新橱柜选型的核心驱动力。最初倾向不锈钢橱柜，就是想彻底告别发霉。</p>
+
+      <p style="margin-top:1.2rem;"><strong>中间方案：分区域定材质</strong></p>
+      <p style="margin:0.5rem 0; font-size:0.9rem;">讨论后认为全不锈钢太贵且冷冰冰，改为分区域：</p>
+      <ul style="margin:0.3rem 0 0.8rem 1.5rem; font-size:0.85rem;">
+        <li>水槽柜+洗碗机柜 → 不锈钢（防霉重灾区）</li>
+        <li>其他地柜 → 多层实木板 + PUR封边</li>
+        <li>吊柜 → 颗粒板</li>
+      </ul>
+      <p style="font-size:0.85rem;">此方案防霉最稳妥，但水槽柜单独用不锈钢要贵一千多。</p>
+
+      <p style="margin-top:1.2rem;"><strong>转折：工艺进步的认知</strong></p>
+      <p style="margin:0.5rem 0; font-size:0.9rem;">用户了解到近年板材工艺有明显进步，发霉概率大幅降低：</p>
+      <ul style="margin:0.3rem 0 0.8rem 1.5rem; font-size:0.85rem;">
+        <li><strong>PUR封边普及</strong>：反应型聚氨酯，防水耐高温，胶线几乎看不见，取代了易开缝的EVA热熔胶</li>
+        <li><strong>板材防水提升</strong>：部分品牌颗粒板做全芯防水处理，吸水膨胀率从8-10%降到3-5%</li>
+        <li><strong>水槽柜特殊处理</strong>：底板铝箔包底、防水封边条，专门针对潮湿区</li>
+      </ul>
+
+      <p style="margin-top:1.2rem;"><strong>最终判断</strong></p>
+      <p style="margin:0.5rem 0; font-size:0.9rem;">工艺进步是"降低发霉概率"而非"消除发霉可能"，但结合预算考量，用户决定接受这个概率，全柜统一颗粒板。同时保留<strong>水浸传感器</strong>作为漏水预警兜底——万一水管接头漏水，第一时间报警，避免水泡柜体。</p>
+
+      <div class="warn-box">
+        <span class="lbl">理性认知</span>
+        <ul>
+          <li>颗粒板+PUR = "十年内大概率不发霉"，不是"绝对不会发霉"</li>
+          <li>水槽柜仍是最高风险区，必须做防潮加强（见下文）</li>
+          <li>水浸传感器不可省，这是最后一道防线</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 三、选购盯死清单 -->
+<div class="sec" id="checklist">
+  <h2><span class="num">3</span>选购盯死清单</h2>
+  <div class="intro">既然选颗粒板，以下几条不能省，一条一条对照验收。打印这份清单带去店里。</div>
+
+  <div class="card">
+    <div class="card-body">
+      <p style="font-weight:700; margin-bottom:0.8rem;">A. 板材基材</p>
+      <ul class="check-list">
+        <li><span class="key">品牌颗粒板</span><span class="desc">爱格（EGGER）/ 可丽芙（CLEAF）级别，认准品牌授权书，拒杂牌薄板。杂牌颗粒板密度低、胶水差、甲醛高，是发霉和环保的重灾区。</span></li>
+        <li><span class="key">甲醛释放等级 ≥ E0级</span><span class="desc">要求出示检测报告，E1是国标底线，E0更优。家有老人小孩，环保不能将就。</span></li>
+        <li><span class="key">板材厚度 ≥ 18mm</span><span class="desc">柜体板厚18mm是标准，低于此值的偷薄板不结实。拿卷尺量截面。</span></li>
+      </ul>
+
+      <p style="font-weight:700; margin:1.2rem 0 0.8rem;">B. 封边工艺（防霉命门，最关键）</p>
+      <ul class="check-list">
+        <li><span class="key">必须 PUR 封边，拒 EVA</span><span class="desc">PUR（反应型聚氨酯热熔胶）防水耐高温，胶线几乎看不见。EVA受潮易开缝，是老橱柜发霉的元凶。合同写明"PUR封边"，验收看胶线是否细且均匀。</span></li>
+        <li><span class="key">所有截面全封边</span><span class="desc">不只是门板和侧板，背板边缘、层板截面、螺丝孔位都要封到。验收时翻开柜子看内部截面有没有裸露。</span></li>
+      </ul>
+
+      <p style="font-weight:700; margin:1.2rem 0 0.8rem;">C. 水槽柜防潮加强（重点盯死）</p>
+      <ul class="check-list">
+        <li><span class="key">底板铝箔包底</span><span class="desc">水槽柜底板贴整张铝箔防潮，隔绝水汽。这是水槽柜防霉的关键加强项，必须做。</span></li>
+        <li><span class="key">背板贴防潮膜</span><span class="desc">水槽柜靠墙那面背板贴防潮膜，防止墙体返潮从背板侵入。</span></li>
+        <li><span class="key">水槽柜内部接缝打防霉硅胶</span><span class="desc">所有拼接缝、螺丝孔用防霉硅胶密封，杜绝水汽从缝隙渗入截面。</span></li>
+      </ul>
+
+      <p style="font-weight:700; margin:1.2rem 0 0.8rem;">D. 五金件</p>
+      <ul class="check-list">
+        <li><span class="key">品牌铰链 + 滑轨</span><span class="desc">海蒂诗（Hettich）/ 百隆（Blum）/ DTC，不锈钢柜体配好五金才不糟蹋。杂牌五金一两年就松、掉、锈。</span></li>
+        <li><span class="key">铰链带阻尼</span><span class="desc">关门缓冲静音，老人使用更友好，也延长柜体寿命。</span></li>
+        <li><span class="key">滑轨带缓冲</span><span class="desc">抽屉推回自动减速闭合，防夹手，适老化加分项。</span></li>
+      </ul>
+
+      <p style="font-weight:700; margin:1.2rem 0 0.8rem;">E. 台面</p>
+      <ul class="check-list">
+        <li><span class="key">厚度 ≥ 15mm</span><span class="desc">低于15mm的偷薄台面强度差、易裂。</span></li>
+        <li><span class="key">石英砂含量 ≥ 90%</span><span class="desc">树脂含量高的话容易发黄渗色。要求出示成分检测报告。</span></li>
+        <li><span class="key">压制成型，非浇注</span><span class="desc">压制工艺致密无孔防渗色，浇注工艺疏松易渗。问清工艺。</span></li>
+        <li><span class="key">纯色或细颗粒花色</span><span class="desc">接缝最不明显。大颗粒花纹拼接处色差明显。</span></li>
+        <li><span class="key">接缝处理</span><span class="desc">两块拼接处打磨抛光到几乎看不见缝，验收用手摸接缝处是否平整。</span></li>
+      </ul>
+
+      <p style="font-weight:700; margin:1.2rem 0 0.8rem;">F. 嵌入式灶开孔</p>
+      <ul class="check-list">
+        <li><span class="key">按灶具说明书开孔</span><span class="desc">先定灶具型号拿开孔图给台面厂家，别让台面师傅凭经验开。尺寸差几毫米灶具就卡不进去。</span></li>
+        <li><span class="key">开孔边缘打磨</span><span class="desc">石英石开孔边缘锋利，必须打磨倒角，验收摸一圈不割手。</span></li>
+        <li><span class="key">灶具与台面间打防霉胶</span><span class="desc">灶具卡入后边缘一圈打防霉硅胶密封，防油污水渗入缝隙。</span></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 四、施工注意事项 -->
+<div class="sec" id="construction">
+  <h2><span class="num">4</span>施工注意事项</h2>
+  <div class="intro">施工阶段需要盯的点和容易踩的坑。</div>
+
+  <div class="card">
+    <div class="card-body">
+      <p style="font-weight:700;">1. 水槽柜安装顺序</p>
+      <p style="font-size:0.9rem; margin:0.3rem 0 1rem;">先装水槽柜体 → 再装台面 → 最后装水槽。水槽下水口位置要和地漏/排水管对齐，偏差大会导致排水管弯折堵塞。水槽柜下方预留净水器+小厨宝的空间。</p>
+
+      <p style="font-weight:700;">2. 台面安装时机</p>
+      <p style="font-size:0.9rem; margin:0.3rem 0 1rem;">台面必须在柜体装完、灶具型号确定后才能量尺开孔。<strong>先定灶具，再量台面</strong>，别反过来。台面到场检查有无运输裂纹再安装。</p>
+
+      <p style="font-weight:700;">3. 水槽安装方式</p>
+      <p style="font-size:0.9rem; margin:0.3rem 0 1rem;">单槽配石英石台面，选<strong>台中盆</strong>（台下嵌入式，台面开槽水槽卡入，边缘和台面齐平）或<strong>台下盆</strong>（水槽挂在台面下方）。台中盆颜值好但开槽费贵；台下盆便宜但边缘有缝易渗水，必须打足防霉胶。不推荐台上盆（边缘高出台面，挡水不美观）。</p>
+
+      <p style="font-weight:700;">4. 封边验收</p>
+      <p style="font-size:0.9rem; margin:0.3rem 0 1rem;">柜子装完逐个检查：所有截面是否都封边了（翻看柜内层板、背板边缘）、封边条是否贴合无缝隙、胶线是否均匀。发现漏封或翘边的当场要求返工。</p>
+
+      <p style="font-weight:700;">5. 水槽柜底板铝箔检查</p>
+      <p style="font-size:0.9rem; margin:0.3rem 0 1rem;">验收时必须翻开看水槽柜底板是否贴了铝箔、是否完整无破损。没做的话要求补做。</p>
+
+      <div class="warn-box">
+        <span class="lbl">石英石台面使用提醒</span>
+        <ul>
+          <li><strong>怕骤热</strong>：炒完菜热锅别直接放台面，必须垫隔热垫或三脚架。热胀冷缩不均会炸裂，这是石英石唯一的硬伤。</li>
+          <li><strong>怕磕碰边角</strong>：台面边缘和转角是薄弱点，重物别磕到。崩角不可修复。</li>
+          <li><strong>渗色风险</strong>：酱油、咖啡、咖喱洒了及时擦，浅色台面尤其注意。深色台面渗色不明显。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 五、施工时间线 -->
+<div class="sec" id="timeline">
+  <h2><span class="num">5</span>施工时间线</h2>
+  <div class="intro">橱柜相关各环节的施工先后顺序，别搞反了。</div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="timeline">
+        <div class="step">
+          <div class="step-title">① 水电改造阶段</div>
+          <div class="step-desc">确定水槽位置、净水器/小厨宝插座点位、洗碗机水电（若装）。水管走向、下水位置、插座位置全部提前定死。小厨宝单独回路。</div>
+        </div>
+        <div class="step">
+          <div class="step-title">② 墙地面贴砖</div>
+          <div class="step-desc">墙面瓷砖、地面防滑砖铺贴完成。贴砖后墙面尺寸可能有微调，橱柜需重新复尺。</div>
+        </div>
+        <div class="step">
+          <div class="step-title">③ 橱柜复尺</div>
+          <div class="step-desc">贴砖完成后师傅上门精确复尺，确认最终尺寸。此时灶具型号必须已定，才能给台面厂家开孔尺寸图。</div>
+        </div>
+        <div class="step">
+          <div class="step-title">④ 柜体生产+安装</div>
+          <div class="step-desc">工厂生产（约15-30天），到货安装柜体。验收封边、五金、铝箔包底。</div>
+        </div>
+        <div class="step">
+          <div class="step-title">⑤ 台面量尺+开孔+安装</div>
+          <div class="step-desc">柜体装完后台面师傅上门量尺，回厂切割开孔（按灶具说明书），再到场安装。验收开孔边缘、接缝处理。</div>
+        </div>
+        <div class="step">
+          <div class="step-title">⑥ 水槽+灶具+龙头安装</div>
+          <div class="step-desc">台面装完后安装水槽（打防霉胶）、嵌入式灶具（边缘打胶）、龙头、净水器、小厨宝。接通水电路测试。</div>
+        </div>
+        <div class="step">
+          <div class="step-title">⑦ 水浸传感器安装</div>
+          <div class="step-desc">水槽柜下方放置水浸传感器，通电测试报警功能。最后一道防线。</div>
+        </div>
+      </div>
+      <div class="note">关键提醒：灶具型号必须在"橱柜复尺"之前定下来，否则台面无法开孔。提前选好灶具，拿开孔图给橱柜厂。</div>
+    </div>
+  </div>
+</div>
+
+<!-- 六、水电关联事项 -->
+<div class="sec" id="water-elec">
+  <h2><span class="num">6</span>水电关联事项</h2>
+  <div class="intro">橱柜方案直接决定的水电点位，水电工进场前必须定死。</div>
+
+  <div class="card">
+    <div class="card-body">
+      <table class="compare-table">
+        <thead>
+          <tr><th style="width:20%">设备</th><th style="width:30%">位置</th><th style="width:25%">水电需求</th><th style="width:25%">备注</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>水槽</strong></td>
+            <td>水槽柜上方</td>
+            <td>冷热水管、下水管</td>
+            <td>单槽，下水口对齐排水管</td>
+          </tr>
+          <tr>
+            <td><strong>净水器</strong></td>
+            <td>水槽柜下</td>
+            <td>1个防水插座（普通功率）</td>
+            <td>进水接冷水管三通，出水接净水龙头</td>
+          </tr>
+          <tr>
+            <td><strong>小厨宝</strong></td>
+            <td>水槽柜下</td>
+            <td>1个防水插座<br><span class="text-red">必须单独回路+漏保</span></td>
+            <td>功率1500-2000W，不能与净水器/冰箱混用，否则跳闸</td>
+          </tr>
+          <tr>
+            <td><strong>冰箱</strong></td>
+            <td>厨房一角</td>
+            <td>1个独立插座</td>
+            <td>单独回路，长期通电不与其他大功率共用</td>
+          </tr>
+          <tr>
+            <td><strong>洗碗机</strong></td>
+            <td>水槽旁（若装）</td>
+            <td>1个防水插座 + 进水管 + 排水管</td>
+            <td>条件性安装，建议预留点位（成本低，后期加装代价大）</td>
+          </tr>
+          <tr>
+            <td><strong>水浸传感器</strong></td>
+            <td>水槽柜下方地面</td>
+            <td>电池供电（无需布线）</td>
+            <td>放水槽柜下+卫生间各1个</td>
+          </tr>
+          <tr>
+            <td><strong>厨房灯</strong></td>
+            <td>吊顶中央</td>
+            <td>1路灯线（开关位）</td>
+            <td>简单吸顶灯，预留一路灯线即可</td>
+          </tr>
+          <tr>
+            <td><strong>排风</strong></td>
+            <td>吊顶内走管</td>
+            <td>烟机插座（吊顶内或墙面）</td>
+            <td>墙洞160/180mm标准口径+止逆阀+防雨帽，吊顶前打好</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="warn-box">
+        <span class="lbl">水电重点</span>
+        <ul>
+          <li>水槽柜下至少 2 个防水插座（净水器 + 小厨宝各一个）</li>
+          <li>小厨宝 1500-2000W 大功率，必须单独一路线 + 单独漏保</li>
+          <li>冰箱单独插座、单独回路</li>
+          <li>所有水槽柜下插座必须带防溅盒</li>
+          <li>洗碗机点位建议预留（不管最终装不装），成本低、后期加装代价大</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 七、方案变更记录 -->
+<div class="sec" id="changed">
+  <h2><span class="num">7</span>方案变更记录</h2>
+  <div class="intro">记录方案演进过程，留档备查。</div>
+
+  <div class="card">
+    <div class="card-body">
+      <table class="compare-table">
+        <thead>
+          <tr><th style="width:15%">版本</th><th style="width:35%">方案内容</th><th style="width:30%">否决原因 / 变更理由</th><th style="width:20%">状态</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>V1 初版</td>
+            <td>全不锈钢橱柜（304食品级）</td>
+            <td>—</td>
+            <td><span class="tag tag-warn">已否决</span></td>
+          </tr>
+          <tr>
+            <td>V2 分区域</td>
+            <td>水槽柜+洗碗机柜不锈钢、其他地柜多层板+PUR、吊柜颗粒板、台面待定</td>
+            <td>全不锈钢太贵且冷冰冰，分区域可兼顾防霉与预算</td>
+            <td><span class="tag tag-warn">已变更</span></td>
+          </tr>
+          <tr>
+            <td>V3 台面定</td>
+            <td>分区域柜体 + 石英石台面 + 嵌入式灶</td>
+            <td>嵌入式灶必须配整板台面，不锈钢薄板开大洞易变形，绑定石英石</td>
+            <td><span class="tag tag-warn">已变更</span></td>
+          </tr>
+          <tr>
+            <td><strong>V4 最终版</strong></td>
+            <td><strong>全柜统一颗粒板 + 石英石台面 + 嵌入式灶</strong></td>
+            <td><strong>用户综合考量：现今板材工艺进步（PUR封边+防水芯材）大幅降低发霉概率，接受概率风险换取预算节省。水浸传感器作为兜底。</strong></td>
+            <td><span class="tag tag-best">当前定案</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="note">完整决策依据见第2节"决策背景"。材料优缺点详见《橱柜材料优缺点大全.html》。</div>
+    </div>
+  </div>
+</div>
+
+<div style="text-align:center; padding:1.5rem 0; border-top:1px solid var(--border); margin-top:2rem; color:var(--muted); font-size:0.8rem;">
+  旧房翻新 · 厨房橱柜决策文档　|　配合《橱柜材料优缺点大全》使用
+</div>
+
+</div>
+</body>
+</html>

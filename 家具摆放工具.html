@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>家具摆放工具</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f0f0;height:100vh;display:flex;flex-direction:column;overflow:hidden;user-select:none}
+.toolbar{background:#fff;padding:8px 12px;display:flex;gap:6px;align-items:center;border-bottom:1px solid #ddd;flex-wrap:wrap}
+.toolbar button{padding:6px 12px;border:1px solid #ccc;background:#fff;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap}
+.toolbar button:hover{background:#e8e8e8}
+.toolbar button.accent{background:#185FA5;color:#fff;border-color:#185FA5}
+.toolbar button.accent:hover{background:#0e4a85}
+.toolbar .sep{width:1px;height:22px;background:#ddd;margin:0 4px}
+.toolbar .info{font-size:12px;color:#888;margin-left:auto}
+.preset-bar{background:#fafafa;padding:6px 12px;display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid #eee;max-height:80px;overflow-y:auto}
+.preset-bar button{padding:3px 10px;border:1px solid #ddd;background:#fff;border-radius:12px;cursor:pointer;font-size:12px;white-space:nowrap;color:#555}
+.preset-bar button:hover{background:#e3f0ff;border-color:#185FA5;color:#185FA5}
+.canvas-wrap{flex:1;position:relative;overflow:hidden;cursor:grab}
+.canvas-wrap:active{cursor:grabbing}
+.canvas-wrap.dragging{cursor:grabbing}
+.canvas-wrap.calibrating{cursor:crosshair}
+canvas{display:block;position:absolute;top:0;left:0}
+.hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.75);color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;pointer-events:none;z-index:10;display:none;transition:opacity 0.2s}
+.hint.show{display:block}
+.modal-bg{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);display:none;align-items:center;justify-content:center;z-index:100}
+.modal-bg.show{display:flex}
+.modal{background:#fff;padding:24px;border-radius:12px;min-width:300px;max-width:400px;width:90%}
+.modal h3{margin-bottom:16px;font-size:16px;font-weight:500}
+.modal label{display:block;margin-bottom:4px;font-size:13px;color:#555}
+.modal input{width:100%;padding:8px 10px;margin-bottom:12px;border:1px solid #ccc;border-radius:6px;font-size:14px;outline:none}
+.modal input:focus{border-color:#185FA5}
+.modal .btn-row{display:flex;gap:8px;margin-top:4px}
+.modal .btn-row button{flex:1;padding:8px;border-radius:6px;border:1px solid #ccc;background:#fff;font-size:14px;cursor:pointer}
+.modal .btn-row button.primary{background:#185FA5;color:#fff;border-color:#185FA5}
+.modal .txt{font-size:13px;color:#666;margin-bottom:12px;line-height:1.5}
+.calib-panel{position:absolute;top:12px;right:12px;background:#fff;padding:14px 16px;border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.18);z-index:20;width:240px;display:none;border:1px solid #e0e0e0}
+.calib-panel.show{display:block}
+.calib-panel h3{margin-bottom:8px;font-size:15px;font-weight:500}
+.calib-panel .txt{font-size:12px;color:#666;margin-bottom:10px;line-height:1.5}
+.calib-panel label{display:block;margin-bottom:4px;font-size:13px;color:#555}
+.calib-panel input{width:100%;padding:8px 10px;margin-bottom:8px;border:1px solid #ccc;border-radius:6px;font-size:14px;outline:none}
+.calib-panel input:focus{border-color:#185FA5}
+.calib-panel .status{font-size:13px;color:#185FA5;margin:0 0 10px}
+.calib-panel .btn-row{display:flex;gap:8px}
+.calib-panel .btn-row button{flex:1;padding:8px;border-radius:6px;border:1px solid #ccc;background:#fff;font-size:14px;cursor:pointer}
+.calib-panel .btn-row button.primary{background:#185FA5;color:#fff;border-color:#185FA5}
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="importImage()">导入户型图</button>
+  <button id="placeBtn" class="accent" onclick="enterPlaceMode()">摆放</button>
+  <button id="scaleBtn" onclick="startCalibrate()">设置比例尺</button>
+  <button id="measureBtn" onclick="startMeasure()">测量距离</button>
+  <span class="sep"></span>
+  <button onclick="showAddModal()" class="accent">自定义家具</button>
+  <button onclick="rotateSelected()">旋转</button>
+  <button onclick="deleteSelected()">删除</button>
+  <span class="sep"></span>
+  <button onclick="resetView()">重置视图</button>
+  <button onclick="saveImage()">保存图片</button>
+  <span class="sep"></span>
+  <button onclick="exportJSON()">导出存档</button>
+  <button onclick="document.getElementById('jsonInput').click()">导入存档</button>
+  <span class="sep"></span>
+  <span class="info" id="info">请先导入户型图</span>
+</div>
+
+<div class="preset-bar" id="presetBar"></div>
+
+<div class="canvas-wrap" id="canvasWrap">
+  <canvas id="canvas"></canvas>
+  <div class="hint" id="hint"></div>
+  <div class="calib-panel" id="calibPanel">
+    <h3>校准比例尺</h3>
+    <div class="txt">在户型图上找一段已知尺寸的墙，依次点击它的<strong>两个端点</strong>，然后输入实际长度。</div>
+    <label>这段距离的实际长度 (cm)</label>
+    <input type="number" id="scaleDist" placeholder="例如：420">
+    <div class="status" id="calibStatus">已选 0 个点</div>
+    <div class="btn-row">
+      <button onclick="resetCalibPoints()">重新定点</button>
+      <button onclick="cancelCalibrate()">取消</button>
+      <button class="primary" onclick="finishCalibrate()">确定</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="addModal">
+  <div class="modal">
+    <h3>添加家具</h3>
+    <label>名称</label>
+    <input type="text" id="fName" placeholder="例如：沙发、双人床">
+    <label>宽度 (cm)</label>
+    <input type="number" id="fW" placeholder="例如：180">
+    <label>深度 (cm)</label>
+    <input type="number" id="fH" placeholder="例如：90">
+    <div class="btn-row">
+      <button onclick="cancelAdd()">取消</button>
+      <button class="primary" onclick="addCustom()">添加</button>
+    </div>
+  </div>
+</div>
+
+
+<input type="file" id="fileInput" accept="image/*" style="display:none" onchange="loadImage(event)">
+<input type="file" id="jsonInput" accept=".json,application/json" style="display:none" onchange="importJSON(event)">
+
+<script>
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+const wrap = document.getElementById('canvasWrap');
+const hintEl = document.getElementById('hint');
+const infoEl = document.getElementById('info');
+
+const COLORS = [
+  '#5B9BD5','#ED7D31','#A5A5A5','#FFC000','#70AD47','#7030A0',
+  '#C55A11','#4472C4','#548235','#BF8F00','#8064A2','#D32F2F'
+];
+
+const PRESETS = [
+  {n:'三人沙发',w:210,h:90},{n:'双人沙发',w:160,h:90},{n:'单人沙发',w:85,h:90},
+  {n:'双人床',w:180,h:200},{n:'1.5m床',w:150,h:200},{n:'单人床',w:100,h:200},
+  {n:'餐桌4人',w:120,h:80},{n:'餐桌6人',w:160,h:90},{n:'茶几',w:120,h:60},
+  {n:'电视柜',w:200,h:45},{n:'衣柜',w:200,h:60},{n:'书桌',w:120,h:60},
+  {n:'书柜',w:120,h:35},{n:'鞋柜',w:100,h:35},{n:'冰箱',w:70,h:65},
+  {n:'洗衣机',w:60,h:60},{n:'马桶',w:42,h:70},{n:'淋浴房',w:90,h:90},
+  {n:'浴缸',w:160,h:80},{n:'橱柜',w:200,h:60},{n:'玄关柜',w:100,h:40},
+  {n:'床头柜',w:45,h:40},{n:'梳妆台',w:80,h:50},{n:'岛台',w:120,h:80},
+];
+
+let bgImage = null;
+let bgDataUrl = null;
+let viewScale = 1, viewX = 0, viewY = 0;
+let pixelsPerCm = null;
+let furniture = [];
+let nextId = 1;
+let selectedId = null;
+let mode = 'idle';
+let calibPoints = [];
+let dragData = null;
+let panData = null;
+let measure = {p1:null, p2:null};
+let dragPt = null;
+let lastScaleDist = '';
+const STORAGE_KEY = 'furniture_layout_autosave';
+let saveTimer = null;
+
+function init() {
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+  bindEvents();
+  buildPresetBar();
+  if (loadFromStorage() && bgImage) {
+    bgImage.onload = ()=>{
+      updateInfo();
+      render();
+      showHint('已自动恢复上次的布局');
+      setTimeout(hideHint, 2500);
+    };
+    if (bgImage.complete) bgImage.onload();
+    render();
+  } else {
+    render();
+  }
+}
+
+function resizeCanvas() {
+  canvas.width = wrap.clientWidth;
+  canvas.height = wrap.clientHeight;
+  if (!bgImage) fitView();
+  render();
+}
+
+function fitView(img) {
+  let iw = img ? img.width : 800, ih = img ? img.height : 600;
+  viewScale = Math.min(canvas.width/iw*.9, canvas.height/ih*.9) || 0.5;
+  viewX = (canvas.width - iw*viewScale)/2;
+  viewY = (canvas.height - ih*viewScale)/2;
+}
+
+function screenToWorld(sx, sy) {
+  return {x:(sx-viewX)/viewScale, y:(sy-viewY)/viewScale};
+}
+
+function hitPoint(pt, world) {
+  if (!pt) return false;
+  let r = 14/viewScale;
+  return Math.abs(world.x-pt.x)<r && Math.abs(world.y-pt.y)<r;
+}
+
+function render() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  ctx.save();
+  ctx.translate(viewX, viewY);
+  ctx.scale(viewScale, viewScale);
+  ctx.imageSmoothingEnabled = true;
+
+  if (bgImage) {
+    ctx.drawImage(bgImage, 0, 0);
+  } else {
+    ctx.fillStyle = '#e8e8e8';
+    ctx.fillRect(0,0,800,600);
+    ctx.fillStyle = '#999';
+    ctx.font = '18px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('点击左上角"导入户型图"',400,290);
+    ctx.font = '14px sans-serif';
+    ctx.fillText('上传你家户型图开始摆放',400,315);
+  }
+
+  calibPoints.forEach((p,i)=>{
+    ctx.fillStyle='#e74c3c';
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,8/viewScale,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle='#fff';
+    ctx.font=`${12/viewScale}px sans-serif`;
+    ctx.textAlign='center';
+    ctx.fillText(i+1, p.x, p.y+4/viewScale);
+  });
+  if (calibPoints.length===2) {
+    ctx.strokeStyle='#e74c3c';
+    ctx.lineWidth=2/viewScale;
+    ctx.setLineDash([8/viewScale,4/viewScale]);
+    ctx.beginPath();
+    ctx.moveTo(calibPoints[0].x,calibPoints[0].y);
+    ctx.lineTo(calibPoints[1].x,calibPoints[1].y);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    let mx=(calibPoints[0].x+calibPoints[1].x)/2;
+    let my=(calibPoints[0].y+calibPoints[1].y)/2-10/viewScale;
+    let dist=Math.sqrt((calibPoints[1].x-calibPoints[0].x)**2+(calibPoints[1].y-calibPoints[0].y)**2);
+    if (pixelsPerCm){
+      ctx.fillStyle='#e74c3c';
+      ctx.font=`bold ${13/viewScale}px sans-serif`;
+      ctx.textAlign='center';
+      ctx.fillText((dist/pixelsPerCm).toFixed(0)+'cm',mx,my);
+    }
+  }
+
+  furniture.forEach(f=>{
+    let scale=pixelsPerCm||0.5;
+    let pw=f.w*scale, ph=f.h*scale;
+    if (f.rot){let t=pw; pw=ph; ph=t;}
+
+    ctx.save();
+    ctx.translate(f.x, f.y);
+
+    ctx.fillStyle=f.color+'50';
+    ctx.strokeStyle=f.color;
+    ctx.lineWidth=(selectedId===f.id?3:1.5)/viewScale;
+    ctx.fillRect(-pw/2, -ph/2, pw, ph);
+    ctx.strokeRect(-pw/2, -ph/2, pw, ph);
+
+    if (selectedId===f.id){
+      ctx.strokeStyle='#185FA5';
+      ctx.lineWidth=3/viewScale;
+      ctx.setLineDash([4/viewScale,4/viewScale]);
+      ctx.strokeRect(-pw/2-3/viewScale, -ph/2-3/viewScale, pw+6/viewScale, ph+6/viewScale);
+      ctx.setLineDash([]);
+    }
+
+    ctx.fillStyle='#222';
+    let fs=Math.max(11, pixelsPerCm?Math.min(14, pw*0.12):12)/viewScale;
+    ctx.font=`500 ${fs}px sans-serif`;
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    let labelW=f.rot?f.h:f.w;
+    let labelH=f.rot?f.w:f.h;
+    if (ph>fs*3){
+      ctx.fillText(f.name, 0, -fs*0.6);
+      ctx.fillText(labelW+'×'+labelH+'cm', 0, fs*0.6);
+    } else if (ph>fs*1.5){
+      ctx.fillText(f.name+' '+labelW+'×'+labelH, 0, 0);
+    } else {
+      ctx.font=`${Math.max(10,fs*0.8)}px sans-serif`;
+      ctx.fillText(f.name,0,0);
+    }
+    ctx.restore();
+  });
+
+  // 测量线
+  if (measure.p1 || measure.p2) {
+    if (measure.p1) {
+      ctx.fillStyle='#27ae60';
+      ctx.beginPath();
+      ctx.arc(measure.p1.x,measure.p1.y,8/viewScale,0,Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle='#fff';
+      ctx.font=`${12/viewScale}px sans-serif`;
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillText('1',measure.p1.x,measure.p1.y);
+    }
+    if (measure.p2) {
+      ctx.fillStyle='#27ae60';
+      ctx.beginPath();
+      ctx.arc(measure.p2.x,measure.p2.y,8/viewScale,0,Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle='#fff';
+      ctx.font=`${12/viewScale}px sans-serif`;
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillText('2',measure.p2.x,measure.p2.y);
+    }
+    if (measure.p1 && measure.p2) {
+      ctx.strokeStyle='#27ae60';
+      ctx.lineWidth=2/viewScale;
+      ctx.beginPath();
+      ctx.moveTo(measure.p1.x,measure.p1.y);
+      ctx.lineTo(measure.p2.x,measure.p2.y);
+      ctx.stroke();
+      let mx=(measure.p1.x+measure.p2.x)/2;
+      let my=(measure.p1.y+measure.p2.y)/2;
+      let dist=Math.sqrt((measure.p2.x-measure.p1.x)**2+(measure.p2.y-measure.p1.y)**2);
+      let label = pixelsPerCm
+        ? (dist/pixelsPerCm/100).toFixed(2)+'m ('+(dist/pixelsPerCm).toFixed(0)+'cm)'
+        : '未校准比例尺';
+      let fs=14/viewScale;
+      ctx.font=`bold ${fs}px sans-serif`;
+      let tw=ctx.measureText(label).width+16/viewScale;
+      let th=fs+8/viewScale;
+      ctx.fillStyle='#27ae60';
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(mx-tw/2, my-th-fs, tw, th, 6/viewScale) :
+        ctx.rect(mx-tw/2, my-th-fs, tw, th);
+      ctx.fill();
+      ctx.fillStyle='#fff';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillText(label, mx, my-th-fs+th/2);
+    }
+  }
+
+  ctx.restore();
+}
+
+function hitTest(f, wx, wy) {
+  let scale = pixelsPerCm || 0.5;
+  let pw = f.w*scale, ph = f.h*scale;
+  if (f.rot) {let t=pw; pw=ph; ph=t;}
+  return wx>=f.x-pw/2 && wx<=f.x+pw/2 && wy>=f.y-ph/2 && wy<=f.y+ph/2;
+}
+
+function bindEvents() {
+  canvas.addEventListener('wheel', e=>{
+    if (!bgImage) return;
+    e.preventDefault();
+    let rect = canvas.getBoundingClientRect();
+    let sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+    let world = screenToWorld(sx, sy);
+    let f = e.deltaY < 0 ? 1.1 : 1/1.1;
+    viewScale = Math.max(0.05, Math.min(10, viewScale*f));
+    viewX = sx - world.x*viewScale;
+    viewY = sy - world.y*viewScale;
+    render();
+    autoSave();
+  });
+
+  canvas.addEventListener('mousedown', e=>{
+    let rect = canvas.getBoundingClientRect();
+    let sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+    let world = screenToWorld(sx, sy);
+
+    if (mode === 'calibrating') {
+      let hit = calibPoints.findIndex(p=>hitPoint(p,world));
+      if (hit>=0) { dragPt={type:'calib',idx:hit}; render(); return; }
+      if (calibPoints.length<2) {
+        calibPoints.push({x:world.x,y:world.y});
+        document.getElementById('calibStatus').textContent = `已选 ${calibPoints.length} 个点`;
+        if (calibPoints.length===2) showHint('可拖动红点微调位置，然后输入实际长度');
+      }
+      render();
+      return;
+    }
+
+    if (mode === 'measuring') {
+      if (!measure.p1) { measure.p1={x:world.x,y:world.y}; render(); return; }
+      if (!measure.p2) { measure.p2={x:world.x,y:world.y}; render(); return; }
+      if (hitPoint(measure.p1,world)) { dragPt={type:'measure',idx:0}; return; }
+      if (hitPoint(measure.p2,world)) { dragPt={type:'measure',idx:1}; return; }
+      measure.p1={x:world.x,y:world.y}; measure.p2=null;
+      render();
+      return;
+    }
+
+    for (let i=furniture.length-1; i>=0; i--) {
+      if (hitTest(furniture[i], world.x, world.y)) {
+        selectedId = furniture[i].id;
+        mode = 'dragging';
+        dragData = {id: furniture[i].id, ox: world.x-furniture[i].x, oy: world.y-furniture[i].y};
+        wrap.classList.add('dragging');
+        let f = furniture.splice(i,1)[0];
+        furniture.push(f);
+        render();
+        return;
+      }
+    }
+
+    selectedId = null;
+    mode = 'panning';
+    panData = {sx, sy, vx: viewX, vy: viewY};
+    wrap.style.cursor = 'grabbing';
+    render();
+  });
+
+  canvas.addEventListener('mousemove', e=>{
+    let rect = canvas.getBoundingClientRect();
+    let sx = e.clientX - rect.left, sy = e.clientY - rect.top;
+    let world = screenToWorld(sx, sy);
+
+    if (dragPt) {
+      if (dragPt.type==='calib') calibPoints[dragPt.idx]={x:world.x,y:world.y};
+      else if (dragPt.type==='measure') {
+        if (dragPt.idx===0) measure.p1={x:world.x,y:world.y};
+        else measure.p2={x:world.x,y:world.y};
+      }
+      render();
+      return;
+    }
+
+    if (mode === 'dragging' && dragData) {
+      let f = furniture.find(f=>f.id===dragData.id);
+      if (f) {
+        f.x = world.x - dragData.ox;
+        f.y = world.y - dragData.oy;
+        render();
+      }
+    } else if (mode === 'panning' && panData) {
+      viewX = panData.vx + (sx - panData.sx);
+      viewY = panData.vy + (sy - panData.sy);
+      render();
+    }
+
+    if (mode === 'idle' && bgImage) {
+      let over = furniture.some(f=>hitTest(f, world.x, world.y));
+      wrap.style.cursor = over ? 'pointer' : 'grab';
+    }
+  });
+
+  canvas.addEventListener('mouseup', ()=>{endDrag();});
+  canvas.addEventListener('mouseleave', ()=>{endDrag();});
+
+  canvas.addEventListener('dblclick', e=>{
+    let rect = canvas.getBoundingClientRect();
+    let world = screenToWorld(e.clientX-rect.left, e.clientY-rect.top);
+    for (let i=furniture.length-1; i>=0; i--) {
+      if (hitTest(furniture[i], world.x, world.y)) {
+        furniture[i].rot = !furniture[i].rot;
+        selectedId = furniture[i].id;
+        render();
+        return;
+      }
+    }
+  });
+
+  document.addEventListener('keydown', e=>{
+    if (selectedId===null) return;
+    if (document.activeElement.tagName==='INPUT') return;
+    if (e.key==='Delete'||e.key==='Backspace') deleteSelected();
+    if (e.key==='r'||e.key==='R') rotateSelected();
+  });
+}
+
+function endDrag() {
+  if (dragPt) { dragPt=null; autoSave(); }
+  if (mode==='dragging'||mode==='panning') {
+    mode = 'idle';
+    dragData = null;
+    panData = null;
+    wrap.classList.remove('dragging');
+    wrap.style.cursor = 'grab';
+    autoSave();
+  }
+}
+
+function showHint(text) {
+  hintEl.textContent = text;
+  hintEl.classList.add('show');
+}
+function hideHint() {
+  hintEl.classList.remove('show');
+}
+
+function buildPresetBar() {
+  let bar = document.getElementById('presetBar');
+  bar.innerHTML = '';
+  PRESETS.forEach(p=>{
+    let btn = document.createElement('button');
+    btn.textContent = `${p.n} ${p.w}×${p.h}`;
+    btn.onclick = ()=>addPreset(p);
+    bar.appendChild(btn);
+  });
+}
+
+function addPreset(p) {
+  addFurniture(p.n, p.w, p.h);
+}
+
+function addFurniture(name, w, h) {
+  let color = COLORS[(nextId-1)%COLORS.length];
+  let center = screenToWorld(canvas.width/2, canvas.height/2);
+  furniture.push({id:nextId++, name, w, h, x:center.x, y:center.y, rot:false, color});
+  selectedId = nextId-1;
+  updateInfo();
+  render();
+  autoSave();
+}
+
+function updateInfo() {
+  if (pixelsPerCm) {
+    infoEl.textContent = `1cm=${pixelsPerCm.toFixed(2)}px | 家具:${furniture.length}件`;
+  } else if (bgImage) {
+    infoEl.textContent = `未校准比例尺 | 家具:${furniture.length}件`;
+  } else {
+    infoEl.textContent = '请先导入户型图';
+  }
+}
+
+function importImage() {
+  document.getElementById('fileInput').click();
+}
+
+function loadImage(e) {
+  let file = e.target.files[0];
+  if (!file) return;
+  let r = new FileReader();
+  r.onload = ev=>{
+    bgDataUrl = ev.target.result;
+    let img = new Image();
+    img.onload = ()=>{
+      bgImage = img;
+      furniture = [];
+      selectedId = null;
+      pixelsPerCm = null;
+      calibPoints = [];
+      lastScaleDist = '';
+      measure = {p1:null, p2:null};
+      dragPt = null;
+      fitView(img);
+      updateInfo();
+      render();
+      autoSave();
+      showHint('现在点击"设置比例尺"校准尺寸');
+      setTimeout(hideHint, 3000);
+    };
+    img.src = bgDataUrl;
+  };
+  r.readAsDataURL(file);
+  e.target.value = '';
+}
+
+function setActiveModeBtn(activeId) {
+  ['placeBtn','scaleBtn','measureBtn'].forEach(id=>document.getElementById(id).classList.remove('accent'));
+  if (activeId) document.getElementById(activeId).classList.add('accent');
+}
+
+function enterPlaceMode() {
+  mode = 'idle';
+  setActiveModeBtn('placeBtn');
+  wrap.classList.remove('calibrating');
+  document.getElementById('calibPanel').classList.remove('show');
+  hideHint();
+  render();
+}
+
+function startCalibrate() {
+  if (mode==='calibrating') { enterPlaceMode(); return; }
+  if (!bgImage) {alert('请先导入户型图'); return;}
+  mode = 'calibrating';
+  setActiveModeBtn('scaleBtn');
+  wrap.classList.add('calibrating');
+  document.getElementById('calibPanel').classList.add('show');
+  if (calibPoints.length===2) {
+    document.getElementById('scaleDist').value = lastScaleDist || '';
+    document.getElementById('calibStatus').textContent = '已校准：可拖动红点微调，或改长度后重新确定';
+    showHint('在上次基础上微调红点，或改长度后重新确定');
+  } else {
+    calibPoints = [];
+    pixelsPerCm = null;
+    document.getElementById('scaleDist').value = '';
+    document.getElementById('calibStatus').textContent = '已选 0 个点';
+  }
+  render();
+}
+
+function resetCalibPoints() {
+  calibPoints = [];
+  pixelsPerCm = null;
+  lastScaleDist = '';
+  document.getElementById('scaleDist').value = '';
+  document.getElementById('calibStatus').textContent = '已选 0 个点';
+  updateInfo();
+  render();
+}
+
+function finishCalibrate() {
+  let d = parseFloat(document.getElementById('scaleDist').value);
+  if (!d||d<=0) {alert('请输入有效距离'); return;}
+  if (calibPoints.length!==2) {alert('请先在图上点击两个点'); return;}
+  let dx = calibPoints[1].x - calibPoints[0].x;
+  let dy = calibPoints[1].y - calibPoints[0].y;
+  pixelsPerCm = Math.sqrt(dx*dx+dy*dy)/d;
+  lastScaleDist = d;
+  enterPlaceMode();
+  updateInfo();
+  autoSave();
+  showHint('比例尺已校准！现在可以添加家具了');
+  setTimeout(hideHint, 2500);
+}
+
+function cancelCalibrate() {
+  if (calibPoints.length < 2) calibPoints = [];
+  enterPlaceMode();
+}
+
+function startMeasure() {
+  if (mode==='measuring') { enterPlaceMode(); return; }
+  if (!bgImage) {alert('请先导入户型图'); return;}
+  if (!pixelsPerCm) {alert('请先"设置比例尺"校准后再测量'); return;}
+  mode = 'measuring';
+  setActiveModeBtn('measureBtn');
+  wrap.classList.add('calibrating');
+  if (measure.p1 && measure.p2) showHint('拖动绿点微调，或点空白处重新测量');
+  else showHint('点两个点测量距离，可拖动绿点微调');
+  render();
+}
+
+function showAddModal() {
+  document.getElementById('addModal').classList.add('show');
+  document.getElementById('fName').focus();
+}
+
+function cancelAdd() {
+  document.getElementById('addModal').classList.remove('show');
+  document.getElementById('fName').value='';
+  document.getElementById('fW').value='';
+  document.getElementById('fH').value='';
+}
+
+function addCustom() {
+  let n = document.getElementById('fName').value.trim()||'家具';
+  let w = parseFloat(document.getElementById('fW').value);
+  let h = parseFloat(document.getElementById('fH').value);
+  if (!w||!h||w<=0||h<=0){alert('请输入有效尺寸');return;}
+  addFurniture(n,w,h);
+  cancelAdd();
+}
+
+function rotateSelected() {
+  if (selectedId===null){alert('请先点选一个家具');return;}
+  let f = furniture.find(f=>f.id===selectedId);
+  if(f){f.rot=!f.rot;render();autoSave();}
+}
+
+function deleteSelected() {
+  if (selectedId===null) return;
+  furniture = furniture.filter(f=>f.id!==selectedId);
+  selectedId = null;
+  updateInfo();
+  render();
+  autoSave();
+}
+
+function resetView() {
+  if (bgImage) {fitView(bgImage);render();autoSave();}
+  else {viewScale=1;viewX=0;viewY=0;render();}
+}
+
+function saveImage() {
+  if (!bgImage&&furniture.length===0){alert('还没有内容可以保存');return;}
+  let a=document.createElement('a');
+  a.download='家具摆放布局.png';
+  a.href=canvas.toDataURL('image/png');
+  a.click();
+  showHint('图片已保存');
+  setTimeout(hideHint,2000);
+}
+
+// ---- 存档：自动保存 / 加载 / 导出 / 导入 ----
+function compressImage(img, maxDim, quality) {
+  let c = document.createElement('canvas');
+  let w = img.width, h = img.height;
+  if (w>maxDim || h>maxDim) {
+    if (w>h) { h = h*maxDim/w; w = maxDim; }
+    else { w = w*maxDim/h; h = maxDim; }
+  }
+  c.width = w; c.height = h;
+  c.getContext('2d').drawImage(img, 0, 0, w, h);
+  return c.toDataURL('image/jpeg', quality);
+}
+
+function getProjectData(fullImg) {
+  return {
+    version: 1,
+    savedAt: new Date().toISOString(),
+    pixelsPerCm,
+    calibPoints,
+    lastScaleDist,
+    measure,
+    furniture,
+    nextId,
+    viewScale, viewX, viewY,
+    bgDataUrl: bgImage ? (fullImg ? bgDataUrl : compressImage(bgImage, 1600, 0.7)) : null
+  };
+}
+
+function autoSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(()=>{
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(getProjectData(false)));
+    } catch(e) {
+      console.warn('自动保存失败(可能存储已满):', e);
+    }
+  }, 400);
+}
+
+function loadFromStorage() {
+  try {
+    let raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return false;
+    let data = JSON.parse(raw);
+    pixelsPerCm = data.pixelsPerCm || null;
+    calibPoints = data.calibPoints || [];
+    lastScaleDist = data.lastScaleDist || '';
+    measure = data.measure || {p1:null,p2:null};
+    furniture = data.furniture || [];
+    nextId = data.nextId || 1;
+    viewScale = data.viewScale || 1;
+    viewX = data.viewX || 0;
+    viewY = data.viewY || 0;
+    if (data.bgDataUrl) {
+      bgDataUrl = data.bgDataUrl;
+      bgImage = new Image();
+      bgImage.onload = ()=>{ updateInfo(); render(); };
+      bgImage.src = data.bgDataUrl;
+    }
+    return true;
+  } catch(e) {
+    console.warn('加载存档失败:', e);
+    return false;
+  }
+}
+
+function exportJSON() {
+  if (!bgImage && furniture.length===0) { alert('没有内容可导出'); return; }
+  let blob = new Blob([JSON.stringify(getProjectData(true))], {type:'application/json'});
+  let a = document.createElement('a');
+  a.download = '家具摆放存档.json';
+  a.href = URL.createObjectURL(blob);
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showHint('存档文件已导出');
+  setTimeout(hideHint, 2000);
+}
+
+function importJSON(e) {
+  let file = e.target.files[0];
+  if (!file) return;
+  let r = new FileReader();
+  r.onload = ev=>{
+    try {
+      let data = JSON.parse(ev.target.result);
+      pixelsPerCm = data.pixelsPerCm || null;
+      calibPoints = data.calibPoints || [];
+      lastScaleDist = data.lastScaleDist || '';
+      measure = data.measure || {p1:null,p2:null};
+      furniture = data.furniture || [];
+      nextId = data.nextId || 1;
+      viewScale = data.viewScale || 1;
+      viewX = data.viewX || 0;
+      viewY = data.viewY || 0;
+      selectedId = null;
+      if (data.bgDataUrl) {
+        bgDataUrl = data.bgDataUrl;
+        bgImage = new Image();
+        bgImage.onload = ()=>{ updateInfo(); render(); autoSave(); };
+        bgImage.src = data.bgDataUrl;
+      } else {
+        bgImage = null;
+        bgDataUrl = null;
+      }
+      updateInfo();
+      render();
+      autoSave();
+      showHint('存档已加载');
+      setTimeout(hideHint, 2000);
+    } catch(err) {
+      alert('文件格式错误，无法加载');
+    }
+  };
+  r.readAsText(file);
+  e.target.value = '';
+}
+
+init();
+</script>
+</body>
+</html>
