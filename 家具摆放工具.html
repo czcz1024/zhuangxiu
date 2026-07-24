@@ -78,8 +78,8 @@ canvas{display:block;position:absolute;top:0;left:0}
   <div class="calib-panel" id="calibPanel">
     <h3>校准比例尺</h3>
     <div class="txt">在户型图上找一段已知尺寸的墙，依次点击它的<strong>两个端点</strong>，然后输入实际长度。</div>
-    <label>这段距离的实际长度 (cm)</label>
-    <input type="number" id="scaleDist" placeholder="例如：420">
+    <label>这段距离的实际长度 (mm)</label>
+    <input type="number" id="scaleDist" placeholder="例如：4200">
     <div class="status" id="calibStatus">已选 0 个点</div>
     <div class="btn-row">
       <button onclick="resetCalibPoints()">重新定点</button>
@@ -94,10 +94,10 @@ canvas{display:block;position:absolute;top:0;left:0}
     <h3>添加家具</h3>
     <label>名称</label>
     <input type="text" id="fName" placeholder="例如：沙发、双人床">
-    <label>宽度 (cm)</label>
-    <input type="number" id="fW" placeholder="例如：180">
-    <label>深度 (cm)</label>
-    <input type="number" id="fH" placeholder="例如：90">
+    <label>宽度 (mm)</label>
+    <input type="number" id="fW" placeholder="例如：1800">
+    <label>深度 (mm)</label>
+    <input type="number" id="fH" placeholder="例如：900">
     <div class="btn-row">
       <button onclick="cancelAdd()">取消</button>
       <button class="primary" onclick="addCustom()">添加</button>
@@ -152,7 +152,7 @@ const PRESETS = [
 let bgImage = null;
 let bgDataUrl = null;
 let viewScale = 1, viewX = 0, viewY = 0;
-let pixelsPerCm = null;
+let pixelsPerMm = null;
 let furniture = [];
 let nextId = 1;
 let selectedId = null;
@@ -252,16 +252,16 @@ function render() {
     let mx=(calibPoints[0].x+calibPoints[1].x)/2;
     let my=(calibPoints[0].y+calibPoints[1].y)/2-10/viewScale;
     let dist=Math.sqrt((calibPoints[1].x-calibPoints[0].x)**2+(calibPoints[1].y-calibPoints[0].y)**2);
-    if (pixelsPerCm){
+    if (pixelsPerMm){
       ctx.fillStyle='#e74c3c';
       ctx.font=`bold ${13/viewScale}px sans-serif`;
       ctx.textAlign='center';
-      ctx.fillText((dist/pixelsPerCm).toFixed(0)+'cm',mx,my);
+      ctx.fillText((dist/pixelsPerMm).toFixed(0)+'mm',mx,my);
     }
   }
 
   furniture.forEach(f=>{
-    let scale=pixelsPerCm||0.5;
+    let scale=pixelsPerMm||0.05;
     let pw=f.w*scale, ph=f.h*scale;
     if (f.rot){let t=pw; pw=ph; ph=t;}
 
@@ -283,7 +283,7 @@ function render() {
     }
 
     ctx.fillStyle='#222';
-    let fs=Math.max(11, pixelsPerCm?Math.min(14, pw*0.12):12)/viewScale;
+    let fs=Math.max(11, pixelsPerMm?Math.min(14, pw*0.12):12)/viewScale;
     ctx.font=`500 ${fs}px sans-serif`;
     ctx.textAlign='center';
     ctx.textBaseline='middle';
@@ -291,7 +291,7 @@ function render() {
     let labelH=f.rot?f.w:f.h;
     if (ph>fs*3){
       ctx.fillText(f.name, 0, -fs*0.6);
-      ctx.fillText(labelW+'×'+labelH+'cm', 0, fs*0.6);
+      ctx.fillText(labelW+'×'+labelH+'mm', 0, fs*0.6);
     } else if (ph>fs*1.5){
       ctx.fillText(f.name+' '+labelW+'×'+labelH, 0, 0);
     } else {
@@ -335,8 +335,8 @@ function render() {
       let mx=(measure.p1.x+measure.p2.x)/2;
       let my=(measure.p1.y+measure.p2.y)/2;
       let dist=Math.sqrt((measure.p2.x-measure.p1.x)**2+(measure.p2.y-measure.p1.y)**2);
-      let label = pixelsPerCm
-        ? (dist/pixelsPerCm/100).toFixed(2)+'m ('+(dist/pixelsPerCm).toFixed(0)+'cm)'
+      let label = pixelsPerMm
+        ? (dist/pixelsPerMm/1000).toFixed(2)+'m ('+(dist/pixelsPerMm).toFixed(0)+'mm)'
         : '未校准比例尺';
       let fs=14/viewScale;
       ctx.font=`bold ${fs}px sans-serif`;
@@ -358,7 +358,7 @@ function render() {
 }
 
 function hitTest(f, wx, wy) {
-  let scale = pixelsPerCm || 0.5;
+  let scale = pixelsPerMm || 0.05;
   let pw = f.w*scale, ph = f.h*scale;
   if (f.rot) {let t=pw; pw=ph; ph=t;}
   return wx>=f.x-pw/2 && wx<=f.x+pw/2 && wy>=f.y-ph/2 && wy<=f.y+ph/2;
@@ -408,17 +408,24 @@ function bindEvents() {
 
     for (let i=furniture.length-1; i>=0; i--) {
       if (hitTest(furniture[i], world.x, world.y)) {
-        selectedId = furniture[i].id;
-        mode = 'dragging';
-        dragData = {id: furniture[i].id, ox: world.x-furniture[i].x, oy: world.y-furniture[i].y};
-        wrap.classList.add('dragging');
-        let f = furniture.splice(i,1)[0];
-        furniture.push(f);
+        if (selectedId === furniture[i].id) {
+          // 点已选中的家具 → 开始拖拽
+          mode = 'dragging';
+          dragData = {id: furniture[i].id, ox: world.x-furniture[i].x, oy: world.y-furniture[i].y};
+          wrap.classList.add('dragging');
+        } else {
+          // 点另一个家具 → 切换选中
+          selectedId = furniture[i].id;
+          mode = 'idle';
+          let f = furniture.splice(i,1)[0];
+          furniture.push(f);
+        }
         render();
         return;
       }
     }
 
+    // 点击空白 → 取消选中 + 画布拖动
     selectedId = null;
     mode = 'panning';
     panData = {sx, sy, vx: viewX, vy: viewY};
@@ -457,6 +464,11 @@ function bindEvents() {
     if (mode === 'idle' && bgImage) {
       let over = furniture.some(f=>hitTest(f, world.x, world.y));
       wrap.style.cursor = over ? 'pointer' : 'grab';
+      if (over && selectedId!==null) {
+        // 悬停在已选中的家具上 → 提示可拖拽
+        let overSelected = furniture.some(f=>hitTest(f, world.x, world.y) && f.id===selectedId);
+        wrap.style.cursor = overSelected ? 'move' : 'pointer';
+      }
     }
   });
 
@@ -536,8 +548,8 @@ function addFurniture(name, w, h) {
 }
 
 function updateInfo() {
-  if (pixelsPerCm) {
-    infoEl.textContent = `1cm=${pixelsPerCm.toFixed(2)}px | 家具:${furniture.length}件`;
+  if (pixelsPerMm) {
+    infoEl.textContent = `1mm=${pixelsPerMm.toFixed(2)}px | 家具:${furniture.length}件`;
   } else if (bgImage) {
     infoEl.textContent = `未校准比例尺 | 家具:${furniture.length}件`;
   } else {
@@ -560,7 +572,7 @@ function loadImage(e) {
       bgImage = img;
       furniture = [];
       selectedId = null;
-      pixelsPerCm = null;
+      pixelsPerMm = null;
       calibPoints = [];
       lastScaleDist = '';
       measure = {p1:null, p2:null};
@@ -605,7 +617,7 @@ function startCalibrate() {
     showHint('在上次基础上微调红点，或改长度后重新确定');
   } else {
     calibPoints = [];
-    pixelsPerCm = null;
+    pixelsPerMm = null;
     document.getElementById('scaleDist').value = '';
     document.getElementById('calibStatus').textContent = '已选 0 个点';
   }
@@ -614,7 +626,7 @@ function startCalibrate() {
 
 function resetCalibPoints() {
   calibPoints = [];
-  pixelsPerCm = null;
+  pixelsPerMm = null;
   lastScaleDist = '';
   document.getElementById('scaleDist').value = '';
   document.getElementById('calibStatus').textContent = '已选 0 个点';
@@ -628,7 +640,7 @@ function finishCalibrate() {
   if (calibPoints.length!==2) {alert('请先在图上点击两个点'); return;}
   let dx = calibPoints[1].x - calibPoints[0].x;
   let dy = calibPoints[1].y - calibPoints[0].y;
-  pixelsPerCm = Math.sqrt(dx*dx+dy*dy)/d;
+  pixelsPerMm = Math.sqrt(dx*dx+dy*dy)/d;
   lastScaleDist = d;
   enterPlaceMode();
   updateInfo();
@@ -645,7 +657,7 @@ function cancelCalibrate() {
 function startMeasure() {
   if (mode==='measuring') { enterPlaceMode(); return; }
   if (!bgImage) {alert('请先导入户型图'); return;}
-  if (!pixelsPerCm) {alert('请先"设置比例尺"校准后再测量'); return;}
+  if (!pixelsPerMm) {alert('请先"设置比例尺"校准后再测量'); return;}
   mode = 'measuring';
   setActiveModeBtn('measureBtn');
   wrap.classList.add('calibrating');
@@ -722,7 +734,7 @@ function getProjectData(fullImg) {
   return {
     version: 1,
     savedAt: new Date().toISOString(),
-    pixelsPerCm,
+    pixelsPerMm,
     calibPoints,
     lastScaleDist,
     measure,
@@ -749,7 +761,7 @@ function loadFromStorage() {
     let raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return false;
     let data = JSON.parse(raw);
-    pixelsPerCm = data.pixelsPerCm || null;
+    pixelsPerMm = data.pixelsPerMm || null;
     calibPoints = data.calibPoints || [];
     lastScaleDist = data.lastScaleDist || '';
     measure = data.measure || {p1:null,p2:null};
@@ -790,7 +802,7 @@ function importJSON(e) {
   r.onload = ev=>{
     try {
       let data = JSON.parse(ev.target.result);
-      pixelsPerCm = data.pixelsPerCm || null;
+      pixelsPerMm = data.pixelsPerMm || null;
       calibPoints = data.calibPoints || [];
       lastScaleDist = data.lastScaleDist || '';
       measure = data.measure || {p1:null,p2:null};
