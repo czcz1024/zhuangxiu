@@ -14,9 +14,10 @@ body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f0f0;h
 .toolbar button.accent:hover{background:#0e4a85}
 .toolbar .sep{width:1px;height:22px;background:#ddd;margin:0 4px}
 .toolbar .info{font-size:12px;color:#888;margin-left:auto}
-.preset-bar{background:#fafafa;padding:6px 12px;display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid #eee;max-height:80px;overflow-y:auto}
+.preset-bar{padding:6px 12px;display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid #eee;max-height:120px;overflow-y:auto;align-items:center}
 .preset-bar button{padding:3px 10px;border:1px solid #ddd;background:#fff;border-radius:12px;cursor:pointer;font-size:12px;white-space:nowrap;color:#555}
 .preset-bar button:hover{background:#e3f0ff;border-color:#185FA5;color:#185FA5}
+.preset-bar .group-label{font-size:11px;color:#999;font-weight:600;padding:0 8px 0 2px;white-space:nowrap;letter-spacing:1px}
 .canvas-wrap{flex:1;position:relative;overflow:hidden;cursor:grab}
 .canvas-wrap:active{cursor:grabbing}
 .canvas-wrap.dragging{cursor:grabbing}
@@ -121,14 +122,31 @@ const COLORS = [
 ];
 
 const PRESETS = [
-  {n:'三人沙发',w:210,h:90},{n:'双人沙发',w:160,h:90},{n:'单人沙发',w:85,h:90},
-  {n:'双人床',w:180,h:200},{n:'1.5m床',w:150,h:200},{n:'单人床',w:100,h:200},
-  {n:'餐桌4人',w:120,h:80},{n:'餐桌6人',w:160,h:90},{n:'茶几',w:120,h:60},
-  {n:'电视柜',w:200,h:45},{n:'衣柜',w:200,h:60},{n:'书桌',w:120,h:60},
-  {n:'书柜',w:120,h:35},{n:'鞋柜',w:100,h:35},{n:'冰箱',w:70,h:65},
-  {n:'洗衣机',w:60,h:60},{n:'马桶',w:42,h:70},{n:'淋浴房',w:90,h:90},
-  {n:'浴缸',w:160,h:80},{n:'橱柜',w:200,h:60},{n:'玄关柜',w:100,h:40},
-  {n:'床头柜',w:45,h:40},{n:'梳妆台',w:80,h:50},{n:'岛台',w:120,h:80},
+  {room:'主卧',items:[
+    {n:'大衣柜',w:2250,h:700},{n:'斗柜',w:1050,h:550},{n:'书柜',w:1500,h:520},
+    {n:'床头柜',w:500,h:410},{n:'电脑桌',w:700,h:480},
+  ]},
+  {room:'阳台',items:[
+    {n:'斗柜',w:850,h:580},{n:'冰柜',w:600,h:600},{n:'条桌',w:1300,h:430},
+    {n:'小沙发',w:1000,h:750},{n:'写字台',w:1200,h:630},{n:'书架',w:1050,h:370},
+  ]},
+  {room:'客厅',items:[
+    {n:'沙发（三）',w:2000,h:950},{n:'沙发（二）',w:1700,h:950},{n:'茶几',w:1200,h:600},
+    {n:'拐角茶几',w:850,h:400},{n:'电视柜（带轮）',w:640,h:560},
+  ]},
+  {room:'次卧',items:[
+    {n:'床',w:1800,h:2000},{n:'衣柜',w:1300,h:600},{n:'床头柜',w:500,h:430},
+    {n:'书柜',w:1100,h:520},{n:'白柜',w:900,h:400},{n:'移动桌',w:500,h:410},
+    {n:'电脑桌',w:1950,h:600},
+  ]},
+  {room:'餐厅',items:[
+    {n:'餐桌',w:1200,h:750},{n:'冰箱',w:800,h:740},{n:'酒柜',w:1500,h:500},
+    {n:'微波炉架',w:600,h:400},{n:'抽屉斗',w:400,h:350},
+  ]},
+  {room:'大卧室',items:[
+    {n:'床',w:1200,h:2000},{n:'衣柜',w:800,h:570},{n:'写字台',w:1200,h:550},
+    {n:'书柜',w:800,h:330},{n:'书架',w:700,h:330},
+  ]},
 ];
 
 let bgImage = null;
@@ -489,16 +507,22 @@ function hideHint() {
 function buildPresetBar() {
   let bar = document.getElementById('presetBar');
   bar.innerHTML = '';
-  PRESETS.forEach(p=>{
-    let btn = document.createElement('button');
-    btn.textContent = `${p.n} ${p.w}×${p.h}`;
-    btn.onclick = ()=>addPreset(p);
-    bar.appendChild(btn);
+  PRESETS.forEach(g=>{
+    let label = document.createElement('span');
+    label.className = 'group-label';
+    label.textContent = g.room;
+    bar.appendChild(label);
+    g.items.forEach(p=>{
+      let btn = document.createElement('button');
+      btn.textContent = `${p.n} ${p.w}×${p.h}`;
+      btn.onclick = ()=>addPreset(g.room, p);
+      bar.appendChild(btn);
+    });
   });
 }
 
-function addPreset(p) {
-  addFurniture(p.n, p.w, p.h);
+function addPreset(room, p) {
+  addFurniture(room+'-'+p.n, p.w, p.h);
 }
 
 function addFurniture(name, w, h) {
