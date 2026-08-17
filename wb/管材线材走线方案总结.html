@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>管材线材走线方案总结：品牌型号·工艺·间距·避坑</title>
+<style>
+  :root {
+    --bg: #f8f7f4; --card-bg: #fff; --text: #2c2c2c; --muted: #6b6b6b;
+    --border: #e8e4dc; --accent: #2c7a4b; --accent-light: #e8f5e9;
+    --warn: #c0392b; --warn-light: #fef0ee; --blue: #2471a3; --blue-light: #eaf2f8;
+    --gold: #b8860b; --gold-light: #fef9e7;
+    --purple: #6c3483; --purple-light: #f4ecf7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:2rem 1rem;
+  }
+  .container { max-width:1100px; margin:0 auto; }
+
+  .header { text-align:center; padding:2rem 0 2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+  .header h1 { font-size:1.9rem; font-weight:700; }
+  .header .subtitle { color:var(--muted); font-size:1rem; margin-top:0.3rem; }
+  .header .meta { font-size:0.82rem; color:#999; margin-top:0.5rem; }
+
+  .nav { position:sticky; top:0; z-index:100; background:var(--card-bg); border-bottom:1px solid var(--border); padding:0.6rem 0; margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; }
+  .nav a { font-size:0.8rem; text-decoration:none; color:var(--muted); padding:4px 10px; border-radius:14px; white-space:nowrap; transition:all 0.15s; }
+  .nav a:hover { background:var(--accent-light); color:var(--accent); font-weight:600; }
+
+  .sec { margin-bottom:2.5rem; scroll-margin-top:60px; }
+  .sec h2 { font-size:1.25rem; font-weight:700; padding-bottom:0.4rem; border-bottom:2px solid var(--accent); margin-bottom:1rem; }
+  .sec h2 .num { display:inline-block; width:28px; height:28px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:28px; font-size:0.85rem; margin-right:0.5rem; }
+  .sec .intro { font-size:0.88rem; color:var(--muted); margin-bottom:1rem; }
+
+  .card { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); margin-bottom:1rem; overflow:hidden; }
+  .card-body { padding:1.2rem; }
+  .card-title { font-weight:700; font-size:1rem; margin-bottom:0.6rem; padding-bottom:0.4rem; border-bottom:1px dashed var(--border); }
+
+  .compare-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin:0.5rem 0 1rem; }
+  .compare-table thead th { background:#f0ede6; padding:0.55rem 0.7rem; text-align:left; font-weight:600; border-bottom:2px solid var(--border); white-space:nowrap; }
+  .compare-table tbody td { padding:0.55rem 0.7rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .compare-table tbody tr:last-child td { border-bottom:none; }
+  .compare-table .col-brand { min-width:110px; }
+
+  .verdict-box { background:var(--accent-light); border:1px solid var(--accent); border-radius:10px; padding:1rem 1.4rem; margin:1rem 0; }
+  .verdict-box .lbl { font-size:0.78rem; font-weight:600; color:var(--accent); text-transform:uppercase; letter-spacing:1px; }
+  .verdict-box .main { font-size:1.05rem; font-weight:700; color:#1a5e3a; margin-top:0.3rem; }
+
+  .warn-box { background:var(--warn-light); border:1px solid #f5c6cb; border-radius:10px; padding:0.9rem 1.2rem; margin:1rem 0; }
+  .warn-box .lbl { font-weight:700; color:var(--warn); font-size:0.95rem; }
+  .warn-box ul { margin:0.3rem 0 0 1.2rem; font-size:0.86rem; }
+  .warn-box li { padding:2px 0; }
+
+  .tip-box { background:var(--blue-light); border:1px solid #aed6f1; border-radius:10px; padding:0.9rem 1.2rem; margin:1rem 0; }
+  .tip-box .lbl { font-weight:700; color:var(--blue); font-size:0.95rem; }
+  .tip-box ul { margin:0.3rem 0 0 1.2rem; font-size:0.86rem; }
+  .tip-box li { padding:2px 0; }
+
+  .check-list { list-style:none; padding:0; }
+  .check-list li { padding:0.5rem 0 0.5rem 1.8rem; position:relative; font-size:0.88rem; border-bottom:1px dashed var(--border); }
+  .check-list li:last-child { border-bottom:none; }
+  .check-list li::before { content:"☐"; position:absolute; left:0.3rem; top:0.5rem; font-size:1.1rem; color:var(--accent); }
+  .check-list li .key { font-weight:700; color:var(--text); }
+  .check-list li .desc { color:var(--muted); font-size:0.82rem; display:block; margin-top:0.2rem; }
+
+  .pitfall-list { list-style:none; padding:0; }
+  .pitfall-list li { padding:0.5rem 0 0.5rem 1.8rem; position:relative; font-size:0.86rem; border-bottom:1px dashed var(--border); }
+  .pitfall-list li:last-child { border-bottom:none; }
+  .pitfall-list li::before { content:"⚠"; position:absolute; left:0.2rem; top:0.5rem; font-size:1rem; color:var(--warn); }
+  .pitfall-list li .key { font-weight:700; color:var(--warn); }
+  .pitfall-list li .desc { color:var(--muted); font-size:0.82rem; display:block; margin-top:0.2rem; }
+
+  .text-green { color:var(--accent); font-weight:600; }
+  .text-red { color:var(--warn); font-weight:600; }
+  .text-amber { color:var(--gold); font-weight:600; }
+  .text-blue { color:var(--blue); font-weight:600; }
+  .text-muted { color:var(--muted); }
+
+  .specs { background:#f9f8f3; border:1px solid var(--border); border-radius:8px; padding:0.8rem 1.1rem; margin-top:0.6rem; font-size:0.84rem; }
+  .specs .lbl { font-weight:600; color:var(--blue); }
+
+  .note { font-size:0.83rem; color:var(--muted); margin-top:0.6rem; padding-left:0.8rem; border-left:3px solid var(--gold); }
+
+  .tag { display:inline-block; font-size:0.72rem; padding:2px 8px; border-radius:10px; font-weight:500; margin-right:0.3rem; }
+  .tag-best { background:var(--accent-light); color:var(--accent); }
+  .tag-warn { background:var(--warn-light); color:var(--warn); }
+  .tag-info { background:var(--blue-light); color:var(--blue); }
+  .tag-gold { background:var(--gold-light); color:var(--gold); }
+  .tag-purple { background:var(--purple-light); color:var(--purple); }
+
+  .flow-diagram { display:flex; flex-wrap:wrap; align-items:center; gap:0.3rem; margin:1rem 0; font-size:0.82rem; }
+  .flow-box { background:var(--accent-light); border:1px solid var(--accent); border-radius:8px; padding:0.4rem 0.8rem; color:var(--accent); font-weight:600; }
+  .flow-arrow { color:var(--muted); font-size:1.1rem; }
+  .flow-box.warn { background:var(--warn-light); border-color:var(--warn); color:var(--warn); }
+  .flow-box.info { background:var(--blue-light); border-color:var(--blue); color:var(--blue); }
+
+  .route-diagram { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin:1rem 0; }
+  .route-card { border-radius:10px; padding:1rem; text-align:center; }
+  .route-card .icon { font-size:2rem; margin-bottom:0.3rem; }
+  .route-card .title { font-weight:700; font-size:0.95rem; margin-bottom:0.3rem; }
+  .route-card .desc { font-size:0.82rem; }
+  .route-green { background:var(--accent-light); border:1px solid var(--accent); }
+  .route-green .title { color:var(--accent); }
+  .route-green .desc { color:#1a5e3a; }
+  .route-red { background:var(--warn-light); border:1px solid #f5c6cb; }
+  .route-red .title { color:var(--warn); }
+  .route-red .desc { color:#922b21; }
+  .route-blue { background:var(--blue-light); border:1px solid #aed6f1; }
+  .route-blue .title { color:var(--blue); }
+  .route-blue .desc { color:#1a5276; }
+
+  .brand-card { border:1px solid var(--border); border-radius:8px; padding:0.8rem 1rem; margin-bottom:0.6rem; }
+  .brand-card .brand-name { font-weight:700; font-size:0.92rem; }
+  .brand-card .brand-tag { font-size:0.75rem; color:var(--muted); margin-left:0.4rem; }
+  .brand-card .brand-detail { font-size:0.84rem; color:var(--text); margin-top:0.3rem; }
+
+  .spacing-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin:0.5rem 0; }
+  .spacing-table th { background:#f0ede6; padding:0.5rem; text-align:left; font-weight:600; border:1px solid var(--border); }
+  .spacing-table td { padding:0.5rem; border:1px solid var(--border); vertical-align:top; }
+  .spacing-table td:first-child { font-weight:600; white-space:nowrap; }
+
+  @media (max-width: 768px) {
+    .route-diagram { grid-template-columns:1fr; }
+    .compare-table { font-size:0.78rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>管材线材走线方案总结</h1>
+  <div class="subtitle">品牌型号 · 工艺参数 · 开槽间距 · 管子固定 · 走顶走地 · 避坑清单</div>
+  <div class="meta">适用：旧房翻新 + 集中供热地暖 + 全屋水电重做 | 太原 · 2026年</div>
+</div>
+
+<nav class="nav">
+  <a href="#routing">走顶走地</a>
+  <a href="#water">冷热水管</a>
+  <a href="#heating">地暖管</a>
+  <a href="#conduit">线管</a>
+  <a href="#wire">电线</a>
+  <a href="#network">网线</a>
+  <a href="#slotting">开槽间距</a>
+  <a href="#slot-waterproof">厨卫开槽防水</a>
+  <a href="#fixing">管子固定</a>
+  <a href="#wago">接线方式</a>
+  <a href="#pitfalls">综合避坑</a>
+  <a href="#checklist">进场验收清单</a>
+</nav>
+
+<!-- ==================== 走顶走地 ==================== -->
+<section class="sec" id="routing">
+  <h2><span class="num">0</span>走顶还是走地？先定大原则</h2>
+  <p class="intro">你家装地暖，这个决策已经被地暖锁死了——<strong>有地暖的房间线管绝对不能走地</strong>。下面按区域给出走线方案。</p>
+
+  <div class="route-diagram">
+    <div class="route-card route-green">
+      <div class="icon">🧱</div>
+      <div class="title">客厅/卧室 → 走墙</div>
+      <div class="desc">竖槽为主，地面有地暖不能走地。强弱电分别走红管/蓝管，沿墙面竖向开槽到顶或到接线盒。</div>
+    </div>
+    <div class="route-card route-blue">
+      <div class="icon">🏠</div>
+      <div class="title">厨房/卫生间 → 横干走顶 + 竖分走墙</div>
+      <div class="desc">横向干线（水管主线、线管主线）走铝扣板吊顶内，拆吊顶就能检修。竖向分支（到开关/插座/水龙头/花洒）走墙面竖槽。<strong>厨卫墙面必须开竖槽</strong>，但开槽后<strong>槽内必须先刷防水再埋管</strong>，尤其淋浴区。</div>
+    </div>
+    <div class="route-card route-red">
+      <div class="icon">🚫</div>
+      <div class="title">全屋地面 → 不走</div>
+      <div class="desc">地暖盘管 + 回填层已经占满地面厚度，线管再走地会被混凝土裹死，换线 impossible。唯一例外：地暖回填前的原始地面可走少量必需穿管（极少）。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">核心原则：电上水下</div>
+      <p style="font-size:0.88rem;">走吊顶时，<strong>线管在上面（贴近楼板），水管在下面</strong>。万一水管接头渗漏，水往下滴到吊顶板上，不会浸泡线管。如果反过来水管在上、线管在下，漏水直接泡电线。</p>
+      <div class="specs">
+        <span class="lbl">口诀：</span>电上水下、强左弱右（红蓝分管）、横平竖直、坚槽优先
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 走线的4个铁律</div>
+    <ul>
+      <li><strong>有地暖不走地</strong>——线管被回填混凝土裹住，后期换线拉不动，等于焊死</li>
+      <li><strong>厨卫墙面不开横槽</strong>——厨卫墙面要贴砖+做防水，横槽破坏墙面整体性且防水难做。但<strong>竖槽必须开</strong>（开关插座/水龙头/花洒都在墙上），关键是开槽后<strong>槽内先刷防水再埋管封槽</strong></li>
+      <li><strong>承重墙不开横槽</strong>——横向开槽切断墙体钢筋，影响结构安全；非承重墙横槽单面墙≤50cm</li>
+      <li><strong>厨卫走顶+走墙结合</strong>——横向干线走吊顶内（好检修），竖向分支走墙面竖槽（到终端），<strong>不是"只走顶不走墙"</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 冷热水管 ==================== -->
+<section class="sec" id="water">
+  <h2><span class="num">1</span>冷热水管（PPR管）</h2>
+  <p class="intro">家装给水管的主流方案是 PPR（无规共聚聚丙烯），热熔连接成一体，无接头隐患。关键是选对品牌系列、管件配套、热熔工艺到位。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">品牌推荐</div>
+
+      <div class="brand-card" style="border-left:4px solid var(--accent);">
+        <div class="brand-name">伟星（伟星新材 002372）<span class="brand-tag">上市公司·行业龙头·推荐首选</span></div>
+        <div class="brand-detail">
+          推荐：<strong>PP-R S2.5 系列</strong>（热水管级别，全屋统一用热水管更保险，成本差不了多少）<br>
+          高端线：星管家系列 / 瓷芯抗菌系列（内壁抗菌层，抑制管道内细菌滋生）<br>
+          规格：进水主管 <strong>De25×3.5mm</strong>（1寸管），分支 <strong>De20×2.8mm</strong>（6分管）<br>
+          特点：管身喷码齐全、不透光、管件配套齐全、星管家系列有50年质保
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--blue);">
+        <div class="brand-name">日丰<span class="brand-tag">性价比高·大品牌兜底</span></div>
+        <div class="brand-detail">
+          推荐：<strong>PP-R S2.5 系列</strong><br>
+          规格：同伟星，De25主管 / De20分支<br>
+          特点：日丰管全国经销网点多，购买方便，日丰也做地暖管和线管，可以一套买齐
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">金牛 / 联塑 / 中财<span class="brand-tag">中档·预算有限可选</span></div>
+        <div class="brand-detail">
+          金牛（武汉金牛）PP-R S2.5系列品质稳定；联塑/中财偏工程渠道，家装也用但品牌档次略低<br>
+          规格：同上
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--warn);">
+        <div class="brand-name">皮尔萨（Pilsa）<span class="brand-tag">假货极多·慎选</span></div>
+        <div class="brand-detail">
+          真皮尔萨是土耳其进口，品质好但市面上假货泛滥。除非你能在官方授权店买到且有防伪验证，否则不建议碰。假皮尔萨=回收料管，几年后必漏。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">工艺参数与施工标准</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>项目</th><th>标准</th><th>怎么验</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>材质</td><td>PP-R（管身喷码标 PP-R）</td><td>看管身喷码</td></tr>
+          <tr><td>系列</td><td><strong>全屋 S2.5</strong>（热水管壁厚更厚耐压更高，冷水也用热水管）</td><td>看管身喷码 S 系列号</td></tr>
+          <tr><td>规格</td><td>主管 De25×3.5mm，分支 De20×2.8mm</td><td>看管身喷码 + 卡尺量壁厚</td></tr>
+          <tr><td>透光性</td><td><strong>不透光</strong>（防管内藻类滋生）</td><td>对光看：透光=劣质，不透光=合格</td></tr>
+          <tr><td>管件</td><td><strong>必须同品牌管件</strong>（不同品牌热熔温度可能有差异）</td><td>看管件标识和管子是否同一品牌</td></tr>
+          <tr><td>执行标准</td><td>GB/T 18742.2（管材）/ .3（管件）</td><td>看管身喷码</td></tr>
+          <tr><td>卫生许可</td><td>有涉水产品卫生许可批件</td><td>看包装或合格证</td></tr>
+          <tr><td>热熔温度</td><td><strong>260-280°C</strong></td><td>看热熔器温度显示</td></tr>
+          <tr><td>热熔时间</td><td>加热 5-8 秒 → 插接 → 保持 5 秒自然冷却</td><td>计时观察</td></tr>
+          <tr><td>打压测试</td><td><strong>0.8-1.0 MPa 保压 30-60 分钟压力不降</strong></td><td>封槽前必须做，看压力表不掉压</td></tr>
+        </tbody>
+      </table>
+
+      <div class="specs">
+        <span class="lbl">热水管保温：</span>热水管走吊顶或走墙时，建议套 <strong>9mm 闭孔橡塑保温套</strong>（品牌参考：华美、坤耐、盈速奇），减少热量损失，也防冷凝水。冷水管走吊顶内也建议保温，防止夏季冷凝水滴到吊顶。
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ PPR水管避坑清单</div>
+    <ul>
+      <li><strong>管件不同品牌</strong>→ 不同品牌PPR热熔温度/流动性可能有差异，接头处是最薄弱点，必须管子管件同品牌</li>
+      <li><strong>热熔不到位</strong>→ 温度不够/时间不够，接头未完全融合，当时不漏，几个月后渗漏，埋墙里发现时墙已泡透</li>
+      <li><strong>热熔过度</strong>→ 加热太久管子内壁熔塌堵管，水流变小。5-8秒是标准时间，看热熔器上的标尺刻度</li>
+      <li><strong>用水强制降温</strong>→ 热熔后必须自然冷却，浇水会让接头急冷开裂</li>
+      <li><strong>冷热水管同槽/间距不够</strong>→ 冷水管壁冷凝水长期浸泡墙体发霉，间距必须≥10cm且不同槽</li>
+      <li><strong>封槽前没打压</strong>→ 封了才发现漏要砸墙返工，打压是封槽前必须的验收节点</li>
+      <li><strong>透光管</strong>→ 管内见光会长藻类堵塞水管，优质PPR不透光，对光看就能分辨</li>
+      <li><strong>回收料管</strong>→ 管身发黄暗淡有黑点杂质，截面对光看晶莹透亮才是好料</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 地暖管 ==================== -->
+<section class="sec" id="heating">
+  <h2><span class="num">2</span>地暖管（PE-RT管）</h2>
+  <p class="intro">地暖盘管铺在保温板上、埋在回填层里，铺完封死再也看不见。管子材质和阻氧层是关键——选错了几年后腐蚀分水器和供暖主管道。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">品牌推荐</div>
+
+      <div class="brand-card" style="border-left:4px solid var(--accent);">
+        <div class="brand-name">乔治费歇尔（GF Piping Systems）<span class="brand-tag">瑞士·高端首选</span></div>
+        <div class="brand-detail">
+          推荐：<strong>PE-RT II 型 + EVOH 阻氧层</strong>，De20×2.0mm<br>
+          特点：全球管路系统巨头，原料用陶氏化学DOWLEX，管壁晶莹透亮，阻氧层品质好。价格比国产贵30-50%，但地暖管用50年不出问题省的心远超差价。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--blue);">
+        <div class="brand-name">瑞好（Rehau）<span class="brand-tag">德国·高端</span></div>
+        <div class="brand-detail">
+          推荐：<strong>RAUPEX PE-Xa</strong> 管 + 专利过氧化物交联工艺<br>
+          特点：PE-Xa 比 PE-RT 耐温耐压更高，但价格也更高，且 PE-Xa 不能热熔连接（需专用管件）。适合预算充裕且追求极致品质。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">伟星 / 日丰 / 金牛<span class="brand-tag">国产·性价比</span></div>
+        <div class="brand-detail">
+          推荐：<strong>PE-RT II 型 + EVOH 阻氧层</strong>，De20×2.0mm<br>
+          特点：伟星和日丰都有PE-RT II型带阻氧层的产品线，品质达标，价格比进口便宜不少。买时一定要确认管身喷码有"II型"和"EVOH"字样。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">工艺参数</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>项目</th><th>标准</th><th>怎么验</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>材质</td><td><strong>PE-RT II 型</strong>（耐高温增强型，I型只耐70°C，II型耐90°C）</td><td>管身喷码看"II型"</td></tr>
+          <tr><td>阻氧层</td><td><strong>EVOH 阻氧层</strong>，氧气渗透率 ≤0.1g/m³·d</td><td>管身喷码看"EVOH"标注 + 检验报告</td></tr>
+          <tr><td>管径</td><td>De20×2.0mm（常用）或 De16×2.0mm</td><td>看管身喷码</td></tr>
+          <tr><td>执行标准</td><td>GB/T 28799.2-2020（管材）/ .3-2020（管件）</td><td>看管身喷码</td></tr>
+          <tr><td>管壁</td><td>均匀透亮、无杂质黑点、内壁光滑</td><td>对光看管壁截面</td></tr>
+          <tr><td>盘管间距</td><td>卫生间 10-15cm，客厅卧室 15-20cm</td><td>铺完用尺量，误差≤10mm</td></tr>
+          <tr><td>弯曲半径</td><td>≥5倍管径（De20管弯半径≥100mm）</td><td>看转弯处无死折</td></tr>
+          <tr><td>固定方式</td><td><strong>卡钉固定在保温板上</strong>（或钢丝网绑扎）</td><td>看卡钉间距均匀无松脱</td></tr>
+          <tr><td>填充层内接头</td><td><strong>绝对禁止接头</strong>——铁律</td><td>看到地面热熔接管立刻叫停</td></tr>
+          <tr><td>打压测试</td><td><strong>0.6-0.8 MPa 保压 24 小时不掉压</strong></td><td>回填前必须做，回填时全程保压</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 地暖管避坑清单</div>
+    <ul>
+      <li><strong>PE-RT I 型冒充 II 型</strong>→ I型耐温只有70°C，集中供热水温可能到80°C以上，I型长期高温会软化变形。管身喷码必须看"II型"</li>
+      <li><strong>无阻氧层</strong>→ 没有EVOH阻氧层，氧气渗入管内腐蚀分水器和供暖主管道，几年后金属部件锈蚀堵塞。管身必须有"EVOH"标注</li>
+      <li><strong>回收料管</strong>→ 管身发黄发暗有黑点杂质，对光看不透亮。好管子晶莹透亮，劣质管子浑浊发暗</li>
+      <li><strong>填充层内有接头</strong>→ 地面热熔接管是绝对禁止的，接头埋在混凝土里，一旦渗漏要砸整个地面。一根管从分水器到回路必须连续无接头</li>
+      <li><strong>回填前没打压</strong>→ 盘管铺设过程中可能被卡钉扎破或施工踩坏，不打压就回填等于盲封。必须保压24小时不掉压才回填</li>
+      <li><strong>回填时撤压力</strong>→ 回填全程管内必须保压，压力表一直挂着。回填时如果压坏盘管，压力立刻掉下来就能发现</li>
+      <li><strong>弯曲半径不够</strong>→ 转弯处死折会折伤管壁，后期应力集中开裂。弯曲半径≥5倍管径</li>
+      <li><strong>卡钉扎破管子</strong>→ 劣质卡钉或施工暴力操作会扎穿管壁。固定用专用地暖卡钉，卡钉质量也要看</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 线管 ==================== -->
+<section class="sec" id="conduit">
+  <h2><span class="num">3</span>强弱电线管（PVC阻燃管）</h2>
+  <p class="intro">线管的作用是保护电线 + 方便后期换线（拉线）。红管走强电、蓝管走弱电，强弱电分管走线，避免电磁干扰。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">品牌推荐</div>
+
+      <div class="brand-card" style="border-left:4px solid var(--accent);">
+        <div class="brand-name">联塑（中国联塑 02128.HK）<span class="brand-tag">上市公司·管材巨头·推荐首选</span></div>
+        <div class="brand-detail">
+          推荐：<strong>PVC-U 阻燃电工套管</strong>，红色（强电）/ 蓝色（弱电）<br>
+          规格：φ16mm（穿2.5mm²线3根）/ φ20mm（穿4mm²线2-3根）<br>
+          壁厚：≥1.5mm（中型）/ ≥1.6mm（重型，踩不碎）<br>
+          特点：PVC管材行业龙头，阻燃性能好，韧性强踩不碎，各规格管件配套齐全
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--blue);">
+        <div class="brand-name">中财<span class="brand-tag">大品牌·品质稳定</span></div>
+        <div class="brand-detail">
+          推荐：<strong>PVC 阻燃电工套管</strong>，红/蓝色<br>
+          特点：中财管业和联塑齐名，PVC管材品质稳定，阻燃达标
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">伟星<span class="brand-tag">品质好·价格略高</span></div>
+        <div class="brand-detail">
+          推荐：PVC电工套管系列，红/蓝色<br>
+          特点：伟星水管是强项，线管也做且品质不错，如果水管也用伟星可以一起买
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">工艺参数</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>项目</th><th>标准</th><th>怎么验</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>材质</td><td>阻燃 PVC 硬管（PVC-U）</td><td>看管身标识</td></tr>
+          <tr><td>颜色</td><td><strong>红管=强电，蓝管=弱电</strong></td><td>颜色分明不混用</td></tr>
+          <tr><td>壁厚</td><td>≥1.5mm（中型），建议≥1.6mm（重型）</td><td>卡尺量</td></tr>
+          <tr><td>韧性</td><td>用脚踩不碎、弯折不裂</td><td>现场踩一脚</td></tr>
+          <tr><td>阻燃</td><td>离火自熄（V-0级阻燃）</td><td>烧一小段，离开火源自熄</td></tr>
+          <tr><td>管径</td><td>φ16mm（2.5mm²线穿3根）/ φ20mm（4mm²线穿2-3根）</td><td>看标识</td></tr>
+          <tr><td>穿线率</td><td><strong>≤管内截面积40%</strong>（不能塞满）</td><td>一根16mm管最多穿3根2.5mm²线</td></tr>
+          <tr><td>弯曲</td><td>不能直角死弯，弯管弹簧弯出弧度</td><td>看转弯处有弧度，方便后期拉线换线</td></tr>
+          <tr><td>管内接头</td><td><strong>管内严禁有电线接头</strong>，接头在接线盒内</td><td>穿线时检查</td></tr>
+          <tr><td>执行标准</td><td>JG/T 3050（建筑绝缘电工套管）</td><td>看管身标识</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <div class="lbl">💡 穿线率怎么算</div>
+    <ul>
+      <li><strong>φ16mm 线管</strong>（内径约12mm，截面积约113mm²）→ 40%≈45mm² → 最多穿 3 根 2.5mm² 线（每根截面积约5.3mm²，3根≈16mm²，加上绝缘层外径约占30-35%）</li>
+      <li><strong>φ20mm 线管</strong>（内径约16mm）→ 最多穿 3 根 4mm² 线</li>
+      <li>实际穿线时不要卡满，留出拉线余量。穿太满散热差、后期换线拉不动</li>
+    </ul>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 线管避坑清单</div>
+    <ul>
+      <li><strong>薄壁管一踩就碎</strong>→ 劣质PVC管壁厚不足1mm，施工踩踏就碎，碎渣扎伤电线绝缘层。买的时候踩一脚试</li>
+      <li><strong>非阻燃管</strong>→ 劣质PVC点燃后持续燃烧不自熄，一旦短路起火会沿管子蔓延。必须阻燃离火自熄</li>
+      <li><strong>穿线率超标</strong>→ 线塞太满散热差，大功率电器长时间用电电线发热，绝缘层老化快；后期换线拉不动</li>
+      <li><strong>直角死弯</strong>→ 线管90°直角弯，后期换线时线卡在弯处拉不动。必须用弯管弹簧弯出弧度</li>
+      <li><strong>管内有接头</strong>→ 电线接头必须在接线盒/底盒内做，管内接头是隐患（接触不良发热、拉线时扯断）</li>
+      <li><strong>强弱电同管</strong>→ 强电（220V）和弱电（网线/电话线）穿同一根管，电磁干扰网速，且强电故障可能窜入弱电烧设备</li>
+      <li><strong>红蓝管混用</strong>→ 颜色不分后期维修分不清哪根是强电哪根是弱电，有触电风险</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 电线 ==================== -->
+<section class="sec" id="wire">
+  <h2><span class="num">4</span>电线（ZC-BV阻燃硬线）</h2>
+  <p class="intro">电线是隐蔽工程里最容易偷工减料的地方——铜芯纯度不够、线径不足、非阻燃绝缘层，这些问题肉眼难辨但后果严重。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">品牌推荐</div>
+
+      <div class="brand-card" style="border-left:4px solid var(--accent);">
+        <div class="brand-name">远东电缆<span class="brand-tag">江苏无锡·上市公司·推荐首选</span></div>
+        <div class="brand-detail">
+          推荐：<strong>ZC-BV 450/750V</strong> 阻燃硬线<br>
+          特点：中国电线电缆行业龙头，年产能最大，铜芯纯度高（≥99.9%无氧铜）， CCC认证齐全。全国各地五金店都有卖，认准防伪标贴。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--blue);">
+        <div class="brand-name">熊猫电线<span class="brand-tag">上海·老品牌·品质好</span></div>
+        <div class="brand-detail">
+          推荐：<strong>ZC-BV 450/750V</strong><br>
+          特点：上海老牌，华东地区认可度高，铜芯品质好。注意市面上假熊猫也多，必须在授权店或旗舰店买。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">德力西 / 正泰<span class="brand-tag">温州·电气巨头</span></div>
+        <div class="brand-detail">
+          推荐：ZC-BV 450/750V<br>
+          特点：德力西和正泰都是低压电气巨头，电线也做得不错，和开关面板/断路器一起买可以配套。正泰的电缆品质在线。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">宝胜 / 起帆 / 上上<span class="brand-tag">区域品牌·品质达标</span></div>
+        <div class="brand-detail">
+          宝胜（江苏宝应，央企）、起帆（上海）、上上（江苏溧阳）都是正规大厂电线，CCC认证齐全，当地买哪个方便就用哪个。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">型号解读与线径规格</div>
+      <div class="specs" style="margin-bottom:1rem;">
+        <span class="lbl">ZC-BV 含义：</span>
+        <strong>Z</strong> = 阻燃（ZC=阻燃C类，还有ZA/ZB等级别，C类是家装常用级别）<br>
+        <strong>B</strong> = 绝缘（不表示软硬）<br>
+        <strong>V</strong> = PVC聚氯乙烯绝缘<br>
+        <strong>450/750V</strong> = 额定电压（450V是交流，750V是直流，家装220V足够）<br>
+        <span class="text-muted">BV=单芯硬线（家装首选，散热好、接头牢）；BVR=多股软线（较贵，接线端子要求高，家装不推荐）</span>
+      </div>
+
+      <table class="compare-table">
+        <thead>
+          <tr><th>用途</th><th>线径</th><th>载流量参考</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>照明</td><td><strong>1.5mm²</strong></td><td>≈15A / 3300W</td><td>灯具功率不大，1.5够用</td></tr>
+          <tr><td>普通插座</td><td><strong>2.5mm²</strong></td><td>≈20A / 4400W</td><td>客厅卧室插座通用</td></tr>
+          <tr><td>厨房主干</td><td><strong>4mm²</strong></td><td>≈27A / 5940W</td><td>厨房电器多功率大，必须4平方</td></tr>
+          <tr><td>空调</td><td><strong>4mm²</strong></td><td>≈27A / 5940W</td><td>2匹以上空调必须4平方</td></tr>
+          <tr><td>小厨宝（即热式）</td><td><strong>2.5-4mm²</strong></td><td>2000W / 单独一路</td><td>必须单独一路！不能和净水器/冰箱混用</td></tr>
+          <tr><td>冰箱</td><td><strong>2.5mm²</strong></td><td>单独一路</td><td>单独回路，出远门只留冰箱不断电</td></tr>
+          <tr><td>入户主线</td><td><strong>10mm²</strong></td><td>≈50A</td><td>老房入户线可能只有6mm²，增容到10mm²配63A总开</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">怎么辨别真假好电线</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>检查项</th><th>好电线</th><th>劣质电线</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>铜芯颜色</td><td>紫红色有光泽</td><td>发暗发黑（杂质铜/回收铜）</td></tr>
+          <tr><td>铜芯手感</td><td>略软但有韧性，弯折回弹</td><td>过硬（杂质多）或过软（铜芯不足）</td></tr>
+          <tr><td>绝缘层</td><td>阻燃PVC，火烧离开火源自熄</td><td>普通PVC，烧了持续燃烧</td></tr>
+          <tr><td>线径</td><td>卡尺量铜芯直径达标（2.5mm²≈1.78mm）</td><td>标2.5实际不足（1.6mm甚至更细）</td></tr>
+          <tr><td>喷码</td><td>品牌、型号、线径、CCC标志、执行标准GB/T 5023 清晰</td><td>喷码模糊/缺失/无CCC</td></tr>
+          <tr><td>长度</td><td>标100米实际100米（±0.5米）</td><td>标100米实际90米甚至更短</td></tr>
+          <tr><td>认证</td><td>CCC强制认证标志 + 合格证</td><td>无CCC或伪造</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 电线避坑清单</div>
+    <ul>
+      <li><strong>铜芯发暗</strong>→ 杂质铜/回收铜，电阻大发热严重，长期使用绝缘层加速老化，有起火风险。紫红色有光泽才是无氧铜</li>
+      <li><strong>线径不足</strong>→ 标2.5mm²实际只有1.8mm²甚至更细，载流量不够，大功率电器一开线就发热。卡尺量铜芯直径核对</li>
+      <li><strong>非阻燃绝缘层</strong>→ 短路起火后电线持续燃烧，沿线管蔓延。必须阻燃PVC，火烧离开自熄</li>
+      <li><strong>不足米</strong>→ 标100米的盘只有80-90米，这是劣质电线最常见的偷工方式。收货时称重也能粗判（2.5mm²线100米约2.2-2.3kg）</li>
+      <li><strong>小厨宝没单独一路</strong>→ 即热式2000W功率，和其他电器混用一路会过载跳闸甚至烧线。必须单独一路2.5-4mm²</li>
+      <li><strong>管内接头</strong>→ 接头必须在接线盒内用WAGO连接器做，管内拧线+电工胶布是隐患（接触不良发热、胶布老化裸露）</li>
+      <li><strong>假品牌</strong>→ 熊猫、远东假货多，必须在授权店/旗舰店买，查防伪码。假线外观几乎一样但铜芯是回收料</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 网线 ==================== -->
+<section class="sec" id="network">
+  <h2><span class="num">5</span>网线（超六类 Cat6A）</h2>
+  <p class="intro">网线是一次布线20年不动的东西，选低了以后升级要重新走线。超六类 Cat6A 支持万兆（10Gbps），37米内跑满，家用完全够。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">品牌推荐</div>
+
+      <div class="brand-card" style="border-left:4px solid var(--accent);">
+        <div class="brand-name">康普 / 安普（CommScope / AMP）<span class="brand-tag">美国·行业标杆·推荐首选</span></div>
+        <div class="brand-detail">
+          推荐：<strong>Cat6A UTP 23AWG</strong>（非屏蔽超六类）<br>
+          特点：康普收购了安普（AMP），是全球综合布线行业老大。线材品质稳定，抗干扰性能好。注意买时认准 CommScope/AMP 品牌标识，假货极多。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--blue);">
+        <div class="brand-name">泛达（Panduit）<span class="brand-tag">美国·高端</span></div>
+        <div class="brand-detail">
+          推荐：Cat6A UTP 23AWG<br>
+          特点：全球知名布线品牌，品质和康普一个档次，价格略高。数据中心和高端商用首选，家用也OK但渠道少。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">大唐电信 / 普天<span class="brand-tag">国产·性价比</span></div>
+        <div class="brand-detail">
+          推荐：Cat6A UTP 23AWG<br>
+          特点：国产综合布线大厂，品质达标，价格比进口便宜。大唐电信和普天都是央企背景，工程渠道多。
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">罗格朗 / TCL-GVS / 秋叶原<span class="brand-tag">零售渠道好买</span></div>
+        <div class="brand-detail">
+          推荐：Cat6A UTP<br>
+          特点：罗格朗（法资）和TCL-GVS面板/模块做得好，秋叶原是国产中端零售品牌。买Cat6A线材+同品牌面板+水晶头配套。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">选型参数</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>项目</th><th>标准</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>类别</td><td><strong>Cat6A（超六类）</strong></td><td>支持万兆10Gbps，频率500MHz，37米内跑满万兆</td></tr>
+          <tr><td>线规</td><td><strong>23AWG</strong>（导体直径≈0.57mm）</td><td>比Cat6的24AWG粗一点，传输性能更好</td></tr>
+          <tr><td>屏蔽</td><td><strong>UTP（非屏蔽）</strong>家用足够</td><td>FTP/SFTP屏蔽线需要全程接地，家用接不好反而更差</td></tr>
+          <tr><td>导体</td><td>无氧铜（OFC），纯度≥99.9%</td><td>铜包铝（CCA）/铜包铜是假线，电阻大信号差</td></tr>
+          <tr><td>外皮</td><td>LSZH（低烟无卤）或 PVC</td><td>LSZH更环保阻燃，燃烧不释放有毒气体</td></tr>
+          <tr><td>水晶头</td><td><strong>必须 Cat6A 专用</strong></td><td>Cat6的水晶头和Cat6A不通用，必须同品牌配套</td></tr>
+          <tr><td>面板模块</td><td><strong>Cat6A 免打线模块</strong></td><td>选和网线同品牌的Cat6A面板模块</td></tr>
+          <tr><td>弯曲半径</td><td>≥8倍线径</td><td>走线时不要硬折，影响信号</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">为什么不选七类/八类？</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>类别</th><th>速率</th><th>家用评价</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>超五类 Cat5e</td><td>千兆1Gbps</td><td><span class="text-red">淘汰</span>，不够用</td></tr>
+          <tr><td>六类 Cat6</td><td>千兆/55米内万兆</td><td><span class="text-amber">够用但不够前瞻</span>，万兆距离受限</td></tr>
+          <tr><td><strong>超六类 Cat6A</strong></td><td>万兆10Gbps/37米内</td><td><span class="text-green">推荐</span>，性价比最高，一次布线20年</td></tr>
+          <tr><td>七类 Cat7</td><td>万兆/必须屏蔽</td><td><span class="text-red">不推荐</span>，必须SFTP屏蔽+全程接地，家用接不好反而更差</td></tr>
+          <tr><td>八类 Cat8</td><td>40Gbps/30米内</td><td><span class="text-red">不推荐</span>，数据中心级别，家用完全没必要，价格贵且施工要求极高</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 网线避坑清单</div>
+    <ul>
+      <li><strong>铜包铝（CCA）冒充无氧铜</strong>→ 最常见的假线。铜包铝线身偏轻、弯折容易断、电阻大信号衰减严重。用磁铁吸（铝不被磁铁吸，纯铜也不被吸，但CCA有一定磁性）、或刮表面看颜色（铝偏银白）。最靠谱是买正规品牌查防伪</li>
+      <li><strong>标Cat6A实际不达标</strong>→ 杂牌标Cat6A但频率达不到500MHz。必须买正规品牌，看包装上的类别标识和检测报告</li>
+      <li><strong>水晶头不匹配</strong>→ Cat6A线用Cat6水晶头，接触不良跑不到万兆。水晶头必须Cat6A专用且同品牌</li>
+      <li><strong>七类/八类线家用</strong>→ 屏蔽线需要全程接地（面板→配线架→交换机都要接地），家用做不到全程接地等于白屏蔽，甚至引入干扰。UTP非屏蔽Cat6A家用最稳</li>
+      <li><strong>和强电同管/间距不够</strong>→ 网线走线必须和强电分管、间距≥30cm，交叉处包锡箔纸。否则220V交流电干扰网线信号，网速不稳定</li>
+      <li><strong>拉线太用力</strong>→ 网线拉力不超过线径的5倍（约80N），硬拽会拉伤内部双绞结构影响信号。穿管时用牵引绳慢慢拉</li>
+      <li><strong>弯曲半径不够</strong>→ 硬折网线会破坏双绞结构，信号衰减。弯曲半径≥8倍线径</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 开槽间距 ==================== -->
+<section class="sec" id="slotting">
+  <h2><span class="num">6</span>开槽规范与间距要求</h2>
+  <p class="intro">开槽是水电施工的第一步，槽开得好不好直接决定管子走得规不规范。间距、深度、方向都有标准。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">各类间距汇总</div>
+      <table class="spacing-table">
+        <thead>
+          <tr><th>间距类型</th><th>标准</th><th>原因</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>强弱电平行间距</td>
+            <td><strong>≥30cm</strong></td>
+            <td>220V交流电电磁场干扰弱电信号，30cm是国标最低要求</td>
+          </tr>
+          <tr>
+            <td>强弱电交叉处理</td>
+            <td><strong>90°直角交叉 + 锡箔纸包裹</strong></td>
+            <td>必须垂直交叉（不能平行交叉），交叉处包锡箔纸屏蔽干扰</td>
+          </tr>
+          <tr>
+            <td>冷热水管间距</td>
+            <td><strong>≥10cm，不同槽</strong></td>
+            <td>冷水管壁冷凝水长期浸泡墙体发霉</td>
+          </tr>
+          <tr>
+            <td>水管与线管间距</td>
+            <td><strong>≥15cm，不同槽</strong></td>
+            <td>水管接头渗漏会沿线管外壁蔓延到电线，且水管冷凝水影响线管</td>
+          </tr>
+          <tr>
+            <td>水管管卡间距</td>
+            <td><strong>50-60cm</strong></td>
+            <td>间距太大管子下垂，热熔接头受重力变形</td>
+          </tr>
+          <tr>
+            <td>线管管卡间距</td>
+            <td><strong>80-100cm</strong></td>
+            <td>线管比水管轻，间距可以稍大，但太大会晃动</td>
+          </tr>
+          <tr>
+            <td>转弯处管卡</td>
+            <td><strong>转弯两端各加一个管卡</strong></td>
+            <td>转弯处受力最大，两端固定防止管子变形移位</td>
+          </tr>
+          <tr>
+            <td>地暖盘管间距</td>
+            <td>卫生间 10-15cm / 客厅卧室 15-20cm</td>
+            <td>卫生间面积小需要密一点保证热量，客厅面积大可以疏一点</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">开槽方向与深度规范</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>项目</th><th>标准</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>开槽方向</td><td><strong>竖槽优先</strong>，横槽尽量避免</td><td>竖向开槽不影响墙体承重，横向开槽切断墙体钢筋</td></tr>
+          <tr><td>横槽长度</td><td>非承重墙单面墙 ≤50cm；<strong>承重墙禁止开横槽</strong></td><td>横槽过长=在墙上切一条缝，削弱墙体抗震能力</td></tr>
+          <tr><td>开槽深度</td><td>管子放入后，管壁距墙面 ≥10mm（砂浆保护层）</td><td>太浅管子露出来贴砖/刷漆后能看到管印；太深伤结构层</td></tr>
+          <tr><td>开槽宽度</td><td>单管槽宽 = 管径 + 20mm；双管槽宽 = 2×管径 + 30mm</td><td>管子两侧各留10mm砂浆填实空间</td></tr>
+          <tr><td>承重墙开槽</td><td><strong>只能开竖槽，深度≤墙厚1/3</strong></td><td>承重墙钢筋在中间，开槽不能碰到钢筋</td></tr>
+          <tr><td>开槽后处理</td><td>开槽面洒水润湿 → 刷界面剂/墙固 → 再埋管</td><td>开槽面有浮灰，不处理砂浆粘不牢后期开裂</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <div class="lbl">💡 弹线定位——开槽前必须做的事</div>
+    <ul>
+      <li>施工方在墙上弹墨线标出管线走向、开关插座位置、间距，你确认后再开槽</li>
+      <li>这一步你要到场核对：每个开关插座位置是否符合你的使用习惯，管线走向是否合理</li>
+      <li>弹线后拍照留档，和完工后的管线照片对照，防止施工中擅自改走向</li>
+    </ul>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 开槽避坑清单</div>
+    <ul>
+      <li><strong>承重墙开横槽</strong>→ 这是最严重的违规。承重墙横向开槽切断钢筋，影响整栋楼结构安全。承重墙只允许竖向浅槽</li>
+      <li><strong>横槽过长</strong>→ 非承重墙横槽超过50cm也影响墙体整体性。如果必须走横线，改走吊顶或走地面（但你有地暖不能走地）</li>
+      <li><strong>开槽太深</strong>→ 打到钢筋或打到楼板（地面开槽打到楼下天花板）。老房子楼板薄，开槽深度严格控制</li>
+      <li><strong>开槽太浅</strong>→ 管子放进去凸出墙面，贴砖/刷漆后能看到管子轮廓。管壁到墙面必须≥10mm保护层</li>
+      <li><strong>强弱电同槽</strong>→ 省事把强电弱电开在一个槽里，电磁干扰严重。必须分开开槽，间距≥30cm</li>
+      <li><strong>冷热水管同槽</strong>→ 冷水管壁凝结水泡墙体。必须分开，间距≥10cm</li>
+      <li><strong>不弹线就开槽</strong>→ 凭感觉开槽，走向乱七八糟间距不达标。必须先弹墨线定位确认后再开</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 厨卫开槽防水 ==================== -->
+<section class="sec" id="slot-waterproof">
+  <h2><span class="num">6.5</span>厨卫开槽防水（关键！最容易漏的一步）</h2>
+  <p class="intro">厨卫墙面必须开竖槽走水电分支线，但开槽破坏了墙面结构层，槽内壁是裸露的砖墙/混凝土。<strong>如果槽内不刷防水就埋管封槽，水会沿管壁与槽壁之间的缝隙渗入墙体内部</strong>——瓷砖表面看不出，墙体内部已经泡透发霉，严重时渗到隔壁房间或楼下。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">哪些槽需要做槽内防水？</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>区域</th><th>槽内防水</th><th>原因</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>卫生间淋浴区墙面（1.8m高以内）</td>
+            <td><strong>必须做</strong></td>
+            <td>淋浴水汽大，水会沿槽缝渗入墙体。这是卫生间墙面漏水的头号原因</td>
+          </tr>
+          <tr>
+            <td>卫生间非淋浴区墙面</td>
+            <td><strong>建议做</strong></td>
+            <td>虽然不直接淋水，但卫生间整体湿度大，槽缝仍有渗水风险</td>
+          </tr>
+          <tr>
+            <td>厨房水槽区域墙面</td>
+            <td><strong>必须做</strong></td>
+            <td>水龙头溅水、水管接头渗漏，水沿槽缝渗入墙体</td>
+          </tr>
+          <tr>
+            <td>厨房其他墙面</td>
+            <td>建议做（至少水管线管槽做）</td>
+            <td>厨房水管走墙的槽，接头渗漏风险区域</td>
+          </tr>
+          <tr>
+            <td>客厅/卧室墙面</td>
+            <td>不需要</td>
+            <td>无水源，无渗水风险</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">槽内防水工艺流程</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>步骤</th><th>工序</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 开槽</td>
+            <td>竖向开槽，深度管壁距墙面≥10mm</td>
+            <td>厨卫墙面禁止开横槽</td>
+          </tr>
+          <tr>
+            <td>2. 清理</td>
+            <td>槽内浮灰、碎渣清理干净，洒水润湿</td>
+            <td>不清理干净防水涂料粘不牢</td>
+          </tr>
+          <tr>
+            <td>3. <strong>槽内刷防水</strong></td>
+            <td>槽内壁涂刷防水涂料 1-2 遍（与大面防水同材料）</td>
+            <td>这是关键步骤！涂料要刷到槽底和两侧壁全覆盖</td>
+          </tr>
+          <tr>
+            <td>4. 等干透</td>
+            <td>等防水涂料完全干透（2-4小时/遍，共24小时）</td>
+            <td>没干透就埋管，防水层被破坏</td>
+          </tr>
+          <tr>
+            <td>5. 埋管固定</td>
+            <td>水管/线管放入槽内，管卡固定</td>
+            <td>固定时注意不要划破防水层</td>
+          </tr>
+          <tr>
+            <td>6. 封槽</td>
+            <td>水泥砂浆封槽，填实无空鼓</td>
+            <td>封槽砂浆不要掺太多水（降低收缩开裂）</td>
+          </tr>
+          <tr>
+            <td>7. <strong>封槽面刷防水</strong></td>
+            <td>封槽干透后，封槽面与大面墙面一起刷防水</td>
+            <td>封槽面和新旧墙面交界处是薄弱点，防水要覆盖整个墙面</td>
+          </tr>
+          <tr>
+            <td>8. 大面防水</td>
+            <td>卫生间墙面满做（淋浴区1.8m高，其他区域0.3m高）</td>
+            <td>槽内防水+大面防水=双重保障</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">防水涂料选择（与大面防水同材料）</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>类型</th><th>特点</th><th>推荐</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>聚合物水泥防水涂料（JS）</td>
+            <td>刚柔结合，与水泥基面粘结好，适合墙面</td>
+            <td><span class="text-green">推荐</span> 厨卫墙面首选</td>
+          </tr>
+          <tr>
+            <td>聚氨酯防水涂料</td>
+            <td>柔性最好，耐拉伸，但气味大</td>
+            <td><span class="text-amber">可用</span> 地面用更好，墙面施工气味大</td>
+          </tr>
+          <tr>
+            <td>丙烯酸防水涂料</td>
+            <td>环保弹性好，但厚度不如JS</td>
+            <td><span class="text-amber">可用</span> 可做槽内涂刷</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="specs">
+        <span class="lbl">品牌参考：</span>东方雨虹、德高、西卡、科顺、汉高。去正规渠道买，假防水料极多。槽内防水用和大面防水<strong>同品牌同型号</strong>的材料，不要混用。
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <div class="lbl">💡 为什么要槽内+大面做两遍防水？</div>
+    <ul>
+      <li><strong>槽内防水</strong>：管壁与槽壁之间的缝隙是渗水通道，槽内刷防水封闭了这个通道</li>
+      <li><strong>大面防水</strong>：封槽后的墙面与新开槽处有材质差异（封槽砂浆 vs 原墙面），交界处易开裂，大面防水覆盖整个墙面</li>
+      <li>两遍防水不重复——槽内防的是"管壁缝隙渗水"，大面防的是"瓷砖表面渗水"，各管各的</li>
+      <li>成本很低（槽内防水涂料用量极少），但省了这步后期墙体发霉漏水维修成本是十倍以上</li>
+    </ul>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 厨卫开槽防水避坑清单</div>
+    <ul>
+      <li><strong>槽内不刷防水直接埋管</strong>→ 最常见的偷工！水管接头微渗或墙面水汽沿管壁缝隙渗入墙体，瓷砖表面看不出，墙体内部泡透发霉，严重时渗到隔壁或楼下</li>
+      <li><strong>防水没干透就埋管</strong>→ 防水层未固化被管子压破划伤，等于没做。每遍等2-4小时，全部干透24小时后再埋管</li>
+      <li><strong>只做槽内不做大面（或反过来）</strong>→ 两遍防水各管各的渗水路径，缺一不可。槽内防管壁缝隙渗水，大面防瓷砖表面渗水</li>
+      <li><strong>封槽砂浆有空鼓</strong>→ 空鼓处是积水通道，封槽时必须填实，管子两侧砂浆均匀填充</li>
+      <li><strong>管卡划破防水层</strong>→ 固定管子时管卡/钢钉打到防水层上，破坏防水。埋管时注意管卡位置，不要钉穿防水层</li>
+      <li><strong>淋浴区水管槽不做防水</strong>→ 淋浴区水汽最大，水管槽（花洒混水阀的墙内水管）如果不做槽内防水，水沿管壁渗入墙体是迟早的事</li>
+      <li><strong>厨房水槽区水管槽不做防水</strong>→ 水龙头溅水、角阀接头渗漏，水沿槽缝渗入墙体，橱柜后面发霉</li>
+      <li><strong>防水涂料混品牌</strong>→ 不同品牌防水涂料成分可能不兼容，槽内和大面必须同品牌同型号</li>
+    </ul>
+  </div>
+</section>
+<section class="sec" id="fixing">
+  <h2><span class="num">7</span>管子固定方式</h2>
+  <p class="intro">管子固定不好会下垂、移位、共振，后期贴砖/封槽时管子位置就乱了。固定间距和固定件都有标准。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">各类管子固定标准</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>管子类型</th><th>固定件</th><th>间距</th><th>特殊要求</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PPR水管（走墙）</td>
+            <td><strong>塑料管卡 + 膨胀螺丝</strong>（或钢钉膨胀卡）</td>
+            <td><strong>50-60cm</strong></td>
+            <td>转弯处两端各加一个管卡；热水管间距取小值（50cm）</td>
+          </tr>
+          <tr>
+            <td>PPR水管（走顶）</td>
+            <td><strong>吊卡 + 膨胀螺丝</strong>（固定到楼板底）</td>
+            <td><strong>50-60cm</strong></td>
+            <td>吊顶内管子必须固定到楼板，不能搭在吊顶龙骨上（共振+承重）</td>
+          </tr>
+          <tr>
+            <td>PVC线管（走墙）</td>
+            <td><strong>线管管卡 + 钢钉</strong>（或自攻螺丝）</td>
+            <td><strong>80-100cm</strong></td>
+            <td>转弯处两端各加一个管卡；直线段中间均匀分布</td>
+          </tr>
+          <tr>
+            <td>PVC线管（走顶）</td>
+            <td><strong>吊卡 + 膨胀螺丝</strong></td>
+            <td><strong>80-100cm</strong></td>
+            <td>同水管走顶，固定到楼板不搭龙骨</td>
+          </tr>
+          <tr>
+            <td>地暖盘管</td>
+            <td><strong>专用地暖卡钉</strong>（钉在保温板上）</td>
+            <td><strong>30-40cm</strong>一个卡钉</td>
+            <td>转弯处加密（转弯两侧各一个卡钉）；间距均匀不松脱</td>
+          </tr>
+          <tr>
+            <td>网线（穿管内）</td>
+            <td>不需要单独固定（线管固定即可）</td>
+            <td>—</td>
+            <td>网线穿在线管内，线管固定好网线就不会跑</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">固定件选型</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>固定件</th><th>用途</th><th>选购要点</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>PPR管管卡</td>
+            <td>固定PPR水管到墙面</td>
+            <td>管卡内径匹配管径（De25/De20）；材质选PP或尼龙（不选回收料脆裂的）；高品质选带橡胶内衬的（减震防磨损）</td>
+          </tr>
+          <tr>
+            <td>钢钉膨胀卡</td>
+            <td>快速固定管卡到墙面</td>
+            <td>钢钉+塑料膨胀套管一体，施工快；选正品（劣质钢钉弯不断入墙不牢）</td>
+          </tr>
+          <tr>
+            <td>PVC线管管卡</td>
+            <td>固定PVC线管到墙面</td>
+            <td>管卡规格匹配线管径（φ16/φ20）；材质选硬质PVC或尼龙；管卡开口朝下安装（防止线管弹出）</td>
+          </tr>
+          <tr>
+            <td>吊卡（走顶用）</td>
+            <td>固定管子到楼板底面</td>
+            <td>吊杆+管卡组合；膨胀螺丝打到楼板≥4cm深度；吊杆选Φ6mm以上钢筋或全牙螺杆</td>
+          </tr>
+          <tr>
+            <td>地暖卡钉</td>
+            <td>固定地暖盘管到保温板</td>
+            <td>U型卡钉，钉脚长度匹配保温板厚度（3cm板用3cm卡钉）；材质选PP塑料（不选金属，金属导热损失热量）</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">⚠ 管子固定避坑清单</div>
+    <ul>
+      <li><strong>管卡间距太大</strong>→ 水管管卡超过60cm管子下垂，热熔接头受重力变形渗漏；线管管卡超过100cm管子晃动，封槽时管子位置乱</li>
+      <li><strong>转弯处没加密</strong>→ 转弯处受力最大，两端不固定管子会弹开变形。转弯两端必须各加一个管卡</li>
+      <li><strong>走顶管子搭在吊顶龙骨上</strong>→ 水管/线管搭在龙骨上不固定到楼板，通水时水锤效应引起龙骨共振嗡嗡响，且龙骨承重后变形。必须用膨胀螺丝固定到楼板底</li>
+      <li><strong>膨胀螺丝深度不够</strong>→ 打入楼板不到3-4cm，管子装水后重量大螺丝松动脱落。老房子楼板砂浆层厚，要打到混凝土层</li>
+      <li><strong>管卡用回收料</strong>→ 劣质管卡一捏就碎，几年后老化断裂管子脱落。管卡虽然小件但必须选品质好的</li>
+      <li><strong>地暖卡钉用金属</strong>→ 金属卡钉导热，热量从盘管传到保温板下损失。必须用PP塑料卡钉</li>
+      <li><strong>管卡开口朝上</strong>→ 线管管卡开口朝上安装，线管容易从开口处弹出。开口朝下或朝侧面安装</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 接线方式 ==================== -->
+<section class="sec" id="wago">
+  <h2><span class="num">8</span>接线方式（WAGO连接器）</h2>
+  <p class="intro">传统拧线+电工胶布的接线方式已经淘汰——胶布老化松脱、接触不良发热是最常见的电路隐患。WAGO连接器是国标推荐的接线方式。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">接线方式对比</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>方式</th><th>操作</th><th>可靠性</th><th>评价</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>WAGO连接器</strong></td>
+            <td>线头插入WAGO接线端子，弹簧夹紧</td>
+            <td><span class="text-green">高</span></td>
+            <td><span class="text-green">推荐</span>。免工具、弹簧恒压不松动、可单手操作、每个孔独立</td>
+          </tr>
+          <tr>
+            <td>螺旋端子</td>
+            <td>螺丝压紧线头</td>
+            <td><span class="text-amber">中</span></td>
+            <td><span class="text-amber">可用</span>。但螺丝可能松动，大电流长期使用需定期检查拧紧</td>
+          </tr>
+          <tr>
+            <td>拧线+电工胶布</td>
+            <td>两根线拧在一起，缠电工胶布</td>
+            <td><span class="text-red">低</span></td>
+            <td><span class="text-red">禁用</span>。胶布老化松脱、接触不良发热起火、维修时无法还原</td>
+          </tr>
+          <tr>
+            <td>焊锡+热缩管</td>
+            <td>焊锡焊接接头，套热缩管</td>
+            <td><span class="text-amber">中高</span></td>
+            <td>可靠但费工时，家装极少用，且硬线焊锡后变脆易断</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">WAGO连接器选型</div>
+      <table class="compare-table">
+        <thead>
+          <tr><th>型号</th><th>孔数</th><th>线径</th><th>用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>WAGO 221-412</td><td>2孔</td><td>0.2-4mm²</td><td>两线对接（最常用）</td></tr>
+          <tr><td>WAGO 221-413</td><td>3孔</td><td>0.2-4mm²</td><td>三线对接（分支/并联）</td></tr>
+          <tr><td>WAGO 221-415</td><td>5孔</td><td>0.2-4mm²</td><td>五线对接（多路分支）</td></tr>
+        </tbody>
+      </table>
+      <div class="specs">
+        <span class="lbl">选购：</span>认准 <strong>WAGO 正品</strong>（德国品牌，橙色操作杆）。市面上有国产仿品（透明/白色外壳），弹簧力和耐久性不如正品。家装用量不大（50-100个），建议直接买正品。国产替代可选 <strong>正泰/德力西的快速接线端子</strong>，品质也可接受。
+      </div>
+      <div class="note">
+        接线操作：剥线 11mm → 推开WAGO操作杆 → 线头插到底 → 压下操作杆 → 轻拉线头确认夹紧。一根线插一个孔，不要两根线插同一个孔。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 综合避坑 ==================== -->
+<section class="sec" id="pitfalls">
+  <h2><span class="num">9</span>综合避坑清单（施工时逐条对照）</h2>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">材料类</div>
+      <ul class="pitfall-list">
+        <li><span class="key">水管管件不同品牌</span><span class="desc">不同品牌PPR热熔温度可能有差异，管件必须和管子同品牌。进场时核对管件包装品牌</span></li>
+        <li><span class="key">PE-RT I型冒充II型</span><span class="desc">I型耐温只有70°C，集中供热可能超温。管身喷码必须看"II型"</span></li>
+        <li><span class="key">地暖管无阻氧层</span><span class="desc">没有EVOH阻氧层几年后腐蚀金属部件。管身必须有"EVOH"标注</span></li>
+        <li><span class="key">电线铜芯发暗</span><span class="desc">杂质铜/回收铜电阻大发热严重。紫红色有光泽才是无氧铜</span></li>
+        <li><span class="key">电线线径不足</span><span class="desc">标2.5实际1.8甚至更细。卡尺量铜芯直径核对</span></li>
+        <li><span class="key">网线铜包铝（CCA）</span><span class="desc">最常见假线，电阻大信号差。买正规品牌查防伪</span></li>
+        <li><span class="key">线管薄壁非阻燃</span><span class="desc">壁厚<1.5mm踩就碎，非阻燃管起火蔓延。踩一脚+烧一段测试</span></li>
+        <li><span class="key">假品牌</span><span class="desc">熊猫、远东、皮尔萨、康普/AMP假货极多。必须在授权店/旗舰店买，查防伪码</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">施工工艺类</div>
+      <ul class="pitfall-list">
+        <li><span class="key">承重墙开横槽</span><span class="desc">最严重违规，切断钢筋影响结构安全。承重墙只允许竖向浅槽</span></li>
+        <li><span class="key">冷热水管同槽</span><span class="desc">冷凝水泡墙体发霉。间距≥10cm不同槽</span></li>
+        <li><span class="key">强弱电同管/间距不够</span><span class="desc">电磁干扰网速，间距≥30cm，交叉90°+锡箔纸</span></li>
+        <li><span class="key">水管与线管同槽</span><span class="desc">漏水沿管壁蔓延到电线。间距≥15cm不同槽</span></li>
+        <li><span class="key">热熔不到位/过度</span><span class="desc">温度不够接头未融合→渗漏；加热太久内壁熔塌→堵管。260-280°C加热5-8秒</span></li>
+        <li><span class="key">管卡间距太大</span><span class="desc">水管50-60cm、线管80-100cm。超了管子下垂变形</span></li>
+        <li><span class="key">走顶管子搭龙骨</span><span class="desc">共振嗡嗡响+龙骨承重变形。必须用膨胀螺丝固定到楼板底</span></li>
+        <li><span class="key">线管直角死弯</span><span class="desc">后期换线拉不动。弯管弹簧弯出弧度</span></li>
+        <li><span class="key">管内有接头</span><span class="desc">电线接头在接线盒内做，管内严禁接头</span></li>
+        <li><span class="key">穿线率超标</span><span class="desc">线塞太满散热差换线拉不动。≤管内截面积40%</span></li>
+        <li><span class="key">地暖填充层内有接头</span><span class="desc">绝对禁止。一根管从分水器到回路连续无接头</span></li>
+        <li><span class="key">拧线+电工胶布</span><span class="desc">胶布老化松脱起火。用WAGO连接器</span></li>
+        <li><span class="key">厨卫开槽后槽内不刷防水</span><span class="desc">最常见偷工！水沿管壁缝隙渗入墙体，瓷砖表面看不出但墙体内部泡透发霉。槽内必须先刷防水再埋管</span></li>
+        <li><span class="key">厨卫墙面开横槽</span><span class="desc">厨卫墙面要贴砖+做防水，横槽破坏墙面整体性且防水难做。只开竖槽</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">验收类</div>
+      <ul class="pitfall-list">
+        <li><span class="key">封槽前没打压</span><span class="desc">水管0.8-1.0MPa保压30-60分钟；地暖0.6-0.8MPa保压24小时。封了再发现漏要砸墙砸地</span></li>
+        <li><span class="key">回填时撤压力</span><span class="desc">地暖回填全程管内保压不撤，压力表一直挂着</span></li>
+        <li><span class="key">没做绝缘测试</span><span class="desc">穿线后用摇表测绝缘电阻≥0.5MΩ，检查有无破损漏电</span></li>
+        <li><span class="key">没拍照留档</span><span class="desc">封槽前管线走向全部拍照/录像，后期打孔维修参考。不拍等于白验</span></li>
+        <li><span class="key">材料进场没验收</span><span class="desc">进场当天核对合格证+型式检验报告（CMA/CNAS），喷码与报告一致</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 进场验收清单 ==================== -->
+<section class="sec" id="checklist">
+  <h2><span class="num">10</span>材料进场验收清单（打印对照）</h2>
+  <p class="intro">材料进场当天你必须到场，带这张清单逐项核对。核心三步：索要证书 → 核对参数 → 拍照留档。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">PPR水管</div>
+      <ul class="check-list">
+        <li><span class="key">管身喷码有 PP-R、S2.5、De25/De20、GB/T 18742</span><span class="desc">缺少任一项=来路不明</span></li>
+        <li><span class="key">管件和管子同品牌</span><span class="desc">不同品牌热熔温度可能不同</span></li>
+        <li><span class="key">对光看不透光</span><span class="desc">透光管会长藻类</span></li>
+        <li><span class="key">截面对光看晶莹透亮无黑点</span><span class="desc">发黄暗淡=回收料</span></li>
+        <li><span class="key">有涉水产品卫生许可批件</span><span class="desc">看包装或合格证</span></li>
+        <li><span class="key">有出厂合格证 + 型式检验报告（CMA/CNAS）</span><span class="desc">两个都要，缺一不让施工</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">地暖盘管</div>
+      <ul class="check-list">
+        <li><span class="key">管身喷码有 PE-RT II型、EVOH、De20×2.0、GB/T 28799.2</span><span class="desc">II型和EVOH缺一不可</span></li>
+        <li><span class="key">对光看管壁晶莹透亮无杂质黑点</span><span class="desc">发黄发暗=回收料</span></li>
+        <li><span class="key">型式检验报告氧气渗透率≤0.1g/m³·d</span><span class="desc">报告上CMA/CNAS标志</span></li>
+        <li><span class="key">报告编号能在检测机构官网查到</span><span class="desc">防PS造假报告</span></li>
+        <li><span class="key">报告上的品牌型号与进场管子完全一致</span><span class="desc">对不上=拿别的产品报告糊弄</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">电线</div>
+      <ul class="check-list">
+        <li><span class="key">线身喷码有 ZC-BV、线径(1.5/2.5/4)、450/750V、GB/T 5023、CCC标志</span><span class="desc">缺少任一项=不合格</span></li>
+        <li><span class="key">铜芯紫红色有光泽</span><span class="desc">发暗发黑=杂质铜/回收铜</span></li>
+        <li><span class="key">卡尺量铜芯直径（2.5mm²≈1.78mm，4mm²≈2.25mm）</span><span class="desc">不达标=线径不足</span></li>
+        <li><span class="key">绝缘层阻燃测试（烧一小段离开火源自熄）</span><span class="desc">持续燃烧=非阻燃</span></li>
+        <li><span class="key">标100米的盘量实际长度</span><span class="desc">劣质常不足米，称重也可粗判</span></li>
+        <li><span class="key">有CCC认证 + 出厂合格证</span><span class="desc">CCC是强制认证，没有=非法产品</span></li>
+        <li><span class="key">查防伪码（品牌官网/电话/扫码）</span><span class="desc">假线外观几乎一样，防伪码是最后防线</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">PVC线管</div>
+      <ul class="check-list">
+        <li><span class="key">管身标识有 PVC-U阻燃、φ16/φ20、JG/T 3050</span><span class="desc">缺少=不明产品</span></li>
+        <li><span class="key">壁厚≥1.5mm（卡尺量）</span><span class="desc">薄壁管踩就碎</span></li>
+        <li><span class="key">用脚踩不碎</span><span class="desc">一踩就碎=劣质</span></li>
+        <li><span class="key">烧一小段离开火源自熄</span><span class="desc">非阻燃=起火隐患</span></li>
+        <li><span class="key">红蓝颜色分明（强电红/弱电蓝）</span><span class="desc">颜色混用后期分不清</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">网线</div>
+      <ul class="check-list">
+        <li><span class="key">包装标 Cat6A、23AWG、UTP、频率500MHz</span><span class="desc">缺少=不达标</span></li>
+        <li><span class="key">导体是无氧铜（截面看紫红色，不是银白色铝色）</span><span class="desc">铜包铝CCA是假线</span></li>
+        <li><span class="key">水晶头是Cat6A专用且同品牌</span><span class="desc">Cat6水晶头和Cat6A不通用</span></li>
+        <li><span class="key">面板模块是Cat6A级别</span><span class="desc">低类别面板拖累整体性能</span></li>
+        <li><span class="key">查防伪码（康普/AMP假货极多）</span><span class="desc">必须在授权店/旗舰店买</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">WAGO连接器</div>
+      <ul class="check-list">
+        <li><span class="key">认准WAGO正品（橙色操作杆，221系列）</span><span class="desc">仿品弹簧力不足</span></li>
+        <li><span class="key">线径范围标0.2-4mm²</span><span class="desc">覆盖家装所有线径</span></li>
+        <li><span class="key">备足2孔/3孔/5孔三种规格</span><span class="desc">家装用量50-100个</span></li>
+      </ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ==================== 品牌速查 ==================== -->
+<section class="sec" id="brands">
+  <h2><span class="num">11</span>品牌速查表</h2>
+  <p class="intro">以下品牌均为参考举例（截至2026年市面常见），不代表唯一选择。各地经销商和产品线会变化，购买时仍需核对包装上的参数和认证编号。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <table class="compare-table">
+        <thead>
+          <tr><th class="col-brand">材料</th><th>推荐品牌（排序=推荐优先级）</th><th>核心辨别点</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>PPR水管</strong></td>
+            <td>伟星 &gt; 日丰 &gt; 金牛 &gt; 联塑/中财 &gt;（皮尔萨慎选）</td>
+            <td>S2.5系列、不透光、管件同品牌、有卫生许可批件</td>
+          </tr>
+          <tr>
+            <td><strong>地暖盘管</strong></td>
+            <td>乔治费歇尔(GF) &gt; 瑞好(Rehau) &gt; 伟星/日丰/金牛</td>
+            <td>PE-RT II型、EVOH阻氧层、管身喷码齐全、透亮无杂质</td>
+          </tr>
+          <tr>
+            <td><strong>分水器</strong></td>
+            <td>曼瑞德 &gt; 丹佛斯 &gt; 意瓦</td>
+            <td>H59-1黄铜、整体锻造（非拼接）、壁厚≥2.6mm</td>
+          </tr>
+          <tr>
+            <td><strong>PVC线管</strong></td>
+            <td>联塑 &gt; 中财 &gt; 伟星</td>
+            <td>壁厚≥1.5mm、阻燃自熄、踩不碎、红蓝分管</td>
+          </tr>
+          <tr>
+            <td><strong>电线</strong></td>
+            <td>远东 &gt; 熊猫 &gt; 德力西/正泰 &gt; 起帆/宝胜/上上</td>
+            <td>ZC-BV、CCC认证、铜芯紫红有光泽、阻燃自熄、查防伪</td>
+          </tr>
+          <tr>
+            <td><strong>网线</strong></td>
+            <td>康普/安普 &gt; 泛达 &gt; 大唐/普天 &gt; 罗格朗/秋叶原</td>
+            <td>Cat6A UTP 23AWG、无氧铜、水晶头同品牌配套</td>
+          </tr>
+          <tr>
+            <td><strong>WAGO连接器</strong></td>
+            <td>WAGO正品（221系列）&gt; 正泰/德力西快速接线端子</td>
+            <td>橙色操作杆、0.2-4mm²线径范围</td>
+          </tr>
+          <tr>
+            <td><strong>管卡/固定件</strong></td>
+            <td>联塑/中财/伟星配套管卡 &gt; 正品钢钉膨胀卡</td>
+            <td>管卡内径匹配管径、PP/尼龙材质（不选脆裂回收料）</td>
+          </tr>
+          <tr>
+            <td><strong>水管保温套</strong></td>
+            <td>华美 &gt; 坤耐 &gt; 盈速奇</td>
+            <td>9mm闭孔橡塑、B1级阻燃</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:1.5rem;">
+    <strong>最后提醒：</strong>隐蔽工程的材料一定要自己买或指定品牌型号写进合同，不能让施工方"包料"用杂牌。品牌在本文中均为参考，购买时仍需核对包装上的参数、执行标准和认证编号——参数达标&gt;有认证&gt;是大品牌，三个都满足最稳。
+  </div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>太原旧房硬装小白实施手册</title>
+<style>
+  :root {
+    --bg: #f8f7f4; --card-bg: #fff; --text: #2c2c2c; --muted: #6b6b6b;
+    --border: #e8e4dc; --accent: #2c7a4b; --accent-light: #e8f5e9;
+    --warn: #c0392b; --warn-light: #fef0ee; --blue: #2471a3; --blue-light: #eaf2f8;
+    --gold: #b8860b; --gold-light: #fef9e7;
+    --purple: #6c3483; --purple-light: #f4ecf7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:2rem 1rem;
+  }
+  .container { max-width:1100px; margin:0 auto; }
+
+  .header { text-align:center; padding:2rem 0 2.5rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+  .header h1 { font-size:1.9rem; font-weight:700; }
+  .header .subtitle { color:var(--muted); font-size:1rem; margin-top:0.3rem; }
+  .header .meta { font-size:0.82rem; color:#999; margin-top:0.5rem; }
+
+  .nav { position:sticky; top:0; z-index:100; background:var(--card-bg); border-bottom:1px solid var(--border); padding:0.6rem 0; margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; }
+  .nav a { font-size:0.8rem; text-decoration:none; color:var(--muted); padding:4px 10px; border-radius:14px; white-space:nowrap; transition:all 0.15s; }
+  .nav a:hover { background:var(--accent-light); color:var(--accent); font-weight:600; }
+
+  .sec { margin-bottom:2.8rem; scroll-margin-top:60px; }
+  .sec h2 { font-size:1.25rem; font-weight:700; padding-bottom:0.4rem; border-bottom:2px solid var(--accent); margin-bottom:1rem; }
+  .sec h2 .num { display:inline-block; width:28px; height:28px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:28px; font-size:0.85rem; margin-right:0.5rem; }
+  .sec h3 { font-size:1.02rem; font-weight:700; margin:1.2rem 0 0.6rem; color:#1a5e3a; }
+  .sec .intro { font-size:0.9rem; color:var(--muted); margin-bottom:1rem; }
+  .sec p { font-size:0.9rem; margin:0.5rem 0; }
+  .sec ul, .sec ol { margin:0.4rem 0 0.8rem 1.3rem; font-size:0.88rem; }
+  .sec li { padding:2px 0; }
+
+  .card { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); margin-bottom:1rem; overflow:hidden; }
+  .card-body { padding:1.2rem; }
+  .card-title { font-weight:700; font-size:1rem; margin-bottom:0.6rem; padding-bottom:0.4rem; border-bottom:1px dashed var(--border); }
+
+  .four { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:1rem 0; }
+  .four-item { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); padding:1rem 1.1rem; }
+  .four-item .k { font-size:0.75rem; font-weight:700; letter-spacing:1px; margin-bottom:0.35rem; }
+  .four-item h4 { font-size:0.95rem; margin-bottom:0.4rem; }
+  .four-item p, .four-item li { font-size:0.84rem; }
+  .four-item ul { margin:0.2rem 0 0 1.1rem; }
+  .k-pick { color:var(--accent); }
+  .k-do { color:var(--blue); }
+  .k-wait { color:var(--gold); }
+  .k-check { color:var(--purple); }
+
+  .compare-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin:0.5rem 0 1rem; }
+  .compare-table thead th { background:#f0ede6; padding:0.55rem 0.7rem; text-align:left; font-weight:600; border-bottom:2px solid var(--border); }
+  .compare-table tbody td { padding:0.55rem 0.7rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .compare-table tbody tr:last-child td { border-bottom:none; }
+
+  .verdict-box { background:var(--accent-light); border:1px solid var(--accent); border-radius:10px; padding:1rem 1.4rem; margin:1rem 0; }
+  .verdict-box .lbl { font-size:0.78rem; font-weight:600; color:var(--accent); letter-spacing:1px; }
+  .verdict-box .main { font-size:1.02rem; font-weight:700; color:#1a5e3a; margin-top:0.3rem; }
+  .verdict-box p { font-size:0.86rem; margin-top:0.4rem; }
+
+  .warn-box { background:var(--warn-light); border:1px solid #f5c6cb; border-radius:10px; padding:0.9rem 1.2rem; margin:1rem 0; }
+  .warn-box .lbl { font-weight:700; color:var(--warn); font-size:0.95rem; }
+  .warn-box ul { margin:0.3rem 0 0 1.2rem; font-size:0.86rem; }
+  .warn-box li { padding:2px 0; }
+
+  .tip-box { background:var(--blue-light); border:1px solid #aed6f1; border-radius:10px; padding:0.9rem 1.2rem; margin:1rem 0; }
+  .tip-box .lbl { font-weight:700; color:var(--blue); font-size:0.95rem; }
+  .tip-box ul, .tip-box p { margin:0.3rem 0 0; font-size:0.86rem; }
+  .tip-box ul { margin-left:1.2rem; }
+
+  .gold-box { background:var(--gold-light); border:1px solid #f9e79f; border-radius:10px; padding:0.9rem 1.2rem; margin:1rem 0; }
+  .gold-box .lbl { font-weight:700; color:var(--gold); font-size:0.95rem; }
+
+  .check-list { list-style:none; padding:0; }
+  .check-list li { padding:0.5rem 0 0.5rem 1.8rem; position:relative; font-size:0.88rem; border-bottom:1px dashed var(--border); }
+  .check-list li:last-child { border-bottom:none; }
+  .check-list li::before { content:"☐"; position:absolute; left:0.3rem; top:0.5rem; font-size:1.1rem; color:var(--accent); }
+  .check-list li .key { font-weight:700; }
+  .check-list li .desc { color:var(--muted); font-size:0.82rem; display:block; margin-top:0.2rem; }
+
+  .pitfall-list { list-style:none; padding:0; }
+  .pitfall-list li { padding:0.5rem 0 0.5rem 1.8rem; position:relative; font-size:0.86rem; border-bottom:1px dashed var(--border); }
+  .pitfall-list li:last-child { border-bottom:none; }
+  .pitfall-list li::before { content:"!"; position:absolute; left:0.35rem; top:0.55rem; width:16px; height:16px; border-radius:50%; background:var(--warn); color:#fff; font-size:0.72rem; font-weight:700; text-align:center; line-height:16px; }
+  .pitfall-list li .key { font-weight:700; color:var(--warn); }
+  .pitfall-list li .desc { color:var(--muted); font-size:0.82rem; display:block; margin-top:0.2rem; }
+
+  .brand-card { border:1px solid var(--border); border-radius:8px; padding:0.8rem 1rem; margin-bottom:0.6rem; }
+  .brand-card .brand-name { font-weight:700; font-size:0.92rem; }
+  .brand-card .brand-tag { font-size:0.75rem; color:var(--muted); margin-left:0.4rem; }
+  .brand-card .brand-detail { font-size:0.84rem; margin-top:0.3rem; }
+
+  .tag { display:inline-block; font-size:0.72rem; padding:2px 8px; border-radius:10px; font-weight:500; margin-right:0.3rem; }
+  .tag-best { background:var(--accent-light); color:var(--accent); }
+  .tag-ok { background:var(--blue-light); color:var(--blue); }
+  .tag-warn { background:var(--warn-light); color:var(--warn); }
+  .tag-gold { background:var(--gold-light); color:var(--gold); }
+  .tag-must { background:var(--warn); color:#fff; font-weight:700; }
+
+  .flow-diagram { display:flex; flex-wrap:wrap; align-items:center; gap:0.3rem; margin:1rem 0; font-size:0.82rem; }
+  .flow-box { background:var(--accent-light); border:1px solid var(--accent); border-radius:8px; padding:0.4rem 0.8rem; color:var(--accent); font-weight:600; }
+  .flow-arrow { color:var(--muted); font-size:1.1rem; }
+  .flow-box.warn { background:var(--warn-light); border-color:var(--warn); color:var(--warn); }
+  .flow-box.info { background:var(--blue-light); border-color:var(--blue); color:var(--blue); }
+  .flow-box.gold { background:var(--gold-light); border-color:var(--gold); color:var(--gold); }
+
+  .route-diagram { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.8rem; margin:1rem 0; }
+  .route-card { border-radius:10px; padding:1rem; text-align:center; }
+  .route-card .title { font-weight:700; font-size:0.95rem; margin-bottom:0.3rem; }
+  .route-card .desc { font-size:0.82rem; }
+  .route-green { background:var(--accent-light); border:1px solid var(--accent); }
+  .route-green .title { color:var(--accent); }
+  .route-blue { background:var(--blue-light); border:1px solid #aed6f1; }
+  .route-blue .title { color:var(--blue); }
+  .route-red { background:var(--warn-light); border:1px solid #f5c6cb; }
+  .route-red .title { color:var(--warn); }
+
+  .svg-box { text-align:center; margin:1rem 0; background:#fafafa; border:1px solid var(--border); border-radius:10px; padding:1rem; overflow-x:auto; }
+  .svg-caption { font-size:0.8rem; color:var(--muted); margin-top:0.5rem; }
+
+  .note { font-size:0.83rem; color:var(--muted); margin-top:0.6rem; padding-left:0.8rem; border-left:3px solid var(--gold); }
+  .specs { background:#f9f8f3; border:1px solid var(--border); border-radius:8px; padding:0.8rem 1.1rem; margin-top:0.6rem; font-size:0.84rem; }
+  .related { font-size:0.83rem; color:var(--muted); margin-top:0.8rem; }
+  .related a { color:var(--blue); }
+
+  .must { display:inline-block; background:var(--warn); color:#fff; font-size:0.7rem; font-weight:700; padding:1px 7px; border-radius:8px; margin-left:0.3rem; vertical-align:middle; }
+
+  @media print {
+    .nav { position:static; }
+    .sec { page-break-inside:avoid; }
+  }
+  @media (max-width: 768px) {
+    .four, .route-diagram { grid-template-columns:1fr; }
+    .compare-table { font-size:0.78rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>太原旧房硬装小白实施手册</h1>
+  <div class="subtitle">已合并《隐蔽工程完全指南》全文 · 品牌型号 · 工艺流程 · 晾干贴膜 · 你怎么验收</div>
+  <div class="meta">太原 5 层老楼 3 层 · 约 100㎡ · 单位锅炉 + 预留大暖 · 全屋地砖 · 2026</div>
+</div>
+
+<nav class="nav">
+  <a href="#home">你家前提</a>
+  <a href="#demo">拆除刨地</a>
+  <a href="#dual">双热源地暖</a>
+  <a href="#fh">盘管回填</a>
+  <a href="#longlife">长期性能</a>
+  <a href="#water">厨卫水路</a>
+  <a href="#elec">强弱电</a>
+  <a href="#wp">防水闭水</a>
+  <a href="#tile">瓷砖地面</a>
+  <a href="#wall">墙面基层</a>
+  <a href="#ceiling">吊顶</a>
+  <a href="#window">门窗密封</a>
+  <a href="#paint">刷漆</a>
+  <a href="#time">工期到场</a>
+  <a href="#buy">进场速查</a>
+</nav>
+
+<!-- ==================== 0 你家情况 ==================== -->
+<section class="sec" id="home">
+  <h2><span class="num">0</span>先把你家的硬条件钉死</h2>
+  <p class="intro">装修公司最爱用「别的家都这么干」糊弄你。你家不是普通精装房，有四件事情会改掉很多常规做法。后面每一章都按这四条来，不要让工人按「默认做法」施工。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">你家和普通装修不一样的四件事</div>
+      <table class="compare-table">
+        <thead><tr><th>条件</th><th>意味着什么</th><th>工人常想怎么偷</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>太原老楼，冬天可到 -20℃</td>
+            <td>地暖保温板要 3cm；阴面阳台厨房必须防冻</td>
+            <td>保温板用 2cm 或泡沫板；水管走外墙</td>
+          </tr>
+          <tr>
+            <td>现在单位锅炉暖气片，以后可能接大暖</td>
+            <td>立管不能割断；楼道预留供回水口；房内混水 + 切换阀</td>
+            <td>高温水直灌地暖；拆立管；不留接口</td>
+          </tr>
+          <tr>
+            <td>厨房在阴面阳台，只有 1 个卫生间</td>
+            <td>厨房按卫生间同等防水；厨房必须做地暖</td>
+            <td>阳台只简单贴砖、不做防水和地暖</td>
+          </tr>
+          <tr>
+            <td>全屋地砖 + 家里有 70 多岁老人</td>
+            <td>客卧柔光砖，厨卫防滑砖，尽量无高差</td>
+            <td>推亮面砖；厨卫做门槛高差；水泥砂浆贴大砖</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="verdict-box">
+    <div class="lbl">一句话总原则</div>
+    <div class="main">面层可以选中档，管子、电线、防水、地暖不能省。有地暖的房间，给水管和电线一律不走地面。</div>
+    <p>硬装预算大约 12 万时：瓷砖选东鹏/马可波罗/诺贝尔中端就够；地暖管、PPR、电线、防水涂料必须写进合同的品牌和型号，材料进场你本人核对喷码和检测报告。</p>
+  </div>
+
+  <div class="route-diagram">
+    <div class="route-card route-green">
+      <div class="title">客厅 / 卧室</div>
+      <div class="desc">地暖 + 柔光地砖。水电竖槽走墙，地面不走管。</div>
+    </div>
+    <div class="route-card route-blue">
+      <div class="title">厨房 / 卫生间</div>
+      <div class="desc">横干走铝扣板吊顶，竖分走墙。槽内先刷防水再埋管。</div>
+    </div>
+    <div class="route-card route-red">
+      <div class="title">全屋地面</div>
+      <div class="desc">只铺地暖盘管，不走给水、不走电线。走地等于焊死，坏了要砸地。</div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <div class="lbl">怎么判断材料优不优质（比认牌子更重要）</div>
+    <ul>
+      <li><strong>第一看参数</strong>：管径、壁厚、线径、密度、压缩强度——数字骗不了人</li>
+      <li><strong>第二看认证</strong>：国标编号、CCC、卫生许可、型式检验报告（CMA/CNAS）</li>
+      <li><strong>第三看品牌</strong>：大品牌底线有保障，但同品牌也分档次，只认牌子不查型号等于没查</li>
+    </ul>
+    <p>下文品牌都写成「首选 / 可接受备选 / 直接拒绝」，不是唯一真理。太原能买到、参数达标即可。</p>
+  </div>
+
+  <p class="note">面层可以选中档，管子、电线、防水、地暖不能省。隐蔽工程出问题 = 砸地砸墙，维修费是当初施工费的十倍起。</p>
+</section>
+
+<!-- ==================== 1 拆除刨地 ==================== -->
+<section class="sec" id="demo">
+  <h2><span class="num">1</span>拆除刨地</h2>
+  <p class="intro">旧房要全部拆掉、刨地刨墙、水电全换。这一步看起来「砸就完了」，但老楼最容易伤结构、伤楼下、把不该拆的立管拆了。</p>
+
+  <div class="four">
+    <div class="four-item">
+      <div class="k k-pick">选什么</div>
+      <h4>这一步几乎不买主材</h4>
+      <p>要准备的是保护：楼下打招呼、楼道铺彩条布、门口挡板。窗户这次不换（已定），拆墙时用木板/薄膜挡住窗框，别砸裂玻璃和密封条。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-do">怎么做</div>
+      <h4>刨到楼板，停</h4>
+      <ul>
+        <li>原地砖/找平层刨掉，露出结构楼板即可，不能往下凿伤预制板/现浇板</li>
+        <li>暖气片可以拆，<strong>穿楼板的竖直供回水立管不能割断</strong></li>
+        <li>尽量不砸承重墙（已定：保持原格局）</li>
+        <li>厨房阳台原有地漏先保护，能留则留</li>
+      </ul>
+    </div>
+    <div class="four-item">
+      <div class="k k-wait">等几天 / 贴膜</div>
+      <h4>刨完清干净就能往下干</h4>
+      <p>不用晾。但水电开槽前地面要扫净、浇水湿润找平用。窗户、保留的马桶（如暂不拆）、吸顶灯拆下收好，不要扔。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-check">你怎么验收</div>
+      <h4>看三件事</h4>
+      <ul>
+        <li>楼板露出来了，没有被凿出坑、露出钢筋乱砸</li>
+        <li>立管还在，用保温棉临时包上，阀门没被拆丢</li>
+        <li>楼下天花板没有新裂缝、没有漏渣（当天就下楼看一眼）</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">拆除这一步直接喊停的情况</div>
+    <ul>
+      <li>工人说「立管碍事，先割掉以后再接」——楼上楼下可能还靠这根管子过水</li>
+      <li>承重墙上开很长的横槽或把门洞乱扩</li>
+      <li>把垃圾从窗口往下倒</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 2 双热源 ==================== -->
+<section class="sec" id="dual">
+  <h2><span class="num">2</span>地暖双热源：单位锅炉 + 预留大暖</h2>
+  <p class="intro">这是你家最特殊、也最容易被装错的一块。单位锅炉和以后市政二次网的水，温度大概 50–70℃；地暖只要 35–45℃。高温水直接灌进地暖管，地面会烫、胶会空鼓、管子寿命会短。必须加混水。两套热源还不能同时开。</p>
+
+  <div class="verdict-box">
+    <div class="lbl">推荐接法（现在就能装，大暖来了只接楼道那两根管）</div>
+    <div class="main">立管保留 → 阀门 A 接现在的单位锅炉；楼道预留口 → 阀门 B 接未来大暖；两路汇到过滤器 + 混水中心，再进餐厅的铜分水器。</div>
+    <p>户内板式换热器先留位置、先留接口，现在不必买。等热力公司进场，如果要求隔离开式连接，再加小型板换。</p>
+  </div>
+
+  <div class="svg-box">
+    <svg viewBox="0 0 980 520" width="100%" style="max-width:960px" xmlns="http://www.w3.org/2000/svg" aria-labelledby="dualTitle dualDesc">
+      <title id="dualTitle">双热源地暖切换示意图</title>
+      <desc id="dualDesc">单位锅炉立管和楼道预留市政接口经阀门A、阀门B汇入混水中心，再接到分水器和地暖盘管。A与B不能同时开启。</desc>
+      <rect x="8" y="8" width="964" height="504" rx="12" fill="#fff" stroke="#e8e4dc"/>
+
+      <!-- 单位锅炉 -->
+      <rect x="30" y="40" width="200" height="120" rx="8" fill="#e8f5e9" stroke="#2c7a4b"/>
+      <text x="130" y="68" text-anchor="middle" font-size="14" font-weight="700" fill="#1a5e3a">现在：单位锅炉</text>
+      <text x="130" y="90" text-anchor="middle" font-size="12" fill="#2c7a4b">穿楼板立管（供/回）</text>
+      <text x="130" y="110" text-anchor="middle" font-size="11" fill="#666">暖气片可拆，立管不能断</text>
+      <text x="130" y="132" text-anchor="middle" font-size="11" fill="#666">水温约 60–70℃</text>
+
+      <!-- 楼道预留 -->
+      <rect x="30" y="200" width="200" height="120" rx="8" fill="#eaf2f8" stroke="#2471a3"/>
+      <text x="130" y="228" text-anchor="middle" font-size="14" font-weight="700" fill="#1a5276">以后：市政大暖</text>
+      <text x="130" y="250" text-anchor="middle" font-size="12" fill="#2471a3">楼道预留供/回口</text>
+      <text x="130" y="270" text-anchor="middle" font-size="11" fill="#666">De25 + 阀门 + 堵头 + 保温</text>
+      <text x="130" y="292" text-anchor="middle" font-size="11" fill="#666">没接通前阀门常关</text>
+
+      <!-- 阀门 A B -->
+      <rect x="280" y="70" width="130" height="60" rx="8" fill="#fef9e7" stroke="#b8860b"/>
+      <text x="345" y="95" text-anchor="middle" font-size="13" font-weight="700" fill="#b8860b">阀门 A + 止回阀</text>
+      <text x="345" y="114" text-anchor="middle" font-size="11" fill="#666">本户从立管接管</text>
+
+      <rect x="280" y="230" width="130" height="60" rx="8" fill="#fef9e7" stroke="#b8860b"/>
+      <text x="345" y="255" text-anchor="middle" font-size="13" font-weight="700" fill="#b8860b">阀门 B + 止回阀</text>
+      <text x="345" y="274" text-anchor="middle" font-size="11" fill="#666">接楼道预留口</text>
+
+      <!-- 汇合 -->
+      <circle cx="460" y="180" r="18" fill="#fff" stroke="#2c2c2c" stroke-width="2"/>
+      <text x="460" y="185" text-anchor="middle" font-size="12" font-weight="700">汇</text>
+
+      <!-- 混水 -->
+      <rect x="510" y="110" width="200" height="140" rx="8" fill="#f4ecf7" stroke="#6c3483"/>
+      <text x="610" y="138" text-anchor="middle" font-size="14" font-weight="700" fill="#6c3483">混水中心</text>
+      <text x="610" y="160" text-anchor="middle" font-size="12" fill="#6c3483">过滤器 + 循环泵</text>
+      <text x="610" y="180" text-anchor="middle" font-size="12" fill="#6c3483">恒温混水阀</text>
+      <text x="610" y="200" text-anchor="middle" font-size="12" fill="#6c3483">温度表 / 压力表</text>
+      <text x="610" y="226" text-anchor="middle" font-size="12" font-weight="700" fill="#1a5e3a">出水 35–45℃</text>
+
+      <!-- 分水器 -->
+      <rect x="750" y="50" width="190" height="90" rx="8" fill="#e8f5e9" stroke="#2c7a4b"/>
+      <text x="845" y="78" text-anchor="middle" font-size="14" font-weight="700" fill="#1a5e3a">铜分水器</text>
+      <text x="845" y="100" text-anchor="middle" font-size="12" fill="#2c7a4b">餐厅 · 5–7 路</text>
+      <text x="845" y="120" text-anchor="middle" font-size="11" fill="#666">距完成地面 ≥300mm</text>
+
+      <!-- 盘管 -->
+      <rect x="750" y="170" width="190" height="150" rx="8" fill="#eaf2f8" stroke="#2471a3"/>
+      <text x="845" y="198" text-anchor="middle" font-size="14" font-weight="700" fill="#1a5276">地暖盘管</text>
+      <text x="845" y="220" text-anchor="middle" font-size="12" fill="#2471a3">客厅 / 主卧 / 次卧</text>
+      <text x="845" y="240" text-anchor="middle" font-size="12" fill="#2471a3">厨房阳台（必须）</text>
+      <text x="845" y="260" text-anchor="middle" font-size="12" fill="#2471a3">卫生间</text>
+      <text x="845" y="290" text-anchor="middle" font-size="11" fill="#666">填充层内禁止接头</text>
+
+      <!-- 板换预留 -->
+      <rect x="510" y="270" width="200" height="50" rx="8" fill="#fff" stroke="#999" stroke-dasharray="5 4"/>
+      <text x="610" y="300" text-anchor="middle" font-size="12" fill="#666">预留板换位置（现在不装）</text>
+
+      <!-- 连线 -->
+      <line x1="230" y1="100" x2="280" y2="100" stroke="#2c7a4b" stroke-width="3"/>
+      <line x1="230" y1="260" x2="280" y2="260" stroke="#2471a3" stroke-width="3"/>
+      <line x1="410" y1="100" x2="460" y2="170" stroke="#b8860b" stroke-width="2"/>
+      <line x1="410" y1="260" x2="460" y2="190" stroke="#b8860b" stroke-width="2"/>
+      <line x1="478" y1="180" x2="510" y2="180" stroke="#2c2c2c" stroke-width="3"/>
+      <line x1="710" y1="150" x2="750" y2="95" stroke="#2c7a4b" stroke-width="3"/>
+      <line x1="845" y1="140" x2="845" y2="170" stroke="#2471a3" stroke-width="3"/>
+
+      <!-- 铁律 -->
+      <rect x="30" y="360" width="920" height="120" rx="8" fill="#fef0ee" stroke="#c0392b"/>
+      <text x="490" y="392" text-anchor="middle" font-size="16" font-weight="700" fill="#c0392b">切换铁律：阀门 A 和阀门 B 不能同时开</text>
+      <text x="490" y="418" text-anchor="middle" font-size="13" fill="#922b21">同时开 = 两套热源串水，可能顶压邻居、污染管网、热力公司追责</text>
+      <text x="490" y="444" text-anchor="middle" font-size="13" fill="#922b21">正确顺序：先关上正在用的那一路，停一两分钟，再打开另一路</text>
+      <text x="490" y="468" text-anchor="middle" font-size="13" fill="#922b21">房内做标牌，或用三通切换阀互锁，避免以后家人拧错</text>
+    </svg>
+    <p class="svg-caption">双热源只在混水中心之前切换。混水之后永远是低温水进分水器，地暖盘管看不到「锅炉水」还是「大暖水」。</p>
+  </div>
+
+  <h3>选什么（写进合同）</h3>
+  <div class="card">
+    <div class="card-body">
+      <div class="brand-card" style="border-left:4px solid var(--accent);">
+        <div class="brand-name">混水中心 <span class="tag tag-best">必配</span></div>
+        <div class="brand-detail">循环泵 + 恒温混水阀 + 过滤器 + 温度表 + 压力表。首选曼瑞德、丹佛斯；可接受备选：意瓦、金牛。拒绝：只有分水器、没有混水和泵，把立管高温水直接接进去。</div>
+      </div>
+      <div class="brand-card" style="border-left:4px solid var(--blue);">
+        <div class="brand-name">铜分水器 <span class="tag tag-best">餐厅已定位置</span></div>
+        <div class="brand-detail">H59-1 黄铜、整体锻造（不是拼接焊管）、壁厚 ≥2.6mm、公称压力 ≥1.0MPa。首选曼瑞德、丹佛斯、意瓦。约 100㎡ 做 5–7 路：客厅、主卧、次卧/儿子房、厨房阳台、卫生间。底部距完成地面 ≥300mm。正上方吊顶留 ≥30×30cm 检修口。配电箱也在餐厅，两者间距 ≥30cm。</div>
+      </div>
+      <div class="brand-card" style="border-left:4px solid var(--gold);">
+        <div class="brand-name">切换阀与楼道预留</div>
+        <div class="brand-detail">阀门 A、B 用全通径铜球阀 + 止回阀，或一把三通切换阀互锁。楼道预留供 + 回两根，建议 De25（PPR S2.5 或热力公司指定材质），出墙加阀门和堵头，套 9mm 以上橡塑保温棉。打楼道墙前先问物业。大暖没来之前阀门常关，堵头拧紧。</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>怎么做</h3>
+  <ol>
+    <li>先量清立管位置，在本户用三通接管，立管上下贯通保持原样，包保温。</li>
+    <li>从室内向楼道打孔预埋供回水，内侧加阀门 B 和堵头，外侧暂时封死。孔洞发泡胶填实，外侧做防水收口，避免楼道冷风灌进来。</li>
+    <li>混水中心和分水器装在餐厅同一检修区，先装支架调水平，再接管。过滤器装在混水之前，以后能拆下来清洗。</li>
+    <li>每路地暖管从分水器出去再回到分水器，一根到底，中间不许接头。</li>
+    <li>阀门上贴标签：「A 单位锅炉（现在用）」「B 市政大暖（预留，常关）」。再写一行：禁止同时打开。</li>
+  </ol>
+
+  <h3>等几天 / 贴膜</h3>
+  <p>设备安装本身不用晾。但混水中心、分水器、阀门在后续施工里最怕被水泥浆和油漆糊死——装完立刻包气泡膜/编织袋，检修口不要封死。地暖第一次升温不在这一步，要等回填和贴砖都干透（见第 8 章）。</p>
+
+  <h3>你怎么验收 <span class="must">建议到场</span></h3>
+  <ul class="check-list">
+    <li><span class="key">立管还在，上下通</span><span class="desc">用手摸立管保温是否包满；问工人有没有割过，看切口。</span></li>
+    <li><span class="key">能指出阀门 A 和阀门 B</span><span class="desc">你自己能独立开关，标牌清楚。试一下：开 A 时 B 是关的。</span></li>
+    <li><span class="key">楼道预留口看得到堵头和阀门</span><span class="desc">两根管子都有，套了保温，没有裸铜裸塑过冬。</span></li>
+    <li><span class="key">混水中心有泵、有混水阀、有过滤器、有两块表</span><span class="desc">缺任何一件都等于高温直供，当场要求补。</span></li>
+    <li><span class="key">分水器水平、距地够高、路数对得上房间</span><span class="desc">厨房阳台必须有独立一路。卫生间建议有一路，马桶落水处盘管绕开。</span></li>
+    <li><span class="key">板换位置空着但能装得下</span><span class="desc">检修空间不要被橱柜或杂物柜占死。</span></li>
+  </ul>
+</section>
+
+<!-- ==================== 3 盘管回填 ==================== -->
+<section class="sec" id="fh">
+  <h2><span class="num">3</span>地暖盘管、打压、回填</h2>
+  <p class="intro">从楼板往上共 6 层，贴完砖就全封死。材料进场第一天你必须到场：索要出厂合格证 + 型式检验报告（CMA/CNAS），核对喷码，拍照。</p>
+
+  <div class="flow-diagram">
+    <div class="flow-box">找平干透</div><span class="flow-arrow">→</span>
+    <div class="flow-box">边界条</div><span class="flow-arrow">→</span>
+    <div class="flow-box">XPS 3cm</div><span class="flow-arrow">→</span>
+    <div class="flow-box">反射膜</div><span class="flow-arrow">→</span>
+    <div class="flow-box">盘管</div><span class="flow-arrow">→</span>
+    <div class="flow-box warn">打压 24h</div><span class="flow-arrow">→</span>
+    <div class="flow-box gold">豆石回填（管内保压）</div><span class="flow-arrow">→</span>
+    <div class="flow-box info">养护 3–7 天再干 7–14 天</div>
+  </div>
+
+  <h3>选什么</h3>
+  <table class="compare-table">
+    <thead><tr><th>材料</th><th>首选</th><th>可接受备选</th><th>直接拒绝</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>盘管</td>
+        <td>乔治费歇尔 或 伟星 PE-RT <strong>II 型 + EVOH</strong>，De20×2.0mm</td>
+        <td>日丰同规格 II 型阻氧管</td>
+        <td>I 型冒充 II 型；无 EVOH；回收料发黄有黑点；无喷码</td>
+      </tr>
+      <tr>
+        <td>XPS 保温板</td>
+        <td>华美 / 绿羽 / 法宁格，<strong>3cm</strong>，密度 ≥30kg/m³，压缩强度 ≥250kPa</td>
+        <td>陶氏、欧文斯科宁（能买到更好）</td>
+        <td>EPS 泡沫板（白色颗粒一掐一个坑）；标 3cm 实际 2cm</td>
+      </tr>
+      <tr>
+        <td>反射膜</td>
+        <td>伟星 / 日丰 / 绿羽配套真铝箔</td>
+        <td>同档真铝箔无纺布复合</td>
+        <td>透光的 PET 镀铝膜（胶带一撕大面积掉铝）</td>
+      </tr>
+      <tr>
+        <td>回填</td>
+        <td>豆石混凝土 C15–C20，豆石 5–15mm <strong>圆形</strong></td>
+        <td>—</td>
+        <td>纯水泥砂浆无石子；碎石片/瓜子片（棱角扎管）</td>
+      </tr>
+      <tr>
+        <td>边界条</td>
+        <td>EVA/PE 发泡条，厚 ≥8mm，有回弹</td>
+        <td>—</td>
+        <td>拿保温板边角料切割替代</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="note">执行标准对照：盘管 GB/T 28799.2-2020；XPS GB/T 10801.2-2025；地暖施工 JGJ 142-2012。管身/板面喷码必须能对上检验报告上的型号。</p>
+
+  <h3>怎么做</h3>
+  <ol>
+    <li><strong>找平</strong>：2 米靠尺缝隙 ≤5mm。老楼刨完往往坑洼，不平就铺保温板，后面全是波浪。</li>
+    <li><strong>边界保温条</strong>：沿墙脚满贴一圈，房间超过约 30㎡ 或边长超过 6m 还要留伸缩缝。</li>
+    <li><strong>XPS</strong>：拼严、缝贴胶带。手按要硬实。太原建议 3cm，别让工人改成 2cm「省层高」。</li>
+    <li><strong>反射膜</strong>：铝面朝上，搭接 ≥50mm，墙脚上翻 ≥50mm。</li>
+    <li><strong>盘管</strong>：客厅卧室间距 15–20cm，厨卫 10–15cm，误差 ≤10mm。弯曲半径 ≥5 倍管径（De20 至少弯 100mm）。卡钉固定，禁止填充层内接头。</li>
+    <li><strong>打压</strong>：0.6–0.8MPa，稳压 1 小时压降 ≤0.05MPa，再保压 24 小时。回填时压力表一直挂着，不撤压。</li>
+    <li><strong>回填</strong>：人工木耙摊铺，禁止铁锹直接砸管子上。管上覆盖 ≥30mm。老楼不要无故加厚，湿式地暖 + 地砖大约增加 80–120kg/㎡，3 层一般能扛，但别再叠很厚砂浆。</li>
+  </ol>
+
+  <div class="svg-box">
+    <svg viewBox="0 0 720 220" width="100%" style="max-width:720px" xmlns="http://www.w3.org/2000/svg">
+      <rect x="40" y="20" width="640" height="28" fill="#c5a572" stroke="#8d6e3d"/>
+      <text x="360" y="39" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">6 地砖 + 瓷砖胶（这一层你看得到）</text>
+      <rect x="40" y="48" width="640" height="28" fill="#b0bec5" stroke="#78909c"/>
+      <text x="360" y="67" text-anchor="middle" font-size="12" fill="#37474f">5 豆石回填，管上覆盖 ≥30mm（厨卫这层之上再做防水）</text>
+      <rect x="40" y="76" width="640" height="36" fill="#81d4fa" stroke="#0288d1"/>
+      <text x="360" y="98" text-anchor="middle" font-size="12" fill="#01579b" font-weight="700">4 PE-RT II 盘管 + EVOH（填充层内无接头）</text>
+      <rect x="40" y="112" width="640" height="22" fill="#eceff1" stroke="#90a4ae"/>
+      <text x="360" y="127" text-anchor="middle" font-size="12" fill="#546e7a">3 真铝箔反射膜，铝面朝上</text>
+      <rect x="40" y="134" width="640" height="28" fill="#ffe082" stroke="#f9a825"/>
+      <text x="360" y="153" text-anchor="middle" font-size="12" fill="#f57f17" font-weight="700">2 XPS 挤塑板 3cm（不是 EPS 泡沫）</text>
+      <rect x="40" y="162" width="640" height="22" fill="#d7ccc8" stroke="#8d6e63"/>
+      <text x="360" y="177" text-anchor="middle" font-size="12" fill="#5d4037">1 找平层（靠尺 ≤5mm）</text>
+      <rect x="40" y="184" width="640" height="22" fill="#6d4c41" stroke="#4e342e"/>
+      <text x="360" y="199" text-anchor="middle" font-size="12" fill="#fff">0 原楼板（结构层，刨地到此为止）</text>
+    </svg>
+    <p class="svg-caption">墙边还有一圈边界保温条，图里没画。厨卫在回填层上再做生活防水，再贴砖。</p>
+  </div>
+
+  <h3>等几天 / 贴膜</h3>
+  <table class="compare-table">
+    <thead><tr><th>步骤</th><th>最短等待</th><th>缩短会怎样</th></tr></thead>
+    <tbody>
+      <tr><td>找平层干透再铺保温板</td><td>3–7 天</td><td>保温板受潮，保温变差</td></tr>
+      <tr><td>盘管打压</td><td>稳压 1h + 保压 24h</td><td>微漏测不出，回填后只能砸地</td></tr>
+      <tr><td>回填洒水养护</td><td>每天洒水 3–7 天</td><td>混凝土开裂，管子可能露出来</td></tr>
+      <tr><td>回填干透再贴砖</td><td>再等 7–14 天</td><td>空鼓脱落；工人说「3 天就能贴」是偷工</td></tr>
+    </tbody>
+  </table>
+  <p>回填后地面不要铺完全密封的塑料布长时间捂着，会闷裂。可以铺湿麻袋/土工布保湿养护。分水器一直包着防水泥浆。</p>
+
+  <h3>你怎么验收 <span class="must">打压必须到场</span></h3>
+  <ul class="check-list">
+    <li><span class="key">材料喷码和报告一致</span><span class="desc">管身要有 II 型、EVOH、De20×2.0、GB/T 28799。报告上有 CMA/CNAS，编号能查。</span></li>
+    <li><span class="key">保温板 3cm、按压不塌</span><span class="desc">带尺子量。白色颗粒泡沫板当场退货。</span></li>
+    <li><span class="key">胶带测反射膜</span><span class="desc">透明胶带粘上去用力撕，大面积掉铝 = 镀铝膜，不合格。</span></li>
+    <li><span class="key">间距、弯头、无接头</span><span class="desc">自己拿卷尺抽查。看见地面热熔接管立刻叫停。</span></li>
+    <li><span class="key">打压看表 + 摸接头</span><span class="desc">0.6–0.8MPa，24 小时不掉。干纸巾擦分水器每个铜接头，湿了就是渗。拍视频，把表盘和时间拍进去。</span></li>
+    <li><span class="key">回填时压力表还挂着</span><span class="desc">撤压再回填等于盲封。豆石必须是圆的，不是碎石片。</span></li>
+    <li><span class="key">回填后看开裂和伸缩缝</span><span class="desc">房间超过 6 米或约 30㎡ 必须留伸缩缝。表面要平整，不能有露管。</span></li>
+  </ul>
+
+  <h3>6 种地暖材料进场（第一天必须做）</h3>
+  <p>材料进场你必须到场，做三件事：<strong>索要证书 → 核对参数 → 拍照留档</strong>。材料不合格，工艺再好也白搭。出厂合格证是厂家自己出的，含金量低；<strong>型式检验报告</strong>是第三方出的，有法律效力，两个都要，缺一个不让施工。</p>
+  <table class="compare-table">
+    <thead><tr><th>材料</th><th>执行标准</th><th>关键参数</th><th>最大的坑</th><th>现场辨别</th></tr></thead>
+    <tbody>
+      <tr><td>PE-RT 盘管</td><td>GB/T 28799.2-2020 / .3-2020</td><td>II 型 + EVOH，氧气渗透率 ≤0.1g/m³·d</td><td>I 型冒充 II 型（I 型耐 70℃ / II 型 90℃）；无阻氧层</td><td>喷码看「II 型」；对光透亮；管壁外层有无阻氧涂层</td></tr>
+      <tr><td>XPS 挤塑板</td><td>GB/T 10801.2-2025</td><td>压缩 ≥250kPa、导热 ≤0.030、燃烧 B1</td><td>EPS 泡沫板冒充</td><td>板面光滑有硬质表皮、指甲掐不留深痕；EPS 一掐一个坑</td></tr>
+      <tr><td>铝箔反射膜</td><td>JGJ 142-2012</td><td>反射率 ≥85%、真铝箔非镀铝膜</td><td>镀铝膜冒充，时间久了氧化脱落</td><td>截面有银白金属层；胶带测试</td></tr>
+      <tr><td>铜分集水器</td><td>CJ/T 251-2007</td><td>H59-1 黄铜、整体锻造、壁厚 ≥2.6mm、≥1.0MPa</td><td>拼接焊管冒充锻造；不锈钢冒充铜</td><td>掂重量；看有无焊缝；断面金黄色</td></tr>
+      <tr><td>回填豆石</td><td>JGJ 142-2012 第 4.3 节</td><td>5–15mm 圆形无棱角</td><td>碎石替代（棱角扎管，最隐蔽的致命伤）</td><td>圆润=豆石，有棱角=碎石，必须拒绝</td></tr>
+      <tr><td>边界保温条</td><td>—</td><td>EVA/PE 高发泡、厚 ≥8mm、有回弹</td><td>保温板边角料切割替代</td><td>按压有回弹=正品；硬脆无弹性=替代品</td></tr>
+    </tbody>
+  </table>
+  <div class="warn-box">
+    <div class="lbl">喷码和报告对不上，当场拒绝开工</div>
+    <ul>
+      <li>索要：每样材料要出厂合格证 + 型式检验报告</li>
+      <li>核对：管身/板面喷码上的标准号、型号，与报告是否一致</li>
+      <li>拍照：材料、喷码特写、合格证、检验报告全部存档——日后维权的第一证据</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 长期性能 ==================== -->
+<section class="sec" id="longlife">
+  <h2><span class="num">3b</span>长期性能怎么当场验（不用等 50 年）</h2>
+  <p class="intro">「阻氧层防腐蚀」「反射膜不氧化」「管子 50 年不裂」，你不可能等 50 年去验证。这不是你的问题，是验收方法的问题。把验收分成两类：当场能测的，和靠报告替你验的。</p>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">第一类：当场能直接验</div>
+      <p>尺寸、间距、压力、外观、材质。拿卷尺、靠尺、压力表当场测。</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">第二类：长期性能 —— 有人替你做了加速老化实验</div>
+      <p>型式检验报告是第三方实验室出的，把 50 年老化压缩到几个月测完。你看报告数据达标，就等于间接验证了长期性能。</p>
+      <table class="compare-table">
+        <thead><tr><th>检测项目</th><th>怎么测</th><th>合格标准</th></tr></thead>
+        <tbody>
+          <tr><td>阻氧层氧气渗透率</td><td>40℃ 持续加压</td><td>≤0.1g/m³·d</td></tr>
+          <tr><td>管材长期静液压强度</td><td>指定温度和压力下持续加压</td><td>几千小时不破裂</td></tr>
+          <tr><td>反射膜附着力</td><td>剥离强度测试</td><td>铝层不脱落</td></tr>
+        </tbody>
+      </table>
+      <p>报告也可能造假，确认三件事：</p>
+      <ol>
+        <li><strong>有 CMA 或 CNAS 标志</strong>——没有这个章 = 废纸</li>
+        <li><strong>报告上的产品型号、品牌和进场材料完全一致</strong>——对不上就是拿别的产品的报告糊弄你</li>
+        <li><strong>报告编号能在检测机构官网查到</strong>——PS 造假的去官网一查就穿</li>
+      </ol>
+      <p>大品牌在正规渠道不敢在报告上造假，一次曝光整个品牌就完了。杂牌白牌没有这个约束。</p>
+    </div>
+  </div>
+
+  <h3>现场快速替代测试（进场当天就能做）</h3>
+  <table class="compare-table">
+    <thead><tr><th>长期性能</th><th>你没法等的事</th><th>现场替代验证</th></tr></thead>
+    <tbody>
+      <tr><td>阻氧层是否有效</td><td>几年后管道腐蚀</td><td>喷码有无「EVOH 阻氧层」+ 报告氧气渗透率</td></tr>
+      <tr><td>反射膜铝层持久性</td><td>几年后氧化脱落</td><td>透明胶带粘上用力撕，大面积脱落 = 劣质镀铝膜</td></tr>
+      <tr><td>管材柔韧性</td><td>几年后开裂漏水</td><td>拿一截用力弯到极限，好管子不裂；回收料发白甚至裂开</td></tr>
+      <tr><td>保温板密度</td><td>受潮后塌陷</td><td>指甲掐表面不留深痕 = 密度够；一掐一个坑 = 太松</td></tr>
+      <tr><td>分水器材质</td><td>内部腐蚀漏水</td><td>掂重量（铜更重）+ 断面金黄色</td></tr>
+    </tbody>
+  </table>
+  <div class="verdict-box">
+    <div class="lbl">一句话</div>
+    <div class="main">你的任务不是做 50 年实验，而是确认：替你做实验的人有资质（CMA/CNAS）、产品对得上、品牌跑不掉。再配合几个现场小测试兜底。</div>
+  </div>
+</section>
+
+<!-- ==================== 4 水路 ==================== -->
+<section class="sec" id="water">
+  <h2><span class="num">4</span>厨卫冷热水：走顶、开槽、防冻</h2>
+  <p class="intro">有地暖，给水管不走地面。厨房在阴面阳台，太原冬天水管冻裂是真事，这一章按「防冻 + 防漏」来。</p>
+
+  <div class="four">
+    <div class="four-item">
+      <div class="k k-pick">选什么</div>
+      <h4>全屋统一热水管</h4>
+      <p><span class="tag tag-best">首选</span>伟星 PP-R <strong>S2.5</strong>（冷水也用这个）<br>
+      <span class="tag tag-ok">备选</span>日丰 S2.5 同规格<br>
+      主管 De25×3.5mm，分支 De20×2.8mm。管件必须同品牌。管身不透光，有涉水卫生批件，执行 GB/T 18742。</p>
+      <p>下水：PVC-U，联塑 / 中财。横管坡度 ≥1%–2%。马桶能不移位就不移。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-do">怎么做</div>
+      <h4>横干走顶 + 竖分走墙</h4>
+      <ul>
+        <li>横向干线走厨卫铝扣板吊顶，<strong>电上水下</strong>，吊卡打进楼板，不搭龙骨</li>
+        <li>竖向到龙头、花洒、马桶角阀，走墙竖槽</li>
+        <li>冷热分槽，间距 ≥10cm；管卡 50–60cm 一个</li>
+        <li>热熔 260–280℃，加热 5–8 秒，插接后保持 5 秒自然冷却，禁止浇水降温</li>
+      </ul>
+    </div>
+    <div class="four-item">
+      <div class="k k-wait">等几天 / 贴膜</div>
+      <h4>封槽前打压，不用晾管</h4>
+      <p>打压 0.8–1.0MPa，保压 30–60 分钟。合格再封槽。热熔接头不要马上受力。吊顶内和靠外墙的冷热水管全部套 9mm 闭孔橡塑保温棉（华美 / 坤耐）。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-check">你怎么验收</div>
+      <h4>看表、擦接头、对光看管</h4>
+      <ul>
+        <li>压力表不掉；干纸巾擦所有接头不湿</li>
+        <li>对光：管子不透光</li>
+        <li>冷热间距够，没有同槽</li>
+        <li>拍全屋水路走向，以后打孔避开</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>开槽规矩（老楼尤其重要）</h3>
+  <table class="compare-table">
+    <thead><tr><th>位置</th><th>可以</th><th>不可以</th></tr></thead>
+    <tbody>
+      <tr><td>承重墙</td><td>浅竖槽，刚够埋管</td><td>横槽切断钢筋；开很深</td></tr>
+      <tr><td>非承重墙</td><td>竖槽为主；横槽单面墙 ≤50cm</td><td>一面墙横向开很长一圈</td></tr>
+      <tr><td>厨卫墙</td><td>竖槽必须开（龙头、花洒都在墙上）</td><td>开完槽不刷防水就埋管</td></tr>
+      <tr><td>地面</td><td>地暖盘管自己走</td><td>给水管、电线再走地</td></tr>
+    </tbody>
+  </table>
+
+  <div class="gold-box">
+    <div class="lbl">厨卫槽内防水（工人最爱省的一步）</div>
+    <p style="font-size:0.86rem;margin-top:0.4rem;">开槽 → 清灰 → 槽内刷防水 1–2 遍 → 干透再埋管 → 封槽 → 封槽面再和大面一起刷防水。淋浴区、厨房水槽区必须做。不做的后果：瓷砖表面看起来没问题，水顺着管壁缝渗进墙里，发霉、渗到隔壁或楼下。</p>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">阴面阳台厨房：防冻四条</div>
+    <ul>
+      <li><strong>厨房必须做地暖</strong>——阴面阳台冬天不供暖，地漏和水盆下水管也会冻</li>
+      <li><strong>水管从室内吊顶过来，不走外墙夹层</strong>——外墙里的水，停暖几天就能冻裂</li>
+      <li><strong>吊顶内和靠外墙的管子全部套保温棉</strong>——冷水管也套，夏天还能防冷凝水滴吊顶</li>
+      <li><strong>阳台封闭不严就先补窗</strong>——窗户已定不换，至少发泡胶填缝 + EPDM 密封条 + 厚窗帘。否则再好的管子也扛不住穿堂风</li>
+    </ul>
+  </div>
+
+  <h3>PPR 水管参数（对照喷码）</h3>
+  <table class="compare-table">
+    <thead><tr><th>项目</th><th>优质标准</th><th>怎么看</th></tr></thead>
+    <tbody>
+      <tr><td>材质</td><td>PPR，管身标识 PP-R</td><td>看喷码</td></tr>
+      <tr><td>系列</td><td>全屋 S2.5（热水管级别，冷水也用这个）</td><td>看 S 系列号。冷水本可用 S5/S4，热水应用 S3.2/S2.5，全屋统一 S2.5 更保险</td></tr>
+      <tr><td>规格</td><td>主管 De25，分支 De20</td><td>喷码 + 卡尺量壁厚</td></tr>
+      <tr><td>透光性</td><td>不透光（防管内长藻）</td><td>对光看：透光=劣质</td></tr>
+      <tr><td>管壁</td><td>内壁光滑、无杂质、壁厚均匀</td><td>看管口截面</td></tr>
+      <tr><td>管件</td><td>必须同品牌</td><td>不同品牌热熔温度可能不同</td></tr>
+      <tr><td>执行标准</td><td>GB/T 18742</td><td>看喷码</td></tr>
+      <tr><td>卫生许可</td><td>有涉水产品卫生许可批件</td><td>看包装或合格证</td></tr>
+    </tbody>
+  </table>
+  <p>还要预留：净水器进回水、小厨宝进出水（水槽柜下）。马桶能不移位就不移。下水管 PVC-U（联塑/中财），横管坡度 ≥1%–2%。</p>
+
+  <div class="pitfall-list">
+    <li><span class="key">热熔不到位</span><span class="desc">温度不够或时间不够，接头未融合，当时不漏，几个月后渗，埋墙里发现时墙已泡透。</span></li>
+    <li><span class="key">热熔过度或浇水降温</span><span class="desc">内壁熔塌堵管；浇水急冷开裂。必须自然冷却。</span></li>
+    <li><span class="key">冷热同槽或间距不够</span><span class="desc">冷凝水长期泡墙发霉。间距 ≥10cm 且不同槽。</span></li>
+    <li><span class="key">给水管走地</span><span class="desc">有地暖更不能走地。走顶漏了拆吊顶能修，走地要砸地暖。</span></li>
+    <li><span class="key">封槽前没打压</span><span class="desc">封了才发现漏只能砸墙。</span></li>
+    <li><span class="key">回收料、透光管、管件不同品牌</span><span class="desc">管身发黄有黑点；对光能看见里面；接头是最薄弱点。</span></li>
+  </div>
+</section>
+
+<!-- ==================== 5 电路 ==================== -->
+<section class="sec" id="elec">
+  <h2><span class="num">5</span>强电弱电：走墙走顶，不走地</h2>
+  <p class="intro">地暖把地面占满了，线管再走地会被混凝土裹死，以后换线拉不动。客厅卧室走墙竖槽；厨卫横干走顶、竖分走墙。强弱电分管、分色。</p>
+
+  <h3>选什么</h3>
+  <table class="compare-table">
+    <thead><tr><th>材料</th><th>首选</th><th>可接受备选</th><th>直接拒绝</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>线管</td>
+        <td>联塑阻燃 PVC，壁厚 ≥1.5mm；红管强电、蓝管弱电</td>
+        <td>中财 / 伟星同规格</td>
+        <td>薄壁一踩就碎；非阻燃；强弱电同管</td>
+      </tr>
+      <tr>
+        <td>电线</td>
+        <td>远东 ZC-BV 阻燃铜芯</td>
+        <td>熊猫 / 正泰 / 德力西</td>
+        <td>铜芯发黑；标 2.5 实际不足；无 CCC</td>
+      </tr>
+      <tr>
+        <td>网线</td>
+        <td>康普或安普 超六类 Cat6A，UTP 23AWG</td>
+        <td>同规格一线品牌 Cat6A</td>
+        <td>七类/八类（家装用不上还难做）；无品牌白牌</td>
+      </tr>
+      <tr>
+        <td>接线</td>
+        <td>WAGO 221 系列</td>
+        <td>合格螺旋端子</td>
+        <td>拧线 + 电工胶布；墙内直接接头</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="specs">
+    <strong>线径不要让工人「看着来」：</strong>照明 1.5mm² · 普通插座 2.5mm² · 厨房/空调 4mm² · 小厨宝 2000W 必须单独一路 2.5–4mm² · 冰箱单独 2.5mm²。穿线率不超过管内截面积 40%（一根 16mm 管最多大约 3 根 2.5mm²）。老房子加地暖、小厨宝、净水器、洗碗机后用电量大增，配电箱总开考虑 63A，看入户线径是否要增容。厨卫回路装漏电保护。
+  </div>
+
+  <h3>电线和线管怎么验（指南原文标准）</h3>
+  <table class="compare-table">
+    <thead><tr><th>项目</th><th>优质标准</th><th>怎么看</th></tr></thead>
+    <tbody>
+      <tr><td>电线材质</td><td>铜芯，BV 单芯硬线或 BVR 多股软线</td><td>看线身喷码</td></tr>
+      <tr><td>铜芯颜色</td><td>紫红色有光泽、粗细均匀</td><td>发暗发黑 = 杂质铜/回收铜</td></tr>
+      <tr><td>绝缘层</td><td>阻燃 PVC，点燃离开火源自熄</td><td>可烧一小段测试</td></tr>
+      <tr><td>认证</td><td>CCC 强制认证，GB/T 5023</td><td>线身喷码和合格证</td></tr>
+      <tr><td>长度</td><td>标 100 米的盘不短斤少两</td><td>劣质常不足米</td></tr>
+      <tr><td>线管</td><td>阻燃 PVC 硬管，壁厚 ≥1.5mm，常用 16 或 20mm</td><td>卡尺量；脚踩不碎、弯折不裂</td></tr>
+      <tr><td>强弱电</td><td>平行 ≥30cm，交叉包锡箔</td><td>当场量</td></tr>
+      <tr><td>接头</td><td>必须在接线盒内</td><td>严禁墙内直接接头</td></tr>
+      <tr><td>弯曲</td><td>要有弧度，方便以后换线</td><td>禁止直角死弯</td></tr>
+    </tbody>
+  </table>
+
+  <h3>怎么做</h3>
+  <ul>
+    <li>客厅卧室：沿墙竖槽到开关插座或上到顶再水平走（水平段尽量走顶部，少开横槽）。</li>
+    <li>厨卫：干线走吊顶贴近楼板（电上水下）；落到开关插座、烟机、热水器的竖槽走墙。</li>
+    <li>强弱电平行间距 ≥30cm，交叉时 90° 并在弱电外包锡箔。</li>
+    <li>线管弯曲要有弧度，禁止直角死折（以后换线拉不动）。管卡 80–100cm 一个。</li>
+    <li>配电箱在餐厅，总开考虑 63A，厨卫回路装漏电保护。弱电箱在客厅电视墙下方（已定），光猫放电视柜上不塞箱里。</li>
+  </ul>
+
+  <h3>等几天 / 贴膜</h3>
+  <p>穿线、绝缘测试通过再封槽，线管本身不用晾。配电箱、弱电箱装完用纸板挡住，防止后续刮腻子、喷漆糊进去。封槽砂浆干 1–2 天再进行墙面下步。</p>
+
+  <h3>你怎么验收 <span class="must">封槽前到场</span></h3>
+  <ul class="check-list">
+    <li><span class="key">红蓝分管，没有同管混走</span><span class="desc">脚踩线管不碎；卡尺量壁厚 ≥1.5mm。</span></li>
+    <li><span class="key">线身喷码 + 铜芯紫红</span><span class="desc">剥一小段看铜，发暗发黑退货。用卡尺核对线径。</span></li>
+    <li><span class="key">墙内无接头，接头在接线盒</span><span class="desc">打开几个底盒看是不是 WAGO。</span></li>
+    <li><span class="key">摇表绝缘 ≥0.5MΩ，各回路单独送电不跳闸</span><span class="desc">小厨宝那一路必须单独空开。</span></li>
+    <li><span class="key">强弱电间距、网线 Cat6A 喷码</span><span class="desc">全屋点位按已定方案：约 9 条网线 + 1 条光纤预埋。拍照存档。</span></li>
+  </ul>
+</section>
+
+<!-- ==================== 6 防水 ==================== -->
+<section class="sec" id="wp">
+  <h2><span class="num">6</span>防水和闭水（厨房按卫生间做）</h2>
+  <p class="intro">厨房在阳台，有洗菜、有地漏、冬天还可能结露。不要听「厨房不用做那么认真」。漏水修一次，比多刷两遍防水贵十倍，而且会泡地暖层。</p>
+
+  <div class="four">
+    <div class="four-item">
+      <div class="k k-pick">选什么</div>
+      <h4>柔性防水，正规渠道</h4>
+      <p><span class="tag tag-best">首选</span>东方雨虹 / 德高 JS 或优质柔性防水<br>
+      <span class="tag tag-ok">备选</span>科顺、西卡、汉高同档<br>
+      <span class="tag tag-warn">拒绝</span>沥青基臭料、来路不明的「防水胶」、只刷一遍就说完了。</p>
+      <p>地面干膜厚 ≥1.5mm，墙面 ≥1.2mm。干透后可在边角割小块取样测厚，太薄等于没做。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-do">怎么做</div>
+      <h4>先附加层，再十字交叉</h4>
+      <ul>
+        <li>地暖回填层之上做生活防水（防洗漱水下渗）</li>
+        <li>阴阳角、管根、地漏先刷一遍 + 贴无纺布</li>
+        <li>地面满做 2–3 遍，干膜厚 ≥1.5mm</li>
+        <li>淋浴区墙面做到 ≥1.8m；厨房水槽墙同样做</li>
+        <li>门槛上翻 ≥10cm，包过门槛石两侧</li>
+      </ul>
+    </div>
+    <div class="four-item">
+      <div class="k k-wait">等几天</div>
+      <h4>遍遍等干，闭水 48 小时</h4>
+      <ul>
+        <li>每遍表干 2–4 小时（手摸不粘）</li>
+        <li>最后一遍完全干 24–48 小时再闭水</li>
+        <li>蓄水 ≥20mm，<strong>48 小时</strong></li>
+        <li>合格后做水泥砂浆保护层，再等 24 小时</li>
+      </ul>
+    </div>
+    <div class="four-item">
+      <div class="k k-check">你怎么验收</div>
+      <h4>下楼看天花板</h4>
+      <ul>
+        <li>闭水期间自己下楼看，不止看表</li>
+        <li>水位有没有明显下降</li>
+        <li>门槛处防水是否翻上去了</li>
+        <li>没闭水不许贴砖</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">闭水试验怎么做才算数</div>
+    <ul>
+      <li>地漏、下水口用气囊或沙袋堵严，蓄清水，高出地面至少 20mm（有条件 30mm 更好）</li>
+      <li>在墙上用铅笔画一条水位线，48 小时后还在这条线附近</li>
+      <li><strong>必须去楼下邻居家看天花板、管根、墙角</strong>，有无湿印、掉皮。只看自家地面不湿，测不出慢渗</li>
+      <li>冬季室内低于 5℃ 不要做防水和闭水，会冻、会假干</li>
+    </ul>
+  </div>
+
+  <p>闭水合格到贴砖之前，防水层最怕踩坏：做完保护层，工人换鞋或垫木板。鞋底石子划破等于白做。</p>
+
+  <h3>防水子步骤（工序最多、最容易偷工）</h3>
+  <table class="compare-table">
+    <thead><tr><th>子步骤</th><th>工序</th><th>等待</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>基层清理，阴阳角做圆弧，管根/地漏周边修补平整</td><td>—</td></tr>
+      <tr><td>2</td><td>附加层：阴阳角、管根、地漏先刷一遍 + 贴无纺布（90% 漏水从这里开始）</td><td>2–4 小时表干</td></tr>
+      <tr><td>3</td><td>第一遍防水（纵向）</td><td>2–4 小时，手摸不粘</td></tr>
+      <tr><td>4</td><td>第二遍防水（横向，十字交叉）</td><td>2–4 小时</td></tr>
+      <tr><td>5</td><td>第三遍（地面建议 3 遍）</td><td>24–48 小时完全干透</td></tr>
+      <tr><td>6</td><td>闭水 ≥20mm</td><td>48 小时，下楼看</td></tr>
+      <tr><td>7</td><td>合格后水泥砂浆保护层</td><td>24 小时</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 7 瓷砖 ==================== -->
+<section class="sec" id="tile">
+  <h2><span class="num">7</span>瓷砖：全屋柔光，厨卫防滑，适老化无高差</h2>
+  <p class="intro">亮面砖在展厅里好看，家里有老人、有地暖、还要拖地，并不合适：湿滑、显脚印、反光刺眼。客卧用柔光/哑光瓷质砖，厨卫地面用防滑砖。</p>
+
+  <div class="verdict-box">
+    <div class="lbl">推荐结论</div>
+    <div class="main">客厅卧室过道：600×600 柔光瓷质砖。卫生间、厨房地面：防滑砖（R10/R11）。墙面：300×600 柔光。品牌用东鹏 / 马可波罗 / 诺贝尔中端即可，不必上简一。</div>
+    <p>老房墙多、房间不一定方正，600×600 比 800×800 更好铺、损耗更低。房间特别方正再考虑 800×800。同一空间必须同一色号批次。</p>
+  </div>
+
+  <h3>选什么</h3>
+  <table class="compare-table">
+    <thead><tr><th>区域</th><th>规格</th><th>表面</th><th>关键指标</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>客厅、卧室、过道、餐厅</td>
+        <td>600×600（首选）；方正再考虑 800×800</td>
+        <td>柔光 / 哑光</td>
+        <td>瓷质砖，吸水率 ≤0.5%，厚度 ≥10mm，通体或优等釉面</td>
+      </tr>
+      <tr>
+        <td>卫生间地面</td>
+        <td>300×300 或 600×600</td>
+        <td>防滑 R10/R11，麻面或微凹凸</td>
+        <td>湿态摩擦系数高；坡向地漏，无积水</td>
+      </tr>
+      <tr>
+        <td>卫生间墙面</td>
+        <td>300×600</td>
+        <td>柔光即可</td>
+        <td>淋浴区铺到顶；阴阳角用阳角条</td>
+      </tr>
+      <tr>
+        <td>厨房地面（阴面阳台）</td>
+        <td>防滑地砖，规格同卫生间地面</td>
+        <td>防滑</td>
+        <td>油污区也要能站稳；保留原地漏</td>
+      </tr>
+      <tr>
+        <td>厨房墙面</td>
+        <td>300×600</td>
+        <td>柔光</td>
+        <td>灶台、水槽墙满铺，便于擦油</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">瓷砖胶和美缝（地暖上这是死规定）</div>
+      <div class="brand-card" style="border-left:4px solid var(--accent);">
+        <div class="brand-name">瓷砖胶 <span class="tag tag-best">C2TE 或 C2TES1</span></div>
+        <div class="brand-detail">首选德高、西卡、马贝、东方雨虹的柔性瓷砖胶。地暖会热胀冷缩，普通水泥砂浆贴大砖，空鼓开裂是时间问题。大砖（≥600）必须齿形刮板满浆 + 背面补涂（背涂）。</div>
+      </div>
+      <div class="brand-card" style="border-left:4px solid var(--blue);">
+        <div class="brand-name">留缝和美缝</div>
+        <div class="brand-detail">砖缝 2–3mm。地暖房间四周靠墙留伸缩缝，美缝剂不要把伸缩缝填死，用弹性硅酮。厨卫美缝用环氧彩砂更耐污（德高 / 卓高）。</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>怎么做</h3>
+  <ol>
+    <li>回填干透、厨卫闭水合格、保护层干了，才能弹线排砖。</li>
+    <li>基层 2 米靠尺 ≤3mm。地暖地面不要再厚厚抹一层砂浆找平，能薄贴就薄贴，利于导热、也减轻荷载。</li>
+    <li>瓷质砖一般不泡水（看背面吸水率说明）；陶质砖才需要泡。不要听「所有砖都要泡一夜」。</li>
+    <li>从门口或房间中线排砖，把半砖藏到边角。厨房超薄地轨（凸出 ≤8mm）在铺砖时嵌入找平，尽量与地砖齐平，适老化、不绊脚。</li>
+    <li>全屋尽量无高差：卫生间、厨房与过道用微坡 + 同厚门槛石过渡，不要做 3–5cm 高台阶。</li>
+    <li>贴完用十字卡和调平器，橡皮锤敲实，擦净缝里余胶。</li>
+  </ol>
+
+  <h3>等几天 / 贴膜</h3>
+  <table class="compare-table">
+    <thead><tr><th>步骤</th><th>最短等待</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td>贴完到上人</td><td>24–48 小时</td><td>不到时间踩会松动。厨卫墙砖同样等。</td></tr>
+      <tr><td>勾缝 / 美缝</td><td>砖稳之后</td><td>缝里余胶先抠干净。</td></tr>
+      <tr><td>贴保护膜</td><td>砖稳、表面干</td><td>用编织布或珍珠棉，接口胶带粘在膜上，<strong>不要粘砖面</strong>。不要用完全密封的塑料布长时间捂潮。</td></tr>
+      <tr><td>地暖第一次升温</td><td>贴砖后再等约 21 天</td><td>每天只加一点温度，禁止一上来开到最高。回填和胶都要慢慢适应热胀。</td></tr>
+    </tbody>
+  </table>
+  <p>后期刮腻子、吊顶、橱柜都在保护膜上作业。分水器、阀门、检修口不要封死。完工再揭膜，边揭边检查划伤。</p>
+
+  <h3>你怎么验收（全屋地面）</h3>
+  <ul class="check-list">
+    <li><span class="key">空鼓：硬币或小木槌逐块敲四角和中心</span><span class="desc">清脆 = 贴满了；空洞发闷 = 空鼓。地砖尽量零空鼓；墙砖单片空鼓率 ≤5%，中心不许空。大面积空鼓要返工。</span></li>
+    <li><span class="key">平整度：2 米靠尺 ≤2mm，相邻砖高低差 ≤0.5mm</span><span class="desc">带靠尺和塞尺，抽客厅、过道、卫生间各测几处。</span></li>
+    <li><span class="key">缝宽一致，无大崩边</span><span class="desc">地暖房间靠墙伸缩缝还在，没有被美缝填死。</span></li>
+    <li><span class="key">厨卫泼水试验</span><span class="desc">水应流向地漏，无倒坡、无积水。门槛石两侧都有防水上翻的痕迹（贴砖前就该拍过照）。</span></li>
+    <li><span class="key">防滑和适老化</span><span class="desc">卫生间、厨房湿着走不打滑；全屋没有高门槛；厨房门轨道不明显凸起绊脚。</span></li>
+    <li><span class="key">色号批次一致</span><span class="desc">同一房间砖色没有一块深一块浅。进场时箱上批次号要拍照。</span></li>
+  </ul>
+
+  <div class="pitfall-list">
+    <li><span class="key">用水泥砂浆贴 600 以上的砖</span><span class="desc">地暖上必空鼓。合同写死 C2TE/C2TES1。</span></li>
+    <li><span class="key">亮面砖铺客卧</span><span class="desc">老人滑倒风险高，脚印和刮痕特别显。</span></li>
+    <li><span class="key">厨卫做高台阶「挡水」</span><span class="desc">挡水靠防水和微坡，不靠绊脚石。家里有老人，无高差优先。</span></li>
+    <li><span class="key">贴完当天让木工进场踩</span><span class="desc">砖还没粘住，整面都会松。</span></li>
+    <li><span class="key">地暖刚贴完砖就点火</span><span class="desc">胶和回填会被热应力拉开。</span></li>
+  </div>
+</section>
+
+<!-- ==================== 墙面基层 ==================== -->
+<section class="sec" id="wall">
+  <h2><span class="num">8</span>墙面基层（老房必须铲到砖）</h2>
+  <p class="intro">老房原有腻子多半不耐水。不铲干净直接批新腻子，是后期乳胶漆起皮脱落的第一原因，也是最常见的返工。</p>
+
+  <div class="four">
+    <div class="four-item">
+      <div class="k k-pick">选什么</div>
+      <h4>耐水腻子 + 墙固</h4>
+      <p><span class="tag tag-best">首选</span>美巢 / 莱恩斯 / 百得 / 立邦<br>
+      腻子必须是<strong>耐水 N 型</strong>，执行 JG/T 298。墙固（界面剂）：美巢、东方雨虹、百得。阴阳角贴 PVC 角条。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-do">怎么做</div>
+      <h4>铲 → 浇水试 → 墙固 → 石膏 → 腻子</h4>
+      <ol>
+        <li>铲到砖墙或水泥层</li>
+        <li>浇水测试：老腻子遇水起泡、手搓掉粉 = 没铲干净</li>
+        <li>清浮灰，滚涂墙固一遍</li>
+        <li>裂缝开 V 槽，贴网格布/牛皮纸，石膏填缝</li>
+        <li>粉刷石膏粗找平，再两遍耐水腻子精找平</li>
+        <li>砂纸打磨</li>
+      </ol>
+    </div>
+    <div class="four-item">
+      <div class="k k-wait">等几天</div>
+      <h4>每遍腻子之间必须 24 小时</h4>
+      <ul>
+        <li>墙固干 2–4 小时</li>
+        <li>裂缝石膏干 24 小时</li>
+        <li>粗找平干 24 小时（厚则更久）</li>
+        <li>第一遍腻子干 24 小时</li>
+        <li>第二遍腻子干 24–48 小时再打磨</li>
+      </ul>
+      <p>赶工期一天刷两遍腻子 = 必然起泡开裂。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-check">你怎么验收</div>
+      <h4>浇水 + 夜间手电</h4>
+      <ul>
+        <li>铲墙后浇水，不起泡不掉粉</li>
+        <li>裂缝处能看到网格布</li>
+        <li>打磨后、刷漆前：夜间用强光手电贴墙侧照，有波浪纹就返工</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">墙面基层偷工清单</div>
+    <ul>
+      <li>老墙皮没铲干净就批腻子 → 后期起皮脱落</li>
+      <li>用非耐水腻子 → 受潮粉化发霉</li>
+      <li>裂缝没贴网格布 → 几个月后裂缝再现</li>
+      <li>腻子没干透就打磨 → 继续收缩开裂</li>
+      <li>不贴阴阳角条 → 角不直</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 吊顶 ==================== -->
+<section class="sec" id="ceiling">
+  <h2><span class="num">9</span>吊顶内隐蔽工程</h2>
+  <p class="intro">厨卫已定铝扣板、轻钢龙骨。封板之前，排风管和线管必须走完。本户分水器在餐厅，检修口开在餐厅，厨房吊顶不用为分水器留口。</p>
+
+  <div class="four">
+    <div class="four-item">
+      <div class="k k-pick">选什么</div>
+      <h4>轻钢龙骨 + 铝扣板</h4>
+      <p>厨卫：铝扣板，板厚 ≥0.5mm，哑光白/浅灰，300×600。龙骨用轻钢防锈，<strong>不用木龙骨</strong>（厨卫蒸汽大，木龙骨受潮变形）。排风管：铝箔软管，卡箍 + 铝箔胶带密封。烟机直排窗外，墙洞吊顶前先打好，口径 160/180mm + 止逆阀 + 防雨帽。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-do">怎么做</div>
+      <h4>先走管，后封板</h4>
+      <ol>
+        <li>弹线，膨胀螺丝固定吊杆</li>
+        <li>装主龙骨 + 副龙骨，调平。检修空间 ≥15cm</li>
+        <li>排风管、线管、水管先走完（电上水下，吊卡打到楼板，不搭龙骨）</li>
+        <li>封铝扣板</li>
+        <li>餐厅分水器正上方留检修口 ≥30×30cm</li>
+      </ol>
+    </div>
+    <div class="four-item">
+      <div class="k k-wait">等几天 / 贴膜</div>
+      <h4>封板前是最后窗口</h4>
+      <p>吊顶本身不用晾。封板后想补管就要拆。分水器、阀门不要被扣板封死。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-check">你怎么验收 <span class="must">封板前到场</span></div>
+      <h4>三件事</h4>
+      <ul>
+        <li>排风管卡箍固定、接口密封，捏一捏不晃</li>
+        <li>没有裸线，全是 PVC 管</li>
+        <li>检修口对准分水器，打开能伸手进去</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">吊顶偷工</div>
+    <ul>
+      <li>木龙骨替代轻钢龙骨</li>
+      <li>排风管没固定 → 共振嗡嗡响</li>
+      <li>封板后才走排风管 → 要么拆板，要么干脆不接</li>
+      <li>检修口漏留或被柜子挡住 → 修分水器要拆吊顶</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 门窗 ==================== -->
+<section class="sec" id="window">
+  <h2><span class="num">10</span>门窗密封（老窗不换，低成本补救）</h2>
+  <p class="intro">窗户已定不换（20 年老窗保温差）。发泡胶填缝 + EPDM 密封条 + 厚窗帘，是预算内最划算的补救。阴面阳台厨房防冻也靠这一步。</p>
+
+  <div class="four">
+    <div class="four-item">
+      <div class="k k-pick">选什么</div>
+      <h4>发泡胶 + EPDM 密封条</h4>
+      <p>发泡胶：聚氨酯，桑莱斯 / 固诺 / 东方雨虹 / 汉高。<br>
+      密封条：三元乙丙（EPDM），耐候耐老化。拒绝劣质 PVC 密封条（几年后发硬开裂）。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-do">怎么做</div>
+      <h4>缝打满，窗台向外坡</h4>
+      <ul>
+        <li>框与墙的缝打满发泡胶，充分膨胀后切平</li>
+        <li>窗扇四周换 EPDM 密封条</li>
+        <li>窗台必须向外倾斜排水</li>
+      </ul>
+    </div>
+    <div class="four-item">
+      <div class="k k-wait">等几天</div>
+      <h4>发泡胶膨胀后再切</h4>
+      <p>按产品说明等膨胀完成（通常几十分钟到数小时）再切多余的。切完再做窗套，避免把没发泡实的空洞盖住。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-check">你怎么验收</div>
+      <h4>看空洞、试倒水</h4>
+      <ul>
+        <li>填缝无空洞，手电照缝不透光</li>
+        <li>密封条按压有弹性，不是发硬的塑料</li>
+        <li>窗台倒一点水应向外流，不能倒灌进屋</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 刷漆 ==================== -->
+<section class="sec" id="paint">
+  <h2><span class="num">11</span>墙面刷漆</h2>
+  <p class="intro">腻子打磨合格之后才刷。底漆一遍 + 面漆两遍。省底漆、面漆只刷一遍，当时看不出来，入住后色差和不耐擦都会暴露。</p>
+
+  <div class="four">
+    <div class="four-item">
+      <div class="k k-pick">选什么</div>
+      <h4>底漆 + 面漆配套</h4>
+      <p>品牌可与腻子同一体系（立邦、多乐士等中端即可）。底漆和面漆尽量同品牌配套。面层可以选中档，不必上最贵的。</p>
+    </div>
+    <div class="four-item">
+      <div class="k k-do">怎么做</div>
+      <h4>清灰 → 底漆 → 两遍面漆</h4>
+      <ol>
+        <li>腻子打磨后清理浮灰</li>
+        <li>刷底漆一遍</li>
+        <li>刷第一遍面漆</li>
+        <li>刷第二遍面漆</li>
+      </ol>
+    </div>
+    <div class="four-item">
+      <div class="k k-wait">等几天</div>
+      <h4>遍遍等干</h4>
+      <ul>
+        <li>底漆干 2–4 小时再刷面漆</li>
+        <li>第一遍面漆干 2–4 小时再刷第二遍</li>
+        <li>第二遍面漆干 24 小时再碰墙、贴膜</li>
+      </ul>
+    </div>
+    <div class="four-item">
+      <div class="k k-check">你怎么验收</div>
+      <h4>色差、起泡、漏刷</h4>
+      <ul>
+        <li>无漏刷、无流坠</li>
+        <li>无起泡（底漆没干就刷面漆会起泡）</li>
+        <li>侧光看颜色均匀</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">刷漆偷工</div>
+    <ul>
+      <li>没刷底漆直接刷面漆 → 附着力差、色差、费面漆</li>
+      <li>底漆没干就刷面漆 → 起泡</li>
+      <li>面漆只刷一遍 → 遮盖力不够、不耐擦洗</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 12 工期 ==================== -->
+<section class="sec" id="time">
+  <h2><span class="num">12</span>总工期时间轴：哪天必须你到场</h2>
+  <p class="intro">太原气候偏干，同样工序比南方略快，但该等的仍要等。室内低于 5℃ 不要做防水、回填、腻子。施工方催「3 天就能贴砖」，拿出这张表对照。装修最容易被偷的不是材料，而是等待时间——该等的不等，当时看不出来，入住后全部暴露。</p>
+
+  <div class="flow-diagram">
+    <div class="flow-box warn">拆除刨地</div><span class="flow-arrow">→</span>
+    <div class="flow-box">水电开槽布管</div><span class="flow-arrow">→</span>
+    <div class="flow-box warn">水路打压 / 电路测试</div><span class="flow-arrow">→</span>
+    <div class="flow-box">双热源 + 混水 + 分水器</div><span class="flow-arrow">→</span>
+    <div class="flow-box warn">地暖打压</div><span class="flow-arrow">→</span>
+    <div class="flow-box gold">回填养护</div><span class="flow-arrow">→</span>
+    <div class="flow-box warn">厨卫防水闭水</div><span class="flow-arrow">→</span>
+    <div class="flow-box">贴砖 + 贴膜</div><span class="flow-arrow">→</span>
+    <div class="flow-box">墙面腻子</div><span class="flow-arrow">→</span>
+    <div class="flow-box info">吊顶 / 门窗密封 / 刷漆</div>
+  </div>
+
+  <table class="compare-table">
+    <thead><tr><th>等待项目</th><th>最短时间</th><th>缩短后果</th></tr></thead>
+    <tbody>
+      <tr><td>水管打压</td><td>30–60 分钟</td><td>测不出微渗</td></tr>
+      <tr><td>地暖打压</td><td>24 小时，回填全程保压</td><td>测不出管损</td></tr>
+      <tr><td>防水每遍之间</td><td>2–4 小时表干</td><td>夹层起皮</td></tr>
+      <tr><td>防水完全干再闭水</td><td>24–48 小时</td><td>闭水无效</td></tr>
+      <tr><td>闭水试验</td><td>48 小时 + 下楼看</td><td>慢渗测不出</td></tr>
+      <tr><td>回填洒水养护</td><td>3–7 天</td><td>开裂</td></tr>
+      <tr><td>回填干透到贴砖</td><td>7–14 天</td><td>空鼓脱落</td></tr>
+      <tr><td>贴砖后上人</td><td>24–48 小时</td><td>砖松动</td></tr>
+      <tr><td>贴砖后地暖首次升温</td><td>约 21 天，缓慢升温</td><td>空鼓、开裂</td></tr>
+      <tr><td>腻子每遍之间</td><td>24 小时</td><td>起泡开裂</td></tr>
+      <tr><td>腻子完全干透到打磨</td><td>24–48 小时</td><td>收缩开裂</td></tr>
+      <tr><td>底漆到面漆</td><td>2–4 小时</td><td>起泡</td></tr>
+      <tr><td>第二遍面漆干透</td><td>24 小时</td><td>碰墙留印、贴膜粘漆</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">必须本人到场的节点（建议打印）</div>
+      <ul class="check-list">
+        <li><span class="key">材料进场当天</span><span class="desc">地暖管、PPR、电线、线管、XPS、防水涂料、瓷砖胶、瓷砖。对喷码、合格证、型式检验报告，拍照。</span></li>
+        <li><span class="key">水电布完、封槽前</span><span class="desc">水路打压 0.8–1.0MPa；电路绝缘和通电；拍管线走向。</span></li>
+        <li><span class="key">双热源阀门和混水装完</span><span class="desc">确认立管未断、A/B 不能同时开、楼道预留口在。</span></li>
+        <li><span class="key">地暖盘管铺完、回填前</span><span class="desc">打压 24 小时，拍压力表视频。回填时再看一眼表还挂不挂。</span></li>
+        <li><span class="key">防水闭水 48 小时</span><span class="desc">自己下楼看天花板。不合格不许贴砖。</span></li>
+        <li><span class="key">贴砖后空鼓和平整度</span><span class="desc">敲遍地砖，靠尺抽查，厨卫泼水。</span></li>
+        <li><span class="key">铲墙后浇水测试</span><span class="desc">铲到结构层，遇水不起泡不掉粉。</span></li>
+        <li><span class="key">腻子打磨后、刷漆前</span><span class="desc">夜间强光手电贴墙侧照，无波浪纹。</span></li>
+        <li><span class="key">吊顶封板前</span><span class="desc">电上水下、排风管已固定、餐厅分水器正上方有检修口。</span></li>
+        <li><span class="key">门窗打胶后</span><span class="desc">发泡胶无空洞，密封条是 EPDM，窗台向外坡。</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <div class="lbl">贴膜保护记三句话</div>
+    <ul>
+      <li>砖稳了再铺编织布/珍珠棉，胶带粘膜不粘砖</li>
+      <li>不要用完全密封塑料布长时间捂潮</li>
+      <li>分水器、阀门、检修口留出来，方便以后打压和排气</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 9 进场速查 ==================== -->
+<section class="sec" id="buy">
+  <h2><span class="num">13</span>进场材料速查表（可打印带去工地）</h2>
+  <p class="intro">原则：首选写进合同；备选只有首选买不到时才换，且参数不能降；拒绝项出现就停工退货。品牌是参考，参数和认证对不上照样退。</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr><th>材料</th><th>首选</th><th>关键参数（盯死）</th><th>现场怎么验</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>地暖盘管</td>
+        <td>乔治费歇尔 / 伟星 PE-RT II + EVOH</td>
+        <td>De20×2.0；II 型；EVOH；GB/T 28799.2-2020</td>
+        <td>喷码；对光透亮无黑点；弯折不裂</td>
+      </tr>
+      <tr>
+        <td>XPS</td>
+        <td>华美 / 绿羽 / 法宁格 3cm</td>
+        <td>密度 ≥30；压缩 ≥250kPa；导热 ≤0.030；B1</td>
+        <td>量厚度；指甲掐不留深痕；拒泡沫颗粒板</td>
+      </tr>
+      <tr>
+        <td>反射膜</td>
+        <td>伟星 / 日丰 / 绿羽真铝箔</td>
+        <td>不透光；铝层撕不掉</td>
+        <td>胶带测试</td>
+      </tr>
+      <tr>
+        <td>混水中心</td>
+        <td>曼瑞德 / 丹佛斯</td>
+        <td>泵 + 混水阀 + 过滤器 + 两块表</td>
+        <td>缺件不装</td>
+      </tr>
+      <tr>
+        <td>分水器</td>
+        <td>曼瑞德 / 丹佛斯 / 意瓦</td>
+        <td>黄铜锻造；壁厚 ≥2.6mm；≥1.0MPa</td>
+        <td>掂重；看断面金黄；无焊缝拼接</td>
+      </tr>
+      <tr>
+        <td>PPR 水管</td>
+        <td>伟星 S2.5</td>
+        <td>主管 De25 / 分支 De20；管件同品牌；卫生批件</td>
+        <td>不透光；喷码 S2.5</td>
+      </tr>
+      <tr>
+        <td>PVC 线管</td>
+        <td>联塑阻燃</td>
+        <td>壁厚 ≥1.5mm；红强电蓝弱电</td>
+        <td>脚踩不碎</td>
+      </tr>
+      <tr>
+        <td>电线</td>
+        <td>远东 ZC-BV</td>
+        <td>CCC；照明 1.5 / 插座 2.5 / 厨空 4</td>
+        <td>铜芯紫红；卡尺量线径</td>
+      </tr>
+      <tr>
+        <td>网线</td>
+        <td>康普 / 安普 Cat6A</td>
+        <td>23AWG UTP</td>
+        <td>护套喷码</td>
+      </tr>
+      <tr>
+        <td>防水</td>
+        <td>雨虹 / 德高</td>
+        <td>JS 或柔性；地面干膜 ≥1.5mm</td>
+        <td>正规渠道防假；闭水 48h</td>
+      </tr>
+      <tr>
+        <td>瓷砖胶</td>
+        <td>德高 / 西卡 / 马贝 / 雨虹</td>
+        <td>C2TE 或 C2TES1</td>
+        <td>包装等级字样；拒普通砂浆贴大砖</td>
+      </tr>
+      <tr>
+        <td>地砖</td>
+        <td>东鹏 / 马可波罗 / 诺贝尔中端柔光</td>
+        <td>吸水率 ≤0.5%；厚 ≥10mm；客卧柔光、厨卫地防滑</td>
+        <td>同一批次色号；拒亮面客卧</td>
+      </tr>
+      <tr>
+        <td>回填豆石</td>
+        <td>现场看料</td>
+        <td>5–15mm 圆形；水泥:砂:豆石约 1:2:3</td>
+        <td>有棱角碎石片立刻停工</td>
+      </tr>
+      <tr>
+        <td>腻子 / 墙固</td>
+        <td>美巢 / 莱恩斯 / 百得 / 立邦</td>
+        <td>耐水腻子 N 型，JG/T 298</td>
+        <td>看包装「N 型」；非耐水遇潮粉化</td>
+      </tr>
+      <tr>
+        <td>发泡胶</td>
+        <td>桑莱斯 / 固诺 / 雨虹 / 汉高</td>
+        <td>聚氨酯，充分膨胀无空洞</td>
+        <td>打得太少有空洞 = 漏风漏音</td>
+      </tr>
+      <tr>
+        <td>边界保温条</td>
+        <td>EVA/PE 发泡条</td>
+        <td>厚 ≥8mm，有回弹</td>
+        <td>拒保温板边角料切割替代</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>验收节点一览（建议打印）</h3>
+  <table class="compare-table">
+    <thead><tr><th>序号</th><th>工程</th><th>节点</th><th>必做检查</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>地暖材料</td><td>进场当天</td><td>合格证 + 型式检验报告（CMA/CNAS），喷码与报告一致，拍照</td></tr>
+      <tr><td>2</td><td>分水器</td><td>安装后</td><td>水平牢固、距完成地面 ≥300mm；餐厅正上方留检修口</td></tr>
+      <tr><td>2a</td><td>双热源</td><td>混水装完</td><td>立管未断；A/B 不能同时开；楼道预留口有阀门+堵头+保温；混水含泵/阀/过滤器/两块表</td></tr>
+      <tr><td>3</td><td>保温板</td><td>铺设后</td><td>3cm、密度、拼接无缝</td></tr>
+      <tr><td>4</td><td>盘管</td><td>回填前</td><td>间距误差 ≤10mm、弯曲半径 ≥5 倍管径、填充层内无接头</td></tr>
+      <tr><td>5</td><td>盘管打压</td><td>回填前</td><td>≥0.6MPa 保压 24h 不掉，拍视频</td></tr>
+      <tr><td>6</td><td>回填</td><td>回填时</td><td>管内保压不撤、木耙摊铺、覆盖 ≥30mm</td></tr>
+      <tr><td>7</td><td>回填后</td><td>养护后</td><td>无开裂、有伸缩缝、表面平整</td></tr>
+      <tr><td>8</td><td>水路</td><td>封槽前</td><td>0.8–1.0MPa 保压 30–60min；拍照走向</td></tr>
+      <tr><td>9</td><td>电路</td><td>封槽前</td><td>穿线率 &lt;40%、强弱电 ≥30cm、无墙内接头、各回路通电、拍照走向</td></tr>
+      <tr><td>10</td><td>防水</td><td>贴砖前</td><td>2–3 遍、门槛上翻 ≥10cm、闭水 48h 下楼看</td></tr>
+      <tr><td>11</td><td>墙面基层</td><td>铲墙后 / 刷漆前</td><td>铲到结构层浇水测试；夜间手电无波浪纹</td></tr>
+      <tr><td>12</td><td>吊顶内</td><td>封板前</td><td>排风管固定、检修口对准分水器</td></tr>
+      <tr><td>13</td><td>门窗</td><td>打胶后</td><td>发泡胶无空洞、EPDM 密封条、窗台外坡</td></tr>
+      <tr><td>14</td><td>瓷砖地面</td><td>贴稳后</td><td>空鼓、平整度、厨卫坡度、无高差</td></tr>
+    </tbody>
+  </table>
+
+  <div class="warn-box">
+    <div class="lbl">最后提醒</div>
+    <ul>
+      <li>隐蔽工程材料尽量自己买，或品牌型号写进合同附件。让施工方「包料」最容易被换成杂牌。</li>
+      <li>每个验收节点合格才付下一笔款。一旦封槽/回填/贴砖，就再也看不到了。</li>
+      <li>管线走向、打压表盘、闭水下楼，全部拍照录像——日后维权的第一证据，后期打孔也能避开管子。</li>
+      <li>该等的等待时间一天都不能少。缩短等待是最大的偷工，当时看不出来，入住后全暴露。</li>
+      <li>找装修公司还是找朋友施工，标准是同一个，区别只是谁来执行、出了问题谁负责。</li>
+    </ul>
+  </div>
+
+  <p class="note">本手册按你家 2026 年已定条件编写，并已合并原《隐蔽工程完全指南》全文：太原老楼、单位锅炉兼容未来大暖、厨房在阴面阳台、全屋地砖、适老化、分水器和配电箱在餐厅。品牌会改款，进场仍以包装喷码和检测报告为准。管材开槽间距若还要对照表，可另看 <a href="../wb/管材线材走线方案总结.html">管材线材走线方案总结.html</a>；带图的靠尺/打压手法可另看 <a href="../wb/隐蔽工程验收操作图解.html">隐蔽工程验收操作图解.html</a>。</p>
+</section>
+
+</div>
+</body>
+</html>
