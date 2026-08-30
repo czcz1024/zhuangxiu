@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>硬装工艺步骤详解：每一步干什么、用什么标准、别人会怎么说</title>
+<style>
+  :root {
+    --bg: #f8f7f4; --card-bg: #fff; --text: #2c2c2c; --muted: #6b6b6b;
+    --border: #e8e4dc; --accent: #2c7a4b; --accent-light: #e8f5e9;
+    --warn: #c0392b; --warn-light: #fef0ee; --blue: #2471a3; --blue-light: #eaf2f8;
+    --gold: #b8860b; --gold-light: #fef9e7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:2rem 1rem;
+  }
+  .container { max-width:980px; margin:0 auto; }
+  .header { text-align:center; padding:2rem 0 2.2rem; border-bottom:1px solid var(--border); margin-bottom:1.5rem; }
+  .header h1 { font-size:1.7rem; font-weight:700; }
+  .header .subtitle { color:var(--muted); font-size:0.95rem; margin-top:0.4rem; }
+  .header .meta { font-size:0.8rem; color:#999; margin-top:0.4rem; }
+  .nav { position:sticky; top:0; z-index:100; background:var(--card-bg); border-bottom:1px solid var(--border); padding:0.55rem 0; margin-bottom:1.6rem; display:flex; flex-wrap:wrap; gap:0.35rem; justify-content:center; }
+  .nav a { font-size:0.78rem; text-decoration:none; color:var(--muted); padding:4px 10px; border-radius:14px; white-space:nowrap; }
+  .nav a:hover { background:var(--accent-light); color:var(--accent); font-weight:600; }
+  .sec { margin-bottom:2.4rem; scroll-margin-top:52px; }
+  .sec h2 { font-size:1.18rem; font-weight:700; padding-bottom:0.4rem; border-bottom:2px solid var(--accent); margin-bottom:0.8rem; }
+  .sec h2 .num { display:inline-block; width:26px; height:26px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:26px; font-size:0.82rem; margin-right:0.45rem; }
+  .intro { font-size:0.88rem; color:var(--muted); margin-bottom:1rem; }
+  .map { width:100%; border-collapse:collapse; font-size:0.82rem; margin:0.6rem 0 1rem; background:#fff; box-shadow:var(--shadow); }
+  .map th { background:#f0ede6; padding:0.5rem 0.65rem; text-align:left; }
+  .map td { padding:0.5rem 0.65rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .step { background:#fff; border-radius:10px; box-shadow:var(--shadow); margin-bottom:0.9rem; padding:1rem 1.15rem; border-left:4px solid var(--accent); }
+  .step.alt { border-left-color:var(--blue); }
+  .step.warn { border-left-color:var(--warn); }
+  .step-h { font-weight:700; font-size:0.98rem; margin-bottom:0.55rem; }
+  .step-h .n { display:inline-block; background:var(--accent); color:#fff; width:22px; height:22px; border-radius:50%; text-align:center; line-height:22px; font-size:0.75rem; margin-right:0.35rem; }
+  .k { font-size:0.75rem; font-weight:700; letter-spacing:0.5px; margin-top:0.55rem; }
+  .k.do { color:var(--accent); }
+  .k.why { color:var(--blue); }
+  .k.say { color:#8e44ad; }
+  .k.bad { color:var(--warn); }
+  .k.new { color:var(--gold); }
+  .step p { font-size:0.86rem; margin:0.15rem 0 0.2rem; }
+  .warn-box { background:var(--warn-light); border:1px solid #f5c6cb; border-radius:10px; padding:0.85rem 1.1rem; margin:0.8rem 0; font-size:0.86rem; }
+  .warn-box .lbl { font-weight:700; color:var(--warn); }
+  .tip-box { background:var(--blue-light); border:1px solid #aed6f1; border-radius:10px; padding:0.85rem 1.1rem; margin:0.8rem 0; font-size:0.86rem; }
+  .tip-box .lbl { font-weight:700; color:var(--blue); }
+  .verdict-box { background:var(--accent-light); border:1px solid var(--accent); border-radius:10px; padding:0.9rem 1.15rem; margin:0.8rem 0; }
+  .verdict-box .lbl { font-size:0.75rem; font-weight:600; color:var(--accent); }
+  .verdict-box .main { font-size:1rem; font-weight:700; color:#1a5e3a; margin-top:0.2rem; }
+  .gold-box { background:var(--gold-light); border:1px solid #f9e79f; border-radius:10px; padding:0.85rem 1.1rem; margin:0.8rem 0; font-size:0.86rem; }
+  .gold-box .lbl { font-weight:700; color:var(--gold); }
+  ul { margin:0.3rem 0 0.4rem 1.2rem; font-size:0.86rem; }
+  @media print { .nav { position:static; } }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>硬装工艺步骤详解</h1>
+  <div class="subtitle">每一步：干什么 · 用什么标准 · 为什么 · 别人会怎么说 · 以后会出什么事</div>
+  <div class="meta">太原旧房 · 地暖全屋铺砖 · 硬装约 12 万 · 对照《太原旧房硬装统一方案》· 2026-08-17</div>
+</div>
+
+<nav class="nav">
+  <a href="#how">怎么用</a>
+  <a href="#demo">1 拆旧</a>
+  <a href="#slot">2 开槽</a>
+  <a href="#ppr">3 水管</a>
+  <a href="#drain">4 下水</a>
+  <a href="#elec">5 电线</a>
+  <a href="#net">6 网线</a>
+  <a href="#fill">7 封槽</a>
+  <a href="#heat">8 地暖</a>
+  <a href="#wp">9 防水</a>
+  <a href="#wall">10 墙面</a>
+  <a href="#tile">11 贴砖</a>
+  <a href="#ceil">12 吊顶</a>
+  <a href="#paint">13 刷漆</a>
+  <a href="#grout">14 美缝</a>
+  <a href="#window">15 窗户</a>
+</nav>
+
+<section class="sec" id="how">
+  <h2><span class="num">0</span>怎么用这份说明</h2>
+  <p class="intro">下面按你家实际施工先后排：先拆旧、再水电、再地暖、再防水贴砖，美缝在后面。每一章同等重要，不是某一项的专题。</p>
+  <div class="tip-box">
+    <div class="lbl">每一张步骤卡片固定八句话</div>
+    <p><b>干什么</b> → <b>作用</b> → <b>我们的标准</b> → <b>为什么是这个</b> → <b>别人可能说</b> → <b>他们以后会出什么问题</b> → <b>我们避免了什么</b> → <b>我们可能带来的新问题</b>（及怎么兜底）</p>
+  </div>
+  <table class="map">
+    <thead><tr><th>顺序</th><th>环节</th><th>这一步结束的标志</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>拆旧与保护</td><td>要留的东西已包好；旧砖旧腻子铲到基层；立管未割</td></tr>
+      <tr><td>2</td><td>弹线开槽</td><td>承重墙只有竖槽；横干走顶；你到场看过墨线</td></tr>
+      <tr><td>3</td><td>冷热水管</td><td>热熔完成，尚未封槽</td></tr>
+      <tr><td>4</td><td>下水管</td><td>坡度对、马桶未移位</td></tr>
+      <tr><td>5</td><td>电线线管接头</td><td>穿管完成，接头在底盒内</td></tr>
+      <tr><td>6</td><td>网线光纤</td><td>Cat6A 到位，不走地</td></tr>
+      <tr><td>7</td><td>打压通电 → 封槽</td><td>水路打压合格、电路通电、管线拍照，然后才填槽</td></tr>
+      <tr><td>8</td><td>地暖</td><td>盘管打压 24h，回填时表仍挂着，养护到期</td></tr>
+      <tr><td>9</td><td>厨卫防水</td><td>闭水 48 小时，你自己下楼看过天花板</td></tr>
+      <tr><td>10</td><td>墙面基层</td><td>耐水腻子打磨完，夜间手电侧照合格（先不急着刷面漆）</td></tr>
+      <tr><td>11</td><td>贴砖 + 厨房地轨</td><td>空鼓敲完，地轨与砖齐平，贴了保护膜</td></tr>
+      <tr><td>12</td><td>厨卫吊顶封板</td><td>管已在顶上，扣板封上，餐厅留检修口</td></tr>
+      <tr><td>13</td><td>刷漆</td><td>底 1 面 2</td></tr>
+      <tr><td>14</td><td>美缝</td><td>砖缝彩砂、墙根硅酮，地暖仍未猛热</td></tr>
+      <tr><td>15</td><td>窗户堵风收口</td><td>发泡胶饱满、EPDM 胶条、窗台外坡</td></tr>
+    </tbody>
+  </table>
+  <div class="gold-box">
+    <div class="lbl">和品牌清单的关系</div>
+    <p>品牌、规格写在《太原旧房硬装统一方案》第 9 节。这份按时间顺序讲「怎么干、凭什么这么干」。两份一起给装修公司。</p>
+  </div>
+  <div class="warn-box">
+    <div class="lbl">先开墙槽、后铺地暖。别把「刨地」和「铺地暖」混成一件事</div>
+    <p><b>拆旧时可以先把原地砖铲到楼板</b>（这叫刨地，地面腾空，开槽掉下来的灰也好扫）。<br>
+    <b>保温板、盘管、回填必须等墙面开槽、水电打压通电、封槽之后</b>再做。先把地暖铺完再开墙槽，灰浆和振动会砸坏管子，墙上下来的管口也会被回填层卡住。<br>
+    装修公司说的「回填后再在上面走电」= 地暖做好后再在回填上加一层线管或开槽走电，<strong>仍然是走地，不是走天花板</strong>。客卧走墙竖槽，厨卫横干才走顶。地面只允许地暖盘管，回填上面到砖之间也不走电。</p>
+  </div>
+  <div class="tip-box">
+    <div class="lbl">可以平行的，不必死等</div>
+    <p>地暖回填养护那几天，可以同时铲墙刮腻子。窗户发泡胶拆旧后就能先打。但封槽绝不能和打压抢；贴砖绝不能和闭水、回填干燥抢；美缝绝不能和「砖还在晃」抢。</p>
+  </div>
+</section>
+
+<section class="sec" id="demo">
+  <h2><span class="num">1</span>拆旧与保护</h2>
+  <p class="intro">第一天不是开槽，是把要留的东西保护好，再把旧的拆干净。拆错了，后面全是补救。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>先保护，再动手砸</div>
+    <p class="k do">干什么</p>
+    <p>用气泡膜/纸板包好：2026 元旦新换的吸顶灯、现有马桶、窗框、冰箱电视洗衣机和要留的老家具。马桶先不拆，或拆时保住坑距和楼下管道。</p>
+    <p class="k do">作用</p>
+    <p>旧房拆改灰大、管子乱。这些东西本期不换，碰坏了要从 12 万里再掏钱。</p>
+    <p class="k why">我们的标准</p>
+    <p>灯、马桶、窗、大家电进场当天就包上。拆旧垃圾日产日清，不要堆在地暖将要铺的地面上长期压。</p>
+    <p class="k say">别人可能说</p>
+    <p>「先拆完再收拾，包不包无所谓。」「马桶一块拆了，新的以后再买。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>灯罩砸裂、马桶坑位被撬坏、窗框划伤以后打胶都漏风。马桶一拆，施工期没厕所还可能伤楼下接口。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免把「沿用」变成「被迫新买」。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>包着施工稍碍事。兜底：包严实、留操作口，比赔一件划算。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>拆到需要的基层，不要乱砸墙</div>
+    <p class="k do">干什么</p>
+    <p>地面旧砖铲掉（为地暖）；墙面旧腻子铲到砖（为新墙面）；水电全拆重做。承重墙、梁、柱不砸。暖气片可拆，穿楼板的立管不能割断。</p>
+    <p class="k do">作用</p>
+    <p>地暖、防水、腻子都要粘在干净结实的基层上。结构动了，装修再好也补不回来。</p>
+    <p class="k why">我们的标准</p>
+    <p>不砸墙改格局。立管用三通接管，上下仍贯通。厨房烟机洞这一阶段按 160/180mm 打好，吊顶前完成。</p>
+    <p class="k say">别人可能说</p>
+    <p>「顺便把这面墙拆了空间大。」「立管割了重接更利落。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>拆承重墙伤楼；割立管影响上下楼供暖，物业和邻居都不会放过。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>格局不能大改。兜底：这本来就是你们定的生活习惯不变。</p>
+  </div>
+</section>
+
+<section class="sec" id="slot">
+  <h2><span class="num">2</span>开槽（水电进场第一刀）</h2>
+  <p class="intro">管子电线还没进场，先把槽开对。这一步伤结构就无法挽回。弹线你要到场看：竖的可以，横着拉长的当场改。</p>
+
+  <div class="step warn">
+    <div class="step-h"><span class="n">1</span>承重墙：只竖槽落到插座/网口，禁止长横槽</div>
+    <p class="k do">干什么</p>
+    <p>每个点位一条竖槽。横向干线走吊顶再竖下来。看到钢筋停。梁柱不开槽。</p>
+    <p class="k do">作用</p>
+    <p>竖槽像在墙上开短口；长横槽等于把承重墙腰斩，伤钢筋。</p>
+    <p class="k why">我们的标准</p>
+    <p>槽深刚好埋管，管壁距墙面再留约 10mm 砂浆；深度不超过墙厚的 1/3。厨卫只开竖槽，开完先刷槽内防水再埋管。</p>
+    <p class="k say">别人可能说</p>
+    <p>「承重墙碰都不能碰，插座别装了。」「横着拉一槽省事，这楼结实。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>完全不开槽：电视、书桌没有墙插，后期明线难看还要打膨胀。长横槽：结构损伤，地震或沉降时从槽裂。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>既有插座网口，又不腰斩墙。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>竖槽条数多、墙面要挂网防裂。兜底：槽面界面剂+挂网+腻子；能挪到非承重墙的点位尽量挪。</p>
+  </div>
+</section>
+
+<section class="sec" id="ppr">
+  <h2><span class="num">3</span>冷热水管（PPR）</h2>
+  <p class="intro">埋进墙里的自来水管。漏一次就要砸。步骤按「进场 → 热熔 → 固定 → 打压 → 保温」。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>进场：S2.5、不透光、管件同品牌</div>
+    <p class="k do">干什么</p>
+    <p>核对喷码 PP-R、S2.5、GB/T 18742；对光不透；截面无黑点；管件与管子同一品牌（伟星首选）。</p>
+    <p class="k do">作用</p>
+    <p>S2.5 壁更厚，冷热水都扛得住压力和温度。不透光才不长绿藻。同品牌才能熔成一体。</p>
+    <p class="k why">为什么冷水也用热水管</p>
+    <p>冷热混用两套壁厚，工人容易拿错；差价不大。全屋 S2.5 减少「这段是冷水管却接到热水器上」的事故。</p>
+    <p class="k say">别人可能说</p>
+    <p>「冷水用 S4 薄管省钱。」「城家/德国管更好。」「管件用便宜的就行，管子贵就够。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>薄管热胀更明显、接头先漏。德系营销牌售后找不到人。管件不同品牌：当时不漏，数月后渗。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>多花一点管材钱。兜底：隐蔽工程这点差价换少砸一次墙，划算。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>热熔：260–280℃，加热 5–8 秒，自然冷却</div>
+    <p class="k do">干什么</p>
+    <p>热熔器升温到位 → 管和件同时套上加热 5–8 秒 → 直线插接到底 → 保持几秒 → 自然凉，禁止浇水。</p>
+    <p class="k do">作用</p>
+    <p>塑料熔在一起变成「一根管」，不是胶水粘的。</p>
+    <p class="k why">为什么是这个温度和时间</p>
+    <p>太低/太短：只粘了表皮，过几个月脱开。太高/太久：内壁熔塌，管子看起来接上了，里面却堵住，水流变细。浇水急冷会裂。</p>
+    <p class="k say">别人可能说</p>
+    <p>「凭手感，看冒烟就行。」「焊完浇点水干得快。」「热熔器坏了用喷灯。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>暗漏泡墙；或者龙头水小，以为是水压，其实接头熔堵。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>冬天环境温度低，热熔器显示够了管子还是硬的。兜底：环境过冷要升温再焊，仍看熔接圈均匀，不靠浇水。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">3</span>走向：电上水下、冷热分槽、厨房不走外墙</div>
+    <p class="k do">干什么</p>
+    <p>客厅卧室竖槽走墙，地面不走给水。厨卫横干走吊顶、竖分走墙。冷热间距 ≥10cm。厨房在阴面阳台：管子从室内吊顶过来，不走外墙夹层。</p>
+    <p class="k do">作用</p>
+    <p>漏水先往下，不浇到电上。冷热太近会结露发霉。外墙夹层太原冬天会冻管。</p>
+    <p class="k say">别人可能说</p>
+    <p>「走地面省槽。」「冷热捆一起好看。」「走外墙不占室内吊顶。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>走地 = 漏了砸地暖。外墙冻裂，开春一化一片水。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>吊顶内管子多，要保温、要吊卡打楼板。兜底：9mm 橡塑保温 + 管卡 50–60cm，不搭龙骨。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">4</span>封槽前打压 0.8–1.0MPa，保压 30–60 分钟</div>
+    <p class="k do">干什么</p>
+    <p>堵住所有口，打压到 0.8–1.0MPa，看表不掉。你在场看表、拍照。</p>
+    <p class="k do">作用</p>
+    <p>用比日常高的压力把虚焊挤出来。封了槽再漏，就是砸墙。</p>
+    <p class="k say">别人可能说</p>
+    <p>「通自来水试试就行。」「打一下马上卸压。」「表坏了目测不漏。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>市政水压远低于试验压，虚焊当时不漏，过年水压高或热胀时爆。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>打太高可能伤管。兜底：按 0.8–1.0，不要私自打到 1.5「更保险」。</p>
+  </div>
+</section>
+
+<section class="sec" id="drain">
+  <h2><span class="num">4</span>下水管</h2>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>横管坡度 1%–2%，马桶不移位</div>
+    <p class="k do">干什么</p>
+    <p>脏水横管往立管方向低头走，每一米大约低 1–2 厘米。马桶坑距保持原位。</p>
+    <p class="k do">作用</p>
+    <p>没坡度会积污水、返臭。移位马桶要改降板或抬高，老房难做、易漏。</p>
+    <p class="k say">别人可能说</p>
+    <p>「坡度越大冲得越快。」「马桶挪一挪对淋浴更好。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>坡太大水跑了渣留下，更容易堵。移位接口是渗水高发点。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>布局迁就原马桶。兜底：本期马桶沿用，只换法兰圈；淋浴用浴帘/无门槛隔断，不靠挪马桶。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>接口用 PVC 专用胶，检查口留下</div>
+    <p class="k do">干什么</p>
+    <p>承插口清洁后刷配套胶，插到底。适当位置留检查口，方便以后疏通。</p>
+    <p class="k say">别人可能说</p>
+    <p>「玻璃胶也能粘。」「检查口难看，封死。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>玻璃胶老化脱开漏污水。堵了要锯管。</p>
+  </div>
+</section>
+
+<section class="sec" id="elec">
+  <h2><span class="num">5</span>电线、线管、接头</h2>
+  <p class="intro">客卧走墙竖槽，厨卫横干走吊顶、竖分走墙。全屋地面只铺地暖盘管，<strong>电线不走地、更不走地暖回填层</strong>。装修公司说的「先地暖、地暖上面走电线」，指的就是把线管埋进回填混凝土里，不是走天花板。</p>
+
+  <div class="step warn">
+    <div class="step-h"><span class="n">0</span>拒绝「地暖上面走电线」</div>
+    <p class="k do">干什么</p>
+    <p>线管只允许：墙里竖槽、厨卫吊顶里吊在楼板下。不允许铺在挤塑板上、盘管旁、回填层里，<strong>也不允许回填干了再在上面加一层走电</strong>。</p>
+    <p class="k do">作用</p>
+    <p>线以后还能抽换；地暖层上面到砖之间，不再夹一层电线。</p>
+    <p class="k why">他们这次说的是哪一种</p>
+    <p>不是「和盘管浇在一起」，而是：先铺地暖、回填、等干 → 再在回填表面上铺线管（或在回填上开槽）→ 再抹一层砂浆盖住 → 再贴砖。线在地暖「上面」，不在盘管缝里。</p>
+    <p class="k why">为什么比混浇好一点，但你家还是不行</p>
+    <p>混浇会硌管、线管和盘管抢位置，这种做法避开了那一层。但它仍是走地：线埋在砖下面，坏了要砸砖；脚下长期热，线皮照样老化；φ16/φ20 管再盖砂浆，地面至少再抬高 2–3cm，地更不热、门槛和厨房地轨更难做平；若图省事在回填上开槽，管上只有约 3cm 保护层，一刀就可能切到盘管。</p>
+    <p class="k why">他们为什么爱这么干</p>
+    <p>少开墙、少走顶，地暖队先收工，水电在平地上布线省事。听起来比「浇在一起」专业，所以会说「我们是回填后再走，安全」。本质还是把没地暖时「地面垫层走水电」的习惯，挪到地暖上面再做一层。</p>
+    <p class="k say">别人可能说</p>
+    <p>「又没跟管子浇一起。」「上面走电不挨着地暖。」「走墙伤承重墙。」「走顶要吊顶、降层高。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>地面抬高一截，门、马桶、地轨、完成面全乱；多一层砂浆隔着，地暖更慢热；换线、加插座仍要揭砖，揭砖可能伤到下面盘管。承重墙我们只开浅竖槽落到插座，不是长横槽。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免在地暖上再叠一层「电的夹心」，也避免在薄回填上开槽切管。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>墙槽比在平地上布线费工。客卧横干贴墙顶走再竖下来，或走窗帘盒，不是满屋吊顶。<br>兜底：合同写死两句——①地暖回填层内禁止敷设强弱电和给水；②回填层之上、瓷砖之下同样禁止再做走电垫层或开槽走电。开槽费可以给，走地的「省工」不要。</p>
+  </div>
+    <p class="k do">干什么</p>
+    <p>电线必须进 PVC 管再埋。管内不要塞满，手电能抽动为佳。</p>
+    <p class="k do">作用</p>
+    <p>管子保护线、方便以后换。塞太满散热差、以后抽不出来。</p>
+    <p class="k say">别人可能说</p>
+    <p>「老房直接埋线二十年了。」「多穿几根省管子。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>漏电难查；换线砸墙；过热老化。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>线径：照明也用 2.5，厨宝单独一路</div>
+    <p class="k do">干什么</p>
+    <p>照明 2.5；插座 2.5；厨房/空调 4；小厨宝 2.5–4 单独空开；冰箱单独 2.5。全屋 ZC-BV 阻燃硬线（远东）。</p>
+    <p class="k why">为什么照明不用 1.5</p>
+    <p>规范里 1.5 常用于照明，但你家要重做一次用二十年，2.5 余量大、接点更不容易热，老房以后加灯不用改线。差价有限。</p>
+    <p class="k say">别人可能说</p>
+    <p>「照明 1.5 国标。」「厨宝和厨房插座一路。」「防火线全屋更安全（宝格雷一类）。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>1.5 也能用，但余量小、老接头更怕热。厨宝混路：开热水跳闸、冰箱也灭。所谓德国防火线是营销，家装穿管阻燃 ZC 才是对症。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>2.5 比 1.5 略硬、穿管稍费劲。兜底：管径选够（φ16/φ20）、穿线率 ≤40%。</p>
+  </div>
+
+  <div class="step warn">
+    <div class="step-h"><span class="n">3</span>接头只用 WAGO，而且只在底盒里</div>
+    <p class="k do">干什么</p>
+    <p>剥线插入 WAGO 221，卡上橙色杆。管内、墙里、吊顶里不许接。</p>
+    <p class="k do">作用</p>
+    <p>接触面积稳定、能查、能拆。拧线+胶布会氧化松脱发热。</p>
+    <p class="k say">别人可能说</p>
+    <p>「电工胶布缠紧一样。」「管子里接一下省底盒。」「国产端子随便买。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>接头在墙里发热是火灾隐患；坏了找不到点。仿品弹簧松，等于没接好。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>底盒要稍深、数量不能偷。兜底：网口用加深盒；开关底盒预留零线。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">4</span>总开 63A，厨卫漏保 30mA</div>
+    <p class="k do">干什么</p>
+    <p>配电箱在餐厅。总闸 63A；厨房、卫生间漏保；漏保测试钮要能跳。</p>
+    <p class="k say">别人可能说</p>
+    <p>「老箱够用。」「漏保爱跳闸，不装省事。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>地暖循环泵+厨宝+厨房电器一上就跳总闸。漏保不装，湿手触电没有最后一道。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>线路有轻微漏电时漏保会跳（有时是真隐患）。兜底：跳了查线，不要拆掉漏保「图方便」。</p>
+  </div>
+</section>
+
+<section class="sec" id="net">
+  <h2><span class="num">6</span>网线、水晶头、光纤</h2>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>Cat6A 走墙走顶，不走地</div>
+    <p class="k do">干什么</p>
+    <p>超六类 23AWG 无氧铜，蓝管，与强电平行 ≥30cm，交叉 90° 包锡箔。约 9 条+1 条光纤。</p>
+    <p class="k why">为什么不买七类八类</p>
+    <p>家用距离内 Cat6A 已能万兆。七类八类贵、接头难、假货更多，性能用不上。</p>
+    <p class="k say">别人可能说</p>
+    <p>「WiFi 6 不用拉网线。」「走地最短。」「八类一步到位。」「铜包铝也标超六。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>儿子网课、电视盒子抢带宽会卡。走地等于焊死在地暖里。CCA 线越用越差。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>点位多、槽多。兜底：承重墙只竖槽落到网口，横干走顶。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>水晶头和模块必须 Cat6A 同品牌</div>
+    <p class="k do">干什么</p>
+    <p>线两头用 Cat6A 专用头；墙上用 Cat6A 模块。Cat6 头不通用。</p>
+    <p class="k say">别人可能说</p>
+    <p>「头都一样，能插上就行。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>线是万兆，头是千兆，整条链路被拖慢，还查不出是哪一段。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">3</span>弱电管用蓝色 PVC，不必上镀锌钢管「防干扰」</div>
+    <p class="k do">干什么</p>
+    <p>网线、光纤仍穿联塑阻燃 PVC 蓝管。防干扰靠三件事：和强电分管、平行 ≥30cm、交叉 90°（交叉处弱电管外包一层锡箔）。</p>
+    <p class="k do">作用</p>
+    <p>PVC 管的作用是保护线和方便以后抽换，不是当屏蔽罩。真正挡电磁干扰的，是网线自己的绞合，以及离电线远一点。</p>
+    <p class="k why">我们的标准</p>
+    <p>Cat6A <strong>UTP（非屏蔽）</strong> + PVC 蓝管。普通住宅不做全程镀锌钢管、不做金属波纹管当弱电主线管。</p>
+    <p class="k why">为什么镀锌管在你家不是刚需</p>
+    <p>金属管要接成连续的「笼子」并且可靠接地，才能屏蔽。家装墙上东一段西一段、口子不跨接、弱电箱又常常没接大地，管子等于一根天线，有时比 PVC 还爱捡干扰。你家是老楼竖槽走线，镀锌管又硬又难弯，承重墙浅槽更埋不进去。</p>
+    <p class="k say">别人可能说</p>
+    <p>「镀锌管才能防干扰，不然网卡。」「必须上屏蔽网线 + 铁管才专业。」「锡箔纸没用，一定要铁管。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>多花钱、开槽更深更难、拉线容易刮伤护套；接地做不好，卡顿照样有，还怪你「没听劝」。真卡多数是：铜包铝、水晶头不配、和电线绑太近、WiFi 拥堵——不是缺一根铁管。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免把工业机房的做法卖成家装必选项。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>若某段实在躲不开、必须和空调/厨房 4 平方线贴着走很长一截，PVC + 间距不够时干扰会比铁管大一点。<br>兜底：先改路径拉开 30cm；实在改不了，这一小段可包锡箔或改走吊顶，不必全屋铁管。屏蔽网线（STP）同样要两端规范接地，普通住宅更容易接错，不作为默认方案。</p>
+  </div>
+</section>
+
+<section class="sec" id="fill">
+  <h2><span class="num">7</span>封槽（水电验收合格之后）</h2>
+  <p class="intro">水管打压过、电路通电过、管线拍照过，才允许把槽填上。先封再验，漏点就埋进墙里了。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>界面剂 + 砂浆填实，验收之后才封</div>
+    <p class="k do">干什么</p>
+    <p>开槽面洒水、刷界面剂，水泥砂浆填实无空鼓。封之前：水路已打压、电路已通电、管线已拍照。</p>
+    <p class="k do">作用</p>
+    <p>槽填不实，墙面会空鼓开裂。先封后验，漏点被砌死，只能砸开。</p>
+    <p class="k why">我们的标准</p>
+    <p>约 1:2.5 水泥砂浆 + 界面剂。厨卫槽内已先做过槽内防水。封完干 1–2 天再进行墙面下一步。</p>
+    <p class="k say">别人可能说</p>
+    <p>「先封了再打压，漏了再砸。」「干灰直接填。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>空鼓开裂；漏点被封在墙里，入住后墙面发霉才发现。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免把没验过的管子砌进墙。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>验收多半天。兜底：你本人到场看表、拍照，再让他们封。</p>
+  </div>
+</section>
+
+<section class="sec" id="heat">
+  <h2><span class="num">8</span>地暖（从找平到回填）</h2>
+  <p class="intro">这一章是「铺地暖」，不是拆旧时的刨地。墙槽已开完、水电已打压通电、槽已封上，地面是干净楼板，才铺保温和盘管。回填层里只有盘管和豆石，<strong>禁止再铺电线管、网线管、给水管</strong>。层从下到上：楼板 → 找平 → XPS 3cm → 真铝箔 → 盘管 → 豆石回填 →（厨卫再做生活防水）→ 砖。混水在餐厅，厨房也要铺，防阴面阳台冻地漏。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>必须有混水，出水 35–45℃</div>
+    <p class="k do">干什么</p>
+    <p>锅炉或未来大暖的高温水，先经过循环泵+混水阀兑成低温，再进分水器。</p>
+    <p class="k do">作用</p>
+    <p>地暖管和砖怕烫。混水是「降温阀门」，不是摆设。</p>
+    <p class="k say">别人可能说</p>
+    <p>「家里锅炉不烫，直接进盘管。」「先装分水器，混水以后再加。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>管加速老化、地面开裂、脚烫。以后加混水要改餐厅这组铜件，等于重做。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>多一套设备、要检修口。兜底：餐厅吊顶留 30×30cm 口；与配电箱间距 ≥30cm。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>XPS 3cm + 真铝箔，拒泡沫板、拒镀铝膜</div>
+    <p class="k do">干什么</p>
+    <p>挤塑板铺满，密度 ≥30、压缩 ≥250kPa。铝箔铝面朝上，胶带撕不掉铝。</p>
+    <p class="k do">作用</p>
+    <p>板让热往上走；铝箔再反射一层。泡沫板（EPS）一踩就瘪，热往楼下跑。</p>
+    <p class="k say">别人可能说</p>
+    <p>「2cm 够了层高低。」「镀铝膜也亮。」「泡沫板便宜一样保温。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>楼下热你家凉；板压溃地面空鼓；镀铝两三年氧化掉，反射没了。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>3cm 加回填，完成面升高。兜底：门套、地轨按升高后的完成面排；厨卫无高差一起抬。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">3</span>盘管：PE-RT II + EVOH，填充层内禁止接头</div>
+    <p class="k do">干什么</p>
+    <p>整盘一回路铺完再进分水器。客卧间距 15–20cm，厨卫 10–15cm。卡钉钉死。</p>
+    <p class="k do">作用</p>
+    <p>II 型耐热更好；EVOH 阻氧，少让氧气钻进水里锈分水器。接头埋在混凝土里，漏了只能砸。</p>
+    <p class="k say">别人可能说</p>
+    <p>「I 型便宜能用。」「差 2 米接一个接头没事。」「间距稀一点省管子，照样热。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>分水器几年锈死；接头必漏；间距稀则地面花热（一块烫一块凉）。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>厨卫加密用管更多。兜底：厨房必须热，防冻比省管子重要。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">4</span>回填：圆形豆石，管上盖 ≥30mm，回填时表一直挂着</div>
+    <p class="k do">干什么</p>
+    <p>水泥:砂:豆石约 1:2:3，豆石 5–15mm 圆形。打压 0.6–0.8MPa 保压 24 小时，倒料时压力表不拆。</p>
+    <p class="k do">作用</p>
+    <p>圆石不扎管。盖够厚，贴砖才不顶到管子。保压是怕施工砸破当时不知道。</p>
+    <p class="k say">别人可能说</p>
+    <p>「瓜子片便宜。」「纯砂浆细腻。」「打压完卸了再倒水泥。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>棱角扎管慢渗；纯砂浆易裂；卸压后砸破了表上看不出来。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>回填层偏厚、楼板荷载增加。兜底：不要再加厚砂浆找平；豆石粒径按标准，不要为「更厚更保险」乱加。</p>
+  </div>
+</section>
+
+<section class="sec" id="wp">
+  <h2><span class="num">9</span>防水</h2>
+  <p class="intro">地暖层被泡一次，修的是整间房。厨房按卫生间认真做。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>槽内先防水，再埋管封槽</div>
+    <p class="k do">干什么</p>
+    <p>厨卫墙面竖槽清理干净 → 刷 1–2 遍同品牌防水 → 干透 → 埋管 → 封槽 → 封槽表面再跟大面一起刷。</p>
+    <p class="k do">作用</p>
+    <p>管子周围是防水最容易断的地方。槽内+大面等于两道雨衣。</p>
+    <p class="k why">我们的标准</p>
+    <p>淋浴区必须；厨房水槽墙必须；卫生间非淋浴区建议做。材料与大面同品牌同型号（雨虹/德高柔性）。</p>
+    <p class="k say">别人可能说</p>
+    <p>「埋完管大面刷一下就行。」「槽里刷不干，别折腾。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>水沿管槽流到隔壁墙、流到地暖层，闭水当时不一定立刻漏到楼下。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>多一天等槽内干。兜底：写进厨卫开槽节点。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>管根、地漏、阴阳角先做附加层</div>
+    <p class="k do">干什么</p>
+    <p>这些拐弯、穿管的地方先贴无纺布/涂附加层，再刷大面。</p>
+    <p class="k do">作用</p>
+    <p>裂缝从转角和管根开始。附加层是补丁，大面是整件雨衣。</p>
+    <p class="k why">我们的标准</p>
+    <p>地漏、管根、门槛、墙地阴角都做。管根用止水节或堵漏再刷。</p>
+    <p class="k say">别人可能说</p>
+    <p>「多刷两遍大面就等于加强了。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>闭水过了，入住后地漏周围慢慢渗。大面厚补不住节点。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>节点处略鼓。兜底：贴砖能盖住，不要为平整省掉补丁。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">3</span>涂膜厚度和上翻高度</div>
+    <p class="k do">干什么</p>
+    <p>地面干膜 ≥1.5mm（要量，不是「刷两遍」就算）。淋浴墙 ≥1.8m；厨房水槽墙同样做；门槛上翻 ≥10cm。</p>
+    <p class="k do">作用</p>
+    <p>水会爬墙、会往门口流。只刷地面中间一块等于盆没有沿。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>遍数是过程，厚度是结果。有的料刷两遍还不到 1mm。1.8m 覆盖淋浴溅水高度；10cm 上翻挡住漫过门口的水。</p>
+    <p class="k say">别人可能说</p>
+    <p>「国标一遍就行。」「厨房不用做那么高，又不是洗澡。」「上翻影响门槛好看。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>厨房洗菜、地漏返水、冬天结露一样能泡地暖。门口倒灌进过道。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>材料用量比报价「两遍」多。兜底：合同按干膜厚度验收，带卡尺或看切样。</p>
+  </div>
+
+  <div class="step warn">
+    <div class="step-h"><span class="n">4</span>闭水 48 小时，自己下楼看天花板</div>
+    <p class="k do">干什么</p>
+    <p>门口砌挡水，蓄水 ≥20mm（有条件 3cm），<strong>48 小时</strong>。期间自己到楼下看天花板、摸墙根。合格才能贴砖。</p>
+    <p class="k do">作用</p>
+    <p>这是防水唯一的「期末考试」。刷得再好看，不闭水等于没做。</p>
+    <p class="k why">为什么是 48 小时不是 24</p>
+    <p>慢渗 24 小时看不出来。48 小时能暴露节点渗。有人说潮湿地区 72 小时，太原偏干 48 足够，24 不够。</p>
+    <p class="k say">别人可能说</p>
+    <p>「闭 24 小时行业都这样。」「蓄薄薄一层意思一下。」「楼下是自家不用看。」「贴完砖再闭。」（贴完再闭可以作二次，但不能替代贴前这一次）</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>入住后楼下渗，要揭砖、伤防水、伤地暖。24 小时过关的工程里，这一类最多。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免假闭水。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>48 小时不能赶工；蓄水太深可能压坏未达强度的找平。兜底：2–3cm 即可，不是泡半池；闭水时楼下打声招呼。</p>
+  </div>
+</section>
+
+<section class="sec" id="wall">
+  <h2><span class="num">10</span>墙面基层：铲、墙固、腻子</h2>
+  <p class="intro">地暖回填养护期间就可以铲墙刮腻子。面漆先别刷，等吊顶封完再刷，免得顶上灰落在新漆上。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>老房铲到砖，浇水试</div>
+    <p class="k do">干什么</p>
+    <p>把旧腻子铲掉。浇水：吸水起泡掉粉 = 还没铲干净。</p>
+    <p class="k say">别人可能说</p>
+    <p>「旧墙打毛批新的就行，铲太费。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>新腻子粘在不耐水的旧皮上，返潮整面脱落，乳胶漆再好也没用。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>灰大、工期长。兜底：你们在外住，值得一次铲干净。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>墙固 + 挂网 + 护角 + N 型耐水腻子，每遍间隔 24 小时</div>
+    <p class="k do">干什么</p>
+    <p>滚墙固 → 裂缝贴耐碱网格布、阳角贴 PVC 条 → 两遍耐水腻子，中间等 24 小时 → 打磨 → 夜间手电侧照。</p>
+    <p class="k why">为什么必须耐水 N 型</p>
+    <p>太原冬天室内外温差大、厨卫有湿气。非耐水腻子遇潮粉化。24 小时是让水分走掉，一天两遍等于夹生。</p>
+    <p class="k say">别人可能说</p>
+    <p>「普通腻子便宜。」「今天刮两遍明天刷漆。」「不用挂网。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>开裂起泡掉粉；侧光一看波浪纹。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>墙面成本比「包工包料最低漆」高。兜底：漆买中端即可，钱放在基层。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">3</span>底漆 1 遍 + 面漆 2 遍，同品牌配套</div>
+    <p class="k do">干什么</p>
+    <p>立邦/多乐士中端净味。底漆封闭腻子、匀吸水；面漆两遍才有色和耐擦。</p>
+    <p class="k say">别人可能说</p>
+    <p>「面漆厚，底漆省了。」「面漆一遍够白。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>发花、不耐擦、局部透底。当时看不出来，入住开灯全是。</p>
+  </div>
+</section>
+
+<section class="sec" id="tile">
+  <h2><span class="num">11</span>贴砖（含瓷砖胶、厨房门地轨）</h2>
+  <p class="intro">地暖上贴砖，胶和留缝比砖的品牌更要命。砖可以中端，胶不能含糊。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>基层：回填干透、靠尺合格再弹线</div>
+    <p class="k do">干什么</p>
+    <p>地暖回填养护 3–7 天，再干 7–14 天；厨卫闭水合格。2 米靠尺看地面，再弹线排砖。</p>
+    <p class="k do">作用</p>
+    <p>砖贴在「还在吐水」的地上会空鼓。不平就贴，砖会一边厚一边薄，空鼓更狠。</p>
+    <p class="k why">我们的标准</p>
+    <p>回填层拍实刮平；能薄贴就薄贴，不要再厚厚抹一层砂浆找平（增荷载、隔地暖热）。局部不平用自流平，不是再做一层厚砂浆。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>地暖热量要穿过回填和砖。垫得越厚越不热，楼板也越沉。老五层楼更要控制。</p>
+    <p class="k say">别人可能说</p>
+    <p>「回填三天就能贴，南方都这样。」「再抹 3 公分砂浆找平更平。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>空鼓、地不热、楼下裂。太原偏干可以略快，但「三天贴砖」仍是抢工期。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免湿贴空鼓、避免地暖被厚砂浆闷死。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>等的天数多。兜底：时间表写死，不为此换施工队。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>瓷砖胶：C2TE / C2TES1，禁止水泥砂浆贴大砖</div>
+    <p class="k do">干什么</p>
+    <p>用柔性瓷砖胶（德高/西卡/马贝/雨虹），齿形刮板满浆，砖背面再补涂一层（背涂）。</p>
+    <p class="k do">作用</p>
+    <p>胶把砖和地面粘成一体，还能跟着地暖热胀冷缩微微变形，不把砖绷裂。</p>
+    <p class="k why">我们的标准</p>
+    <p>≥600 砖、地暖上：C2TE 或 C2TES1。C2=增强粘结；T=抗滑移（墙砖不往下掉）；E=加长晾置；S1=有变形能力（地暖更需要）。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>普通水泥砂浆又硬又脆，地暖一热一冷就和砖脱开，敲起来空空的。大砖背面凹槽多，不背涂中间是空的。</p>
+    <p class="k say">别人可能说</p>
+    <p>「水泥沙子贴砖二十年了。」「瓷砖胶太贵，砂浆加 801 胶水一样。」「陶氏/杂牌胶也写 C2。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>第一、第二个供暖季大面积空鼓，走起来砰砰响，局部掉砖。地暖上揭砖极易伤盘管。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免地暖上空鼓这个最高频翻车。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>胶比砂浆贵。兜底：12 万里这笔不能省，省在面层品牌可以，胶不行。进场核对包装 C2 字样和检测报告。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">3</span>砖要不要泡水</div>
+    <p class="k do">干什么</p>
+    <p>看砖的吸水率：瓷质砖（≤0.5%）一般不泡；陶质砖才泡。</p>
+    <p class="k do">作用</p>
+    <p>陶砖会抢胶里的水，泡过才粘得住。瓷砖几乎不吸水，泡了等于砖背湿膜，反而打滑空鼓。</p>
+    <p class="k why">我们的标准</p>
+    <p>客卧地砖按瓷质买，不泡水。工人说「所有砖泡一夜」时，看箱上吸水率。</p>
+    <p class="k say">别人可能说</p>
+    <p>「所有砖都要泡，老规矩。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>瓷砖泡水后空鼓率升高，还浪费一天。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免用错老工艺。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>若买到陶质墙砖忘了泡，会粘不牢。兜底：进场看参数，陶质按说明泡。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">4</span>排砖、无高差、厨房地轨一起埋</div>
+    <p class="k do">干什么</p>
+    <p>从门口或中线排砖，半砖藏边角。厨卫与过道用微坡+同厚门槛石，不做 3–5cm 台阶。厨房超薄地轨在铺砖时嵌入，尽量与砖齐平。</p>
+    <p class="k do">作用</p>
+    <p>老人、以后轮椅，不能有门槛绊脚。地轨现在不埋，以后再切砖会伤地暖。</p>
+    <p class="k why">我们的标准</p>
+    <p>地轨凸出 ≤8mm。卫生间微坡向地漏，不要为「挡水」做高台阶。</p>
+    <p class="k say">别人可能说</p>
+    <p>「厨卫必须高 5 公分防倒灌。」「地轨以后装柜子再做。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>高差绊倒 70 多岁的母亲；后期切槽碰到盘管。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免不适老、避免二次伤地暖。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>无高差时若防水和地漏坡度没做好会漫水。兜底：门槛石上翻防水 ≥10cm + 地漏坡度 + 水浸传感器，不是靠台阶挡水。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">5</span>敲空鼓、贴保护膜</div>
+    <p class="k do">干什么</p>
+    <p>逐块敲四角和中心。清脆为实，闷响为空。合格后贴编织布/珍珠棉保护，胶带粘在膜上不粘砖面。</p>
+    <p class="k why">我们的标准</p>
+    <p>地砖尽量零空鼓；墙砖单片空鼓率 ≤5%，中心不许空。不要用完全密封塑料布长期捂。</p>
+    <p class="k say">别人可能说</p>
+    <p>「边角空一点正常。」「整面铺保鲜膜保护最好。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>空鼓越走越大；塑料布捂出发霉、水印。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>零空鼓要求严，可能局部返工。兜底：宁可揭几块重贴，不要带着空鼓过冬供暖。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">6</span>厨房门：超薄地轨嵌入砖面，不用吊轨</div>
+    <p class="k do">干什么</p>
+    <p>铺砖时把铝合金厚壁地轨埋到与砖齐平，凸出 ≤8mm。门扇 5mm 钢化玻璃，别太重。</p>
+    <p class="k do">作用</p>
+    <p>推拉门要有轨道。现在埋进砖里，以后不用在地暖层上再切槽。</p>
+    <p class="k why">我们的标准</p>
+    <p>超薄地轨，铝合金实心厚壁，尼龙密封轴承滑轮。拒吊轨、拒 3–5cm 传统地轨。</p>
+    <p class="k say">别人可能说</p>
+    <p>「吊轨不占地。」「传统地轨更稳。」「轨道以后装门再做。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>吊轨：门长期下垂、缝大油烟外溢。传统地轨：绊脚、藏油污。后期切槽伤地暖。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免不适老、避免二次伤地暖。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>轨槽会进灰，要吸尘。兜底：选尼龙密封轮；养成每周吸尘；比绊倒老人的代价小。</p>
+  </div>
+</section>
+
+<section class="sec" id="ceil">
+  <h2><span class="num">12</span>厨卫吊顶封板</h2>
+  <p class="intro">吊顶里的水管线管在水电阶段就已经吊到楼板上了。现在只是封铝扣板。先走管后封板，封了再想改管要揭顶。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>轻钢龙骨 + 铝扣板 ≥0.6mm</div>
+    <p class="k do">干什么</p>
+    <p>吊杆打进楼板；管子用吊卡固定到楼板，不搭龙骨；留 ≥15cm 检修空间；餐厅分水器上方留检修口，厨房不留。</p>
+    <p class="k do">作用</p>
+    <p>遮住厨卫顶部的管线，油烟好擦，漏了能揭开修。</p>
+    <p class="k why">我们的标准</p>
+    <p>板厚 ≥0.6mm，300×600 哑光白/浅灰。不用木龙骨、不用 PVC 扣板。</p>
+    <p class="k say">别人可能说</p>
+    <p>「木龙骨便宜。」「PVC 扣板一样防水。」「管子搁龙骨上省吊卡。」「厨房也留检修口好看统一。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>木龙骨受潮霉、虫。PVC 发黄变脆。管子搭龙骨会嗡嗡响、龙骨变形。厨房检修口正对油烟，实际分水器在餐厅，开错地方。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免顶上管子没固定、修的时候找不到分水器。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>铝扣板不如石膏顶「高级」。兜底：厨卫要能揭开检修，客餐厅不做满屋吊顶即可。</p>
+  </div>
+</section>
+
+<section class="sec" id="paint">
+  <h2><span class="num">13</span>刷漆（底漆 + 面漆）</h2>
+  <p class="intro">腻子早已打磨合格。吊顶封完、砖面贴了保护膜，再刷漆。底 1 遍、面 2 遍。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>底漆 1 遍 + 面漆 2 遍，同品牌配套</div>
+    <p class="k do">干什么</p>
+    <p>立邦/多乐士中端净味。底漆封闭腻子、匀吸水；面漆两遍才有色和耐擦。</p>
+    <p class="k do">作用</p>
+    <p>这是你看见的墙面颜色。基层已经在第 10 章做完，这里只负责涂均匀、耐擦。</p>
+    <p class="k why">我们的标准</p>
+    <p>底漆不能省。面漆两遍。颜色选奶油白/暖灰/浅米色。夜间手电侧照腻子合格后再刷。</p>
+    <p class="k say">别人可能说</p>
+    <p>「面漆厚，底漆省了。」「面漆一遍够白。」「腻子没干先刷赶工期。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>发花、不耐擦、局部透底。当时看不出来，入住开灯全是。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免用漆掩盖没干的腻子。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>多等一天、多一遍工钱。兜底：12 万里漆买中端，不要把钱省在遍数上。</p>
+  </div>
+</section>
+
+<section class="sec" id="grout">
+  <h2><span class="num">14</span>美缝</h2>
+  <p class="intro">贴砖稳定、吊顶和墙面脏活基本结束后再美缝，免得胶面被踩脏、被漆点。家里至少有三种缝，材料不能混用。</p>
+
+  <div class="verdict-box">
+    <div class="lbl">先记住这张地图</div>
+    <div class="main">砖缝打环氧彩砂；地暖靠墙那圈打弹性硅酮；阳角踢脚打中性玻璃胶。三样不要互相替代。</div>
+  </div>
+
+  <table class="map">
+    <thead><tr><th>什么地方</th><th>用什么</th><th>千万别用</th><th>一句话原因</th></tr></thead>
+    <tbody>
+      <tr><td>厨房地砖、墙砖缝</td><td>环氧彩砂（德高/卓高）</td><td>白水泥、免费填缝剂、普通环氧</td><td>油污潮湿，要耐脏防霉</td></tr>
+      <tr><td>卫生间地砖、墙砖缝</td><td>环氧彩砂</td><td>同上</td><td>长期见水，白水泥会发黑长毛</td></tr>
+      <tr><td>客厅、卧室、过道、餐厅砖缝</td><td>环氧彩砂（默认）</td><td>白水泥、1mm 无缝</td><td>地暖要留缝；彩砂耐脏够用</td></tr>
+      <tr><td>南向窗边、浅色砖的缝</td><td>可升级聚脲</td><td>普通环氧（三个月就黄）</td><td>阳光会把环氧晒黄，浅色最明显</td></tr>
+      <tr><td>地暖房间靠墙一圈（约 8–10mm）</td><td>中性弹性硅酮（陶熙/瓦克/雨虹）</td><td>环氧彩砂、聚脲、水泥</td><td>这是伸缩缝，要能弹，填死砖会拱</td></tr>
+      <tr><td>阳角条与砖、踢脚线与砖</td><td>中性玻璃胶</td><td>美缝剂硬填</td><td>这是收边，不是砖缝</td></tr>
+      <tr><td>烟机洞、窗框收口</td><td>中性玻璃胶 / 发泡胶（框缝）</td><td>美缝剂</td><td>美缝剂不是结构密封胶</td></tr>
+    </tbody>
+  </table>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>等砖稳了再美缝</div>
+    <p class="k do">干什么</p>
+    <p>贴砖完成后，至少再等 24–48 小时（墙砖同样），砖不晃了才清缝、打胶。</p>
+    <p class="k do">作用</p>
+    <p>美缝剂要粘在稳定的缝壁上。砖还在沉降、胶还没干，打上去会裂、会空。</p>
+    <p class="k why">我们的标准</p>
+    <p>地砖上人、墙砖不晃，缝里瓷砖胶已经抠得动。地暖此时仍不能升温。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>瓷砖胶终凝要时间。地暖如果这时候加热，缝还在动，美缝必裂。</p>
+    <p class="k say">别人可能说</p>
+    <p>「贴完当天就能美缝，我们赶工期。」「美缝和贴砖是一拨人，连着干。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>缝开裂、两边空鼓、一抠就掉。你以为美缝坏了，其实是砖还没稳。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免「新房三个月缝条条裂」被说成美缝品牌不行。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>工期多等 1–2 天。兜底：写进合同节点，不因此扣工人钱，只是不许抢。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">2</span>清缝：把缝掏干净、掏够深</div>
+    <p class="k do">干什么</p>
+    <p>用清缝锥把缝里残留的瓷砖胶、灰渣抠掉，扫净、吸尘，缝壁干燥无油。</p>
+    <p class="k do">作用</p>
+    <p>美缝剂要「咬」住砖的两侧。缝里有胶渣，新胶只粘在渣上，一擦就掉。</p>
+    <p class="k why">我们的标准</p>
+    <p>缝深至少抠到砖厚的 2/3；宽度保持贴砖时的 2–3mm；缝底看不见大块残胶。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>胶太浅只是「表面上一条线」，脚一蹭、拖把一拖就掉皮。够深才有锚固。</p>
+    <p class="k say">别人可能说</p>
+    <p>「缝里有点胶没事，打上去盖住。」「不用抠那么深，浪费时间。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>三个月出现「中间一条空心、两边翘」；厨卫缝发黑，因为残胶吸水发霉。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免假美缝（只盖表面）。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>抠太猛可能崩砖边。兜底：用专用清缝工具，不要用螺丝刀硬撬釉面。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">3</span>砖缝宽度：2–3mm，不做「无缝」</div>
+    <p class="k do">干什么</p>
+    <p>贴砖时就用十字卡/留缝条把缝留出来。美缝只是把这条缝填上，不能把缝挤没。</p>
+    <p class="k do">作用</p>
+    <p>地暖热了地面会胀。缝是「让路」的。美缝材料再好，也替代不了这条缝。</p>
+    <p class="k why">我们的标准</p>
+    <p>全屋砖缝 2–3mm。地暖房尤其不能按 1mm 或「无缝」干。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>600 砖在地暖上热胀量肉眼看不见，但会挤。1mm 缝被胶填死后等于没缝。2–3mm 是地暖贴砖的常规让路宽度，也方便美缝打饱满。</p>
+    <p class="k say">别人可能说</p>
+    <p>「现在都流行无缝，缝越小越高档。」「留 3mm 难看，像公装。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>供暖第一年砖角挤崩、空鼓、 vis 响。你修要揭砖，地暖层也危险。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免地暖热胀把砖挤碎。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>缝比「无缝」显眼。兜底：美缝颜色贴近砖色，远看仍是整面；不要用对比色故意描格子，除非你喜欢。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">4</span>厨卫砖缝：环氧彩砂（不要白水泥、不要普通环氧）</div>
+    <p class="k do">干什么</p>
+    <p>厨房、卫生间的地砖缝、墙砖缝，打双组份环氧彩砂，压实、刮平。</p>
+    <p class="k do">作用</p>
+    <p>挡住油、水、皂垢钻进缝里；表面能擦；比水泥缝耐霉。</p>
+    <p class="k why">我们的标准</p>
+    <p>德高 / 卓高环氧彩砂。厨卫墙地都用。浅色砖选米灰/砖色，不要纯白缝（更显脏、更显黄）。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>环氧彩砂是树脂+砂，固化后硬、不吸水。白水泥是会吸水的「粉笔缝」。普通环氧（没砂的亮面胶）便宜，但厨卫油污一沾发花，阳光区还爱黄。聚脲更抗黄、更好擦，但贵、干得快、要熟练工；12 万硬装默认彩砂性价比更高。</p>
+    <p class="k say">别人可能说</p>
+    <p>①「填缝剂免费送，不用买美缝。」②「白水泥勾缝二十年都这样。」③「普通环氧就行，亮晶晶好看。」④「厨卫必须上聚脲，不上就是偷工。」⑤「真瓷胶/美缝剂一支打全屋。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>①② 白水泥、填缝剂：三个月发黑、长霉、一抠掉渣，厨卫最明显。<br>③ 普通环氧：亮面刮花、油膜洗不掉、窗边发黄。<br>④ 聚脲本身没错，错在「不买就是错」——预算会被美缝吃掉，隐蔽工程反而被挤。施工差的聚脲会拉丝、起皮。<br>⑤ 一支胶打砖缝又打伸缩缝：硬胶填死墙根，砖拱裂。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免厨卫缝变成「黑色污垢槽」；避免用错胶把伸缩缝填死。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>环氧彩砂在南向窗、浅色缝，3–5 年可能轻微发黄；颗粒面比聚脲略藏污。<br>兜底：厨卫选中深缝色；若客厅大窗+浅色砖，窗边那一间可加钱改聚脲，其余仍彩砂。不要全屋无脑上最贵。</p>
+  </div>
+
+  <div class="step alt">
+    <div class="step-h"><span class="n">5</span>客卧客厅过道：默认也用环氧彩砂</div>
+    <p class="k do">干什么</p>
+    <p>干燥区砖缝同样打环氧彩砂，和厨卫同一体系，方便维修补色。</p>
+    <p class="k do">作用</p>
+    <p>地暖房间拖地、脚印、沙土都在缝里。彩砂比水泥耐脏；全屋一种材料，以后补缝好配色。</p>
+    <p class="k why">我们的标准</p>
+    <p>默认环氧彩砂。只有「浅色砖 + 长期晒太阳的窗边」才局部升级聚脲。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>网上常说「客卧彩砂、厨卫聚脲」。分区是对的，但你家客卧也有地暖、也要拖地，水泥填缝一样脏。全屋彩砂工艺统一、价可控。聚脲留给真正会黄的地方。</p>
+    <p class="k say">别人可能说</p>
+    <p>「客厅必须聚脲才高档。」「客卧用水泥就行，又不见水。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>全屋聚脲：多花一两千，施工窗口短，工人一赶就做丑。<br>客卧水泥：过道先发黑，和厨卫交界两条颜色，像没装修完。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免两套材料乱搭、避免干燥区偷用水泥。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>窗边仍可能黄。兜底：看样时若选很浅的缝，南向客厅单独报价聚脲。</p>
+  </div>
+
+  <div class="step warn">
+    <div class="step-h"><span class="n">6</span>地暖靠墙那一圈：弹性硅酮，禁止美缝填死</div>
+    <p class="k do">干什么</p>
+    <p>贴砖时墙根留出边界保温条的位置（约 8–10mm）。美缝工打砖缝时，这一圈改打中性弹性硅酮，或先空着再打硅酮。</p>
+    <p class="k do">作用</p>
+    <p>地面热胀时往墙根「挤余量」。这一圈是地暖的呼吸缝，不是装饰缝。</p>
+    <p class="k why">我们的标准</p>
+    <p>材料：陶熙 / 瓦克 / 雨虹中性硅酮。颜色可近踢脚或近砖。踢脚线压在这圈胶上，不要把胶铲掉再塞实木踢脚。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>环氧彩砂、聚脲固化后是刚性的。填进伸缩缝 = 把让路堵死。硅酮能随温度拉长缩短。</p>
+    <p class="k say">别人可能说</p>
+    <p>「墙根也打满美缝才好看，一条缝走到底。」「有踢脚线挡着，填死看不见。」「保温条割掉，砖铺到墙皮。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>供暖后墙根砖拱起、空鼓、踢脚崩开。修要揭一圈砖，地暖边缘最容易伤管。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免地暖热胀无处可去。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>墙根有一条稍宽的胶缝，不如「铺到墙皮」好看。兜底：踢脚线盖住大部分；选铝合金踢脚，本身不怕地暖潮热。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">7</span>打胶、压缝、铲胶</div>
+    <p class="k do">干什么</p>
+    <p>缝两侧贴美纹纸（可选）→ 把胶打进缝底 → 用压缝球压实刮平 → 余胶在未干透前铲净 → 揭纸。</p>
+    <p class="k do">作用</p>
+    <p>胶要进缝底不能只挂表面；砖面上不能留一层「膜」，否则永远黏灰。</p>
+    <p class="k why">我们的标准</p>
+    <p>胶面略低于砖面 0.5mm 左右（凹缝），不要鼓成一条圆棱（凸缝容易被拖布刮掉，老人也硌脚）。室内 10℃ 以上施工。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>太原冬天若房间没采暖，胶固化不良会发黏、开裂。凹缝耐刮、适老。</p>
+    <p class="k say">别人可能说</p>
+    <p>「凸缝才显得饱满高级。」「天冷也能打，加固化剂。」「余胶干了再铲。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>凸缝被拖布拉掉皮；低温固化不全，缝发黏粘灰；干透再铲会伤釉面。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免好看一天、掉皮一年。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>凹缝远看不如凸缝「满」。兜底：颜色配好后几乎看不出；适老优先。</p>
+  </div>
+
+  <div class="step">
+    <div class="step-h"><span class="n">8</span>养护：能走、能拖、地暖何时开</div>
+    <p class="k do">干什么</p>
+    <p>打完按产品说明养护。一般 24 小时少踩，72 小时后再认真拖地。地暖仍要等贴砖后约 21 天再首次缓慢升温。</p>
+    <p class="k do">作用</p>
+    <p>胶的强度是慢慢起来的。地暖加热是另一套时间表，和美缝不是同一天。</p>
+    <p class="k why">我们的标准</p>
+    <p>美缝养护看说明书（常 24–72h）。地暖首次升温：贴砖后再约 21 天，每天只加一点，禁止一上来开最高。</p>
+    <p class="k why">为什么是这个标准</p>
+    <p>回填层、瓷砖胶、美缝都要适应热胀。一起猛热，缝会拉裂。</p>
+    <p class="k say">别人可能说</p>
+    <p>「打完就能拖。」「地暖开着美缝干得快。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>胶面被拖花；地暖一开缝开裂，全屋返工。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免第一年供暖把缝拉坏。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>入住前要空房间等。兜底：你们本就在外租房，把 21 天写进计划，不要为提前搬而开地暖烘房。</p>
+  </div>
+</section>
+
+<section class="sec" id="window">
+  <h2><span class="num">15</span>窗户堵风与收口</h2>
+  <p class="intro">拆旧后就可以先打一发发泡胶挡施工期灌风；竣工前再换密封条、切平收口。本期不换窗。</p>
+
+  <div class="step">
+    <div class="step-h"><span class="n">1</span>发泡胶填框缝 + EPDM 密封条</div>
+    <p class="k do">干什么</p>
+    <p>框与墙的缝打满聚氨酯发泡胶，膨胀后再切平。窗扇胶条换成三元乙丙。窗台向外坡。</p>
+    <p class="k do">作用</p>
+    <p>老窗先把灌风和进水堵住。换窗以后单独做，水电不用动。</p>
+    <p class="k why">为什么不换窗</p>
+    <p>12 万要保隐蔽工程。换窗贵，且老小区外立面、物业不一定让改。先堵风，性价比最高。</p>
+    <p class="k say">别人可能说</p>
+    <p>「不换断桥铝等于白装。」「发泡胶有毒。」「窗台向内好看。」</p>
+    <p class="k bad">他们以后会出什么问题</p>
+    <p>把钱花在窗上，电线水管用杂牌。窗台向内：雨水进墙、进地暖边缘。</p>
+    <p class="k do">我们避免了什么</p>
+    <p>避免预算被窗户吃掉、避免雨水往屋里流。</p>
+    <p class="k new">我们可能带来的新问题</p>
+    <p>保温仍不如新窗。兜底：厚窗帘 + 可选冬季保温膜；以后单独换窗。</p>
+  </div>
+</section>
+
+<div class="verdict-box">
+  <div class="lbl">工地上怎么用</div>
+  <div class="main">按今天进行到第几步，翻到那一章。师傅改标准时，问他：漏了怎么修、谁出钱。</div>
+  <p>品牌规格仍以《太原旧房硬装统一方案》第 9 节为准。这份只解决「这一步为什么必须这样做」。</p>
+</div>
+
+</div>
+</body>
+</html>

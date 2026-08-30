@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>隐蔽工程验收操作图解 — 电路·网络·施工规范全图解</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: #f5f5f5; color: #333; line-height: 1.7; padding: 20px;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 { font-size: 26px; text-align: center; margin: 20px 0 10px; color: #1a1a1a; }
+  .subtitle { text-align: center; color: #666; font-size: 14px; margin-bottom: 30px; }
+  h2 {
+    font-size: 20px; color: #fff; background: #2563eb;
+    padding: 12px 20px; border-radius: 8px; margin: 35px 0 20px;
+  }
+  h3 { font-size: 17px; color: #1e40af; margin: 20px 0 12px; border-left: 4px solid #2563eb; padding-left: 12px; }
+  h4 { font-size: 15px; color: #333; margin: 16px 0 8px; }
+  p { margin: 8px 0; font-size: 15px; }
+  .card {
+    background: #fff; border-radius: 12px; padding: 24px; margin: 16px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .tool-box {
+    background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px;
+    padding: 16px; margin: 12px 0;
+  }
+  .tool-box h4 { color: #1e40af; }
+  .step {
+    display: flex; gap: 16px; margin: 12px 0; align-items: flex-start;
+  }
+  .step-num {
+    flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+    background: #2563eb; color: #fff; font-size: 15px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-content { flex: 1; }
+  .step-content p { margin: 2px 0; }
+  .warn {
+    background: #fef3c7; border: 1px solid #fcd34d; border-radius: 8px;
+    padding: 12px 16px; margin: 12px 0; font-size: 14px;
+  }
+  .warn-title { font-weight: bold; color: #92400e; }
+  .ok {
+    background: #d1fae5; border: 1px solid #6ee7b7; border-radius: 8px;
+    padding: 12px 16px; margin: 12px 0; font-size: 14px;
+  }
+  .ok-title { font-weight: bold; color: #065f46; }
+  .standard-table {
+    width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px;
+  }
+  .standard-table th {
+    background: #2563eb; color: #fff; padding: 10px; text-align: left;
+  }
+  .standard-table td {
+    border: 1px solid #ddd; padding: 8px 10px;
+  }
+  .standard-table tr:nth-child(even) { background: #f8fafc; }
+  .svg-box {
+    text-align: center; margin: 16px 0; background: #fafafa;
+    border-radius: 8px; padding: 16px;
+  }
+  .svg-caption { font-size: 13px; color: #666; margin-top: 8px; }
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 12px;
+    font-size: 12px; font-weight: bold; margin: 2px 4px 2px 0;
+  }
+  .tag-buy { background: #dbeafe; color: #1e40af; }
+  .tag-tool { background: #d1fae5; color: #065f46; }
+  .tag-free { background: #fef3c7; color: #92400e; }
+  .toc {
+    background: #fff; border-radius: 12px; padding: 20px; margin: 20px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .toc h3 { margin-top: 0; }
+  .toc ul { list-style: none; padding-left: 12px; }
+  .toc li { padding: 4px 0; }
+  .toc a { color: #2563eb; text-decoration: none; }
+  .toc a:hover { text-decoration: underline; }
+  .summary-box {
+    background: #1e293b; color: #e2e8f0; border-radius: 12px;
+    padding: 20px; margin: 24px 0;
+  }
+  .summary-box h3 { color: #fbbf24; border: none; padding: 0; }
+  .summary-box ul { padding-left: 20px; }
+  .summary-box li { margin: 6px 0; font-size: 14px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>隐蔽工程验收操作图解</h1>
+<p class="subtitle">不懂工程也能照着做 — 工具操作 + 电路网络施工规范，一看就懂</p>
+
+<div class="toc">
+  <h3>目录</h3>
+  <ul>
+    <li><a href="#tools">你需要准备的工具清单（花不到 100 块）</a></li>
+    <li><a href="#kaochi">一、2 米靠尺 + 楔形塞尺 — 测地面/墙面平整度</a></li>
+    <li><a href="#daya">二、打压测试 — 测地暖盘管/水管是否漏水</a></li>
+    <li><a href="#bishui">三、闭水试验 — 测防水是否渗漏</a></li>
+    <li><a href="#shoudian">四、手电筒侧光检测 — 测墙面平整度</a></li>
+    <li><a href="#qita">五、其他零成本验收方法</a></li>
+    <li><a href="#dianlu">六、电路隐蔽工程 — 开槽、穿管、回路、强弱电分离</a></li>
+    <li><a href="#wangluo">七、网络布线 — 网线、光纤、弱电箱、各房间点位</a></li>
+    <li><a href="#summary">总结：各阶段你要到场的节点</a></li>
+  </ul>
+</div>
+
+<!-- ========== 工具清单 ========== -->
+<h2 id="tools">你需要准备的工具清单</h2>
+<div class="card">
+<p>别被专业名词吓住，你要用的工具分三类：</p>
+<table class="standard-table">
+  <tr><th>工具</th><th>用途</th><th>分类</th><th>价格</th></tr>
+  <tr><td>2 米靠尺（铝合金折叠式）</td><td>测地面/墙面平整度</td><td><span class="tag tag-buy">建议自购</span></td><td>30-60 元</td></tr>
+  <tr><td>楔形塞尺</td><td>配合靠尺测缝隙大小</td><td><span class="tag tag-buy">建议自购</span></td><td>5-15 元</td></tr>
+  <tr><td>手动试压泵 + 压力表</td><td>打压测试</td><td><span class="tag tag-tool">施工方带</span></td><td>—</td></tr>
+  <tr><td>卷尺（5 米）</td><td>量管间距、各种尺寸</td><td><span class="tag tag-buy">建议自购</span></td><td>10-20 元</td></tr>
+  <tr><td>网络测试仪</td><td>测网线 8 芯通路</td><td><span class="tag tag-tool">施工方带</span></td><td>—</td></tr>
+  <tr><td>强光手电筒</td><td>墙面侧光检测</td><td><span class="tag tag-tool">手机代替</span></td><td>0 元</td></tr>
+  <tr><td>透明胶带</td><td>反射膜铝层测试</td><td><span class="tag tag-free">家里有</span></td><td>0 元</td></tr>
+  <tr><td>硬币 / 小木槌</td><td>敲瓷砖测空鼓</td><td><span class="tag tag-free">家里有</span></td><td>0 元</td></tr>
+  <tr><td>手机（拍照录像）</td><td>全程拍照留证</td><td><span class="tag tag-free">家里有</span></td><td>0 元</td></tr>
+</table>
+<p style="margin-top:12px;"><strong>总花费不到 100 块</strong>，但能帮你盯住几万块的隐蔽工程。靠尺和塞尺网上搜"2米靠尺 楔形塞尺"套装就有，买铝合金的别买塑料的。</p>
+</div>
+
+<!-- ========== 2米靠尺 ========== -->
+<h2 id="kaochi">一、2 米靠尺 + 楔形塞尺 — 测地面/墙面平整度</h2>
+
+<div class="card">
+<h3>这个工具长什么样？</h3>
+<p>靠尺就是一根 2 米长的铝合金直尺，可以折叠成 1 米方便携带。它不是什么高科技，就是一根"特别直的尺子"。楔形塞尺是一小片一头薄一头厚的金属片，上面有刻度，专门用来量缝隙有多宽。</p>
+
+<div class="svg-box">
+<svg width="700" height="200" viewBox="0 0 700 200">
+  <!-- 靠尺展开状态 -->
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">2 米靠尺（展开状态）</text>
+  <!-- 尺身 -->
+  <rect x="50" y="45" width="600" height="25" rx="4" fill="#c0c0c0" stroke="#888" stroke-width="1.5"/>
+  <rect x="50" y="45" width="298" height="25" rx="4" fill="#d0d0d0" stroke="#888" stroke-width="1.5"/>
+  <rect x="350" y="45" width="300" height="25" rx="4" fill="#d0d0d0" stroke="#888" stroke-width="1.5"/>
+  <!-- 折叠处 -->
+  <line x1="350" y1="42" x2="350" y2="73" stroke="#666" stroke-width="2" stroke-dasharray="4,2"/>
+  <circle cx="350" cy="57" r="4" fill="#888"/>
+  <!-- 刻度 -->
+  <text x="100" y="88" font-size="10" fill="#666">0</text>
+  <text x="200" y="88" font-size="10" fill="#666">50cm</text>
+  <text x="350" y="88" font-size="10" fill="#666">100cm（折叠处）</text>
+  <text x="500" y="88" font-size="10" fill="#666">150cm</text>
+  <text x="640" y="88" font-size="10" fill="#666">200cm</text>
+  <!-- 水平气泡 -->
+  <rect x="320" y="38" width="60" height="8" rx="4" fill="#a0d8ef" stroke="#666" stroke-width="1"/>
+  <circle cx="350" cy="42" r="3" fill="#fff" stroke="#666" stroke-width="0.5"/>
+  <text x="390" y="45" font-size="9" fill="#666">水平气泡</text>
+
+  <!-- 楔形塞尺 -->
+  <text x="350" y="120" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">楔形塞尺（放大示意）</text>
+  <!-- 塞尺形状：一头薄一头厚 -->
+  <polygon points="280,150 420,150 420,175 280,165" fill="#fbbf24" stroke="#92400e" stroke-width="1.5"/>
+  <!-- 刻度线 -->
+  <line x1="295" y1="150" x2="295" y2="160" stroke="#92400e" stroke-width="0.5"/>
+  <text x="293" y="170" font-size="8" fill="#92400e">1</text>
+  <line x1="320" y1="150" x2="320" y2="162" stroke="#92400e" stroke-width="0.5"/>
+  <text x="318" y="172" font-size="8" fill="#92400e">3</text>
+  <line x1="350" y1="150" x2="350" y2="165" stroke="#92400e" stroke-width="0.5"/>
+  <text x="348" y="175" font-size="8" fill="#92400e">5</text>
+  <line x1="380" y1="150" x2="380" y2="168" stroke="#92400e" stroke-width="0.5"/>
+  <text x="378" y="178" font-size="8" fill="#92400e">7</text>
+  <line x1="408" y1="150" x2="408" y2="171" stroke="#92400e" stroke-width="0.5"/>
+  <text x="404" y="181" font-size="8" fill="#92400e">10mm</text>
+  <!-- 标注 -->
+  <text x="270" y="160" text-anchor="end" font-size="10" fill="#666">薄端（刀刃状）</text>
+  <line x1="272" y1="157" x2="280" y2="155" stroke="#666" stroke-width="1"/>
+  <text x="430" y="170" font-size="10" fill="#666">厚端（8mm）</text>
+  <line x1="428" y1="167" x2="420" y2="170" stroke="#666" stroke-width="1"/>
+</svg>
+</div>
+<p class="svg-caption">左：2 米靠尺展开后就是一根铝合金直尺，中间有折叠关节，上面有水平气泡。右：楔形塞尺一头薄一头厚，塞进缝隙后读刻度就知道缝隙有多宽。</p>
+
+<h3>怎么用？（测地面平整度为例）</h3>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <p><strong>清理地面</strong>：先把要测的地面扫干净，不能有沙子碎石，否则靠尺放上去架空了，测不准。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <p><strong>展开靠尺，锁紧关节</strong>：2 米靠尺从折叠状态展开，中间有卡扣，展开后锁紧。听到"咔"一声说明锁住了。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <p><strong>把靠尺平放在地上</strong>：铝合金面朝下贴着地面放。放的时候轻放，别砸。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <p><strong>看靠尺和地面之间有没有缝隙</strong>：蹲下来，眼睛贴着地面看靠尺边缘。如果地面平，靠尺整个边缘都贴着地面；如果地面不平，会有某个地方翘起来，出现缝隙。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-content">
+    <p><strong>用塞尺量缝隙</strong>：找到缝隙最大的地方，把楔形塞尺的薄端塞进去。塞到塞不动为止，看塞尺上的刻度——刻度显示的数字就是缝隙宽度（单位 mm）。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-content">
+    <p><strong>每个房间至少测 3 处</strong>：每个位置测 3 个方向——纵向、左斜 45°、右斜 45°，取最大值作为该处平整度。门口、地漏附近要重点测。</p>
+  </div>
+</div>
+
+<div class="svg-box">
+<svg width="700" height="240" viewBox="0 0 700 240">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">靠尺测地面平整度 — 正确 vs 错误</text>
+
+  <!-- 正确：地面平 -->
+  <text x="175" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">✓ 合格：地面平整</text>
+  <!-- 地面 -->
+  <rect x="50" y="120" width="250" height="50" fill="#e5e7eb" stroke="#9ca3af"/>
+  <pattern id="floor1" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+    <rect width="20" height="20" fill="#e5e7eb"/>
+    <line x1="0" y1="0" x2="20" y2="0" stroke="#9ca3af" stroke-width="0.5"/>
+    <line x1="0" y1="0" x2="0" y2="20" stroke="#9ca3af" stroke-width="0.5"/>
+  </pattern>
+  <rect x="50" y="120" width="250" height="50" fill="url(#floor1)" stroke="#9ca3af"/>
+  <!-- 靠尺 -->
+  <rect x="50" y="110" width="250" height="10" fill="#c0c0c0" stroke="#666" stroke-width="1"/>
+  <text x="175" y="106" text-anchor="middle" font-size="9" fill="#666">靠尺</text>
+  <!-- 标注：贴合 -->
+  <text x="175" y="145" text-anchor="middle" font-size="11" fill="#065f46">靠尺完全贴合地面</text>
+  <text x="175" y="160" text-anchor="middle" font-size="11" fill="#065f46">无缝隙 ✓</text>
+
+  <!-- 错误：地面不平 -->
+  <text x="525" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">✗ 不合格：地面有高低差</text>
+  <!-- 地面（一端高一段低） -->
+  <path d="M 400 130 L 480 130 L 480 140 L 520 140 L 520 130 L 650 130 L 650 170 L 400 170 Z" fill="url(#floor1)" stroke="#9ca3af"/>
+  <!-- 靠尺 -->
+  <rect x="400" y="110" width="250" height="10" fill="#c0c0c0" stroke="#666" stroke-width="1"/>
+  <text x="525" y="106" text-anchor="middle" font-size="9" fill="#666">靠尺</text>
+  <!-- 缝隙区域 -->
+  <rect x="480" y="120" width="40" height="20" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="500" y="135" text-anchor="middle" font-size="10" fill="#92400e">缝隙!</text>
+  <!-- 塞尺 -->
+  <polygon points="485,120 515,120 515,130 485,124" fill="#fbbf24" stroke="#92400e" stroke-width="1"/>
+  <text x="530" y="128" font-size="9" fill="#92400e">塞尺</text>
+  <!-- 标注 -->
+  <text x="525" y="155" text-anchor="middle" font-size="11" fill="#991b1b">靠尺与地面之间有缝隙</text>
+  <text x="525" y="170" text-anchor="middle" font-size="11" fill="#991b1b">用塞尺量 → 读数超 5mm ✗</text>
+
+  <!-- 端头提醒 -->
+  <text x="350" y="210" text-anchor="middle" font-size="12" fill="#666">⚠ 注意：靠尺两端各 10cm 内不算（制造误差），从 10cm 之后开始找最大缝隙</text>
+  <text x="350" y="228" text-anchor="middle" font-size="12" fill="#666">口诀：靠尺三面放，塞尺垂直插，端头十内不算数</text>
+</svg>
+</div>
+<p class="svg-caption">左边地面平整，靠尺贴合无缝隙；右边地面有高低差，靠尺架起来出现缝隙，用塞尺量出宽度。</p>
+
+<h3>合格标准是多少？</h3>
+<table class="standard-table">
+  <tr><th>检测对象</th><th>用 2 米靠尺测，缝隙 ≤多少算合格</th></tr>
+  <tr><td>地暖找平层（铺保温板前）</td><td><strong>≤ 5mm</strong>（这是文档里写的标准）</td></tr>
+  <tr><td>水泥砂浆整体地面</td><td>≤ 4mm</td></tr>
+  <tr><td>贴完地砖后</td><td>≤ 2mm</td></tr>
+  <tr><td>木地板面层</td><td>≤ 3mm</td></tr>
+  <tr><td>墙面普通平整度</td><td>≤ 3mm</td></tr>
+  <tr><td>墙面高级平整度（装柜子的墙）</td><td>≤ 2mm</td></tr>
+</table>
+
+<div class="warn">
+  <span class="warn-title">⚠ 常见错误：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>靠尺两端悬空放</strong>——靠尺伸出地面边缘了，读数偏大。正确做法：靠尺两端都不悬挑，距端头 10cm 内不算。</li>
+    <li><strong>塞尺斜着插</strong>——必须垂直插入缝隙，斜着插读数偏大。</li>
+    <li><strong>只测一个方向</strong>——每个位置要测 3 个方向（纵向 + 左右 45°），取最大值。</li>
+    <li><strong>漏测关键位置</strong>——门口、地漏周边、走道必须测，这些地方最容易不平。</li>
+  </ul>
+</div>
+</div>
+
+<!-- ========== 打压测试 ========== -->
+<h2 id="daya">二、打压测试 — 测地暖盘管 / 水管是否漏水</h2>
+
+<div class="card">
+<h3>这是什么？为什么要做？</h3>
+<p>打压测试就是往管道里注满水，然后用泵加压，让管内压力远高于正常工作压力，然后关掉泵，看压力表会不会往下掉。如果掉得快，说明管子某处有漏水点——可能是接头没焊好、管子有破损。<strong>这一步必须在回填/封槽之前做</strong>，因为一旦封了就再也看不见管子了。</p>
+
+<h3>工具长什么样？</h3>
+<div class="svg-box">
+<svg width="700" height="220" viewBox="0 0 700 220">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">手动试压泵 + 压力表</text>
+
+  <!-- 手动试压泵 -->
+  <text x="160" y="45" text-anchor="middle" font-size="12" fill="#666">手动试压泵</text>
+  <!-- 泵体 -->
+  <rect x="100" y="55" width="80" height="60" rx="6" fill="#3b82f6" stroke="#1e40af" stroke-width="2"/>
+  <text x="140" y="90" text-anchor="middle" font-size="11" fill="#fff" font-weight="bold">泵体</text>
+  <!-- 手柄 -->
+  <line x1="140" y1="55" x2="140" y2="30" stroke="#666" stroke-width="3"/>
+  <line x1="125" y1="30" x2="155" y2="30" stroke="#666" stroke-width="4" stroke-linecap="round"/>
+  <text x="175" y="33" font-size="9" fill="#666">← 手柄（上下压）</text>
+  <!-- 出水管 -->
+  <path d="M 180 85 L 220 85 L 220 120" stroke="#1e40af" stroke-width="3" fill="none"/>
+  <!-- 进水管 -->
+  <path d="M 100 100 L 70 100 L 70 130" stroke="#1e40af" stroke-width="3" fill="none"/>
+  <text x="55" y="125" font-size="9" fill="#666">进水</text>
+
+  <!-- 压力表 -->
+  <text x="380" y="45" text-anchor="middle" font-size="12" fill="#666">压力表（表盘放大）</text>
+  <circle cx="380" cy="100" r="45" fill="#fff" stroke="#333" stroke-width="2"/>
+  <!-- 刻度 -->
+  <text x="380" y="65" text-anchor="middle" font-size="8" fill="#666">0</text>
+  <text x="415" y="80" font-size="8" fill="#666">0.4</text>
+  <text x="425" y="105" font-size="8" fill="#666">0.8</text>
+  <text x="415" y="130" font-size="8" fill="#666">1.2</text>
+  <text x="380" y="145" text-anchor="middle" font-size="8" fill="#666">1.6</text>
+  <text x="345" y="130" font-size="8" fill="#666">MPa</text>
+  <!-- 指针指向 0.8 -->
+  <line x1="380" y1="100" x2="415" y2="100" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="380" cy="100" r="4" fill="#dc2626"/>
+  <!-- 合格区间标注 -->
+  <path d="M 395 72 A 28 28 0 0 1 417 95" stroke="#10b981" stroke-width="3" fill="none"/>
+  <text x="440" y="85" font-size="10" fill="#065f46">合格区间</text>
+  <text x="440" y="98" font-size="10" fill="#065f46">0.6~1.0</text>
+
+  <!-- 分水器连接示意 -->
+  <text x="590" y="45" text-anchor="middle" font-size="12" fill="#666">连到分水器</text>
+  <rect x="540" y="80" width="100" height="50" rx="4" fill="#fbbf24" stroke="#92400e" stroke-width="2"/>
+  <text x="590" y="110" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">分水器</text>
+  <!-- 连接管 -->
+  <path d="M 425 100 L 540 100" stroke="#1e40af" stroke-width="3" fill="none"/>
+  <text x="480" y="95" text-anchor="middle" font-size="9" fill="#666">连接管</text>
+
+  <!-- 底部说明 -->
+  <text x="350" y="175" text-anchor="middle" font-size="12" fill="#666">打压泵把水压进管子 → 压力表显示管内压力 → 看压力掉不掉</text>
+  <text x="350" y="195" text-anchor="middle" font-size="12" fill="#666">施工方会带这套工具，你只需要盯住压力表读数</text>
+  <text x="350" y="212" text-anchor="middle" font-size="12" fill="#666">压力表量程一般 0~1.6 MPa，1 MPa ≈ 10 公斤压力</text>
+</svg>
+</div>
+
+<h3>怎么操作？（你不动手，但要盯住）</h3>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <p><strong>注水排气</strong>：工人把水管/地暖管接到试压泵上，先往管里注满水，打开排气阀把管内空气排干净，直到流出水再关排气阀。<strong>管里不能有空气，有空气压力表会乱跳，测不准。</strong></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <p><strong>开始打压</strong>：工人上下压泵的手柄，压力表指针慢慢往上升。<strong>你盯住表盘</strong>——地暖管打压到 <strong>0.6~0.8 MPa</strong>（6~8 公斤），水管打压到 <strong>0.8~1.0 MPa</strong>。不能超过 1.2 MPa，否则可能压坏管子。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <p><strong>稳压观察（关键！）</strong>：打到目标压力后关掉泵，<strong>稳压 30 分钟到 1 小时</strong>。你盯着压力表看指针掉不掉——掉压 ≤0.05 MPa（半公斤）算合格。如果 10 分钟就掉了 0.1 MPa 以上，肯定有漏点，让工人查。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <p><strong>肉眼复查接头</strong>：不能只看表。拿干纸巾擦一遍所有接头、分水器阀门、堵头处，纸巾湿了就是渗水。特别盯分水器和主管道连接的铜件处，那里最容易渗。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-content">
+    <p><strong>保压 24 小时（地暖）</strong>：短暂测试通过后，把压力降到 0.6 MPa 左右，<strong>保持 24 小时不撤</strong>。第二天再看表，压降不超过 0.1 MPa 且接头干燥 = 合格。<strong>拍照留证！</strong></p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-content">
+    <p><strong>回填时全程保压（地暖专属）</strong>：回填豆石混凝土时压力表不能撤，保持 0.4 MPa 以上。万一回填时工人铲子碰到管子，压力立刻掉下来你就能发现——这就是为什么回填时必须全程保压。</p>
+  </div>
+</div>
+
+<div class="svg-box">
+<svg width="700" height="160" viewBox="0 0 700 160">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">压力表读数判断</text>
+
+  <!-- 合格 -->
+  <circle cx="120" cy="90" r="35" fill="#fff" stroke="#333" stroke-width="2"/>
+  <line x1="120" y1="90" x2="145" y2="72" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="120" cy="90" r="3" fill="#dc2626"/>
+  <text x="120" y="140" text-anchor="middle" font-size="11" fill="#065f46" font-weight="bold">✓ 合格</text>
+  <text x="120" y="155" text-anchor="middle" font-size="10" fill="#065f46">指针稳定不掉</text>
+
+  <!-- 微降 -->
+  <circle cx="280" cy="90" r="35" fill="#fff" stroke="#333" stroke-width="2"/>
+  <line x1="280" y1="90" x2="142" y2="72" stroke="#f59e0b" stroke-width="2" transform="rotate(12 280 90)"/>
+  <circle cx="280" cy="90" r="3" fill="#f59e0b"/>
+  <text x="280" y="140" text-anchor="middle" font-size="11" fill="#92400e" font-weight="bold">⚠ 边界</text>
+  <text x="280" y="155" text-anchor="middle" font-size="10" fill="#92400e">24h掉≤0.1MPa 可接受</text>
+
+  <!-- 明显掉压 -->
+  <circle cx="440" cy="90" r="35" fill="#fff" stroke="#333" stroke-width="2"/>
+  <line x1="440" y1="90" x2="460" y2="115" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="440" cy="90" r="3" fill="#dc2626"/>
+  <text x="440" y="140" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">✗ 不合格</text>
+  <text x="440" y="155" text-anchor="middle" font-size="10" fill="#991b1b">压力快速下降</text>
+
+  <!-- 归零 -->
+  <circle cx="600" cy="90" r="35" fill="#fff" stroke="#333" stroke-width="2"/>
+  <line x1="600" y1="90" x2="600" y2="65" stroke="#dc2626" stroke-width="2"/>
+  <circle cx="600" cy="90" r="3" fill="#dc2626"/>
+  <text x="600" y="140" text-anchor="middle" font-size="11" fill="#991b1b" font-weight="bold">✗ 严重泄漏</text>
+  <text x="600" y="155" text-anchor="middle" font-size="10" fill="#991b1b">指针归零 管子有破</text>
+</svg>
+</div>
+
+<div class="warn">
+  <span class="warn-title">⚠ 打压测试常见坑：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>用气压代替水压</strong>——严禁！气压不稳定，漏了也听不见。必须用水压。</li>
+    <li><strong>只打 5 分钟就说好了</strong>——不行，地暖管至少稳压 30 分钟，再保压 24 小时。</li>
+    <li><strong>管里有空气没排干净</strong>——压力表会一直跳，测不准。必须先排气到出清水。</li>
+    <li><strong>回填时把压力放了</strong>——回填全程必须保压，这是发现回填损伤的唯一手段。</li>
+    <li><strong>冬天测完不放水</strong>——气温低于 0°C，测完必须把管里的水吹干，否则冻裂。</li>
+  </ul>
+</div>
+
+<div class="ok">
+  <span class="ok-title">✓ 你只需要记住这几个数字：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li>地暖管：打到 <strong>0.6~0.8 MPa</strong>，稳压 1 小时掉压 ≤0.05 MPa，再保压 24 小时</li>
+    <li>水管（PPR）：打到 <strong>0.8~1.0 MPa</strong>，保压 30~60 分钟不掉压</li>
+    <li>回填时：管内保持 <strong>≥0.4 MPa</strong> 不撤</li>
+    <li>全程<strong>拍照录像</strong>，拍表盘读数 + 时间</li>
+  </ul>
+</div>
+</div>
+
+<!-- ========== 闭水试验 ========== -->
+<h2 id="bishui">三、闭水试验 — 测防水是否渗漏</h2>
+
+<div class="card">
+<h3>这是什么？</h3>
+<p>闭水试验就是在防水涂料干透之后，往卫生间/厨房地面放水，蓄水 48 小时，然后去楼下邻居家看天花板有没有渗水。这是检验防水做没做好的唯一可靠方法——<strong>贴砖之前必须做，没做不能贴。</strong></p>
+
+<h3>怎么操作？</h3>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <p><strong>等防水层完全干透</strong>：刷完最后一遍防水后，等 24~48 小时让防水层完全干透。没干透做闭水试验，防水层会被泡坏。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <p><strong>封堵所有下水口</strong>：地漏、马桶下水管、洗手盆下水管——全部用塑料袋装沙子堵严实。这是最关键的一步，堵不严水从管道跑了，测出来"合格"是假象。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <p><strong>门口砌挡水坎</strong>：在卫生间门口用水泥砂浆或沙袋砌一道 10~20cm 高的挡水坎，形成一个"水池"，防止水从门口流出去。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <p><strong>放水</strong>：往地面放水，水深 <strong>2~5cm</strong>（最浅处不少于 2cm）。放完水后用笔在墙面画一条水位线，方便后面观察水位有没有下降。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-content">
+    <p><strong>等待 48 小时</strong>：期间不能进人踩踏，不能施工。第一天（24 小时）先去看一次，第二天（48 小时）最终检查。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">6</div>
+  <div class="step-content">
+    <p><strong>去楼下邻居家看天花板</strong>：这是最关键的一步！到楼下对应位置的卫生间天花板，看有没有水渍、阴潮、滴水、起皮发霉。<strong>没有渗水痕迹 = 合格。</strong>有问题立即放水修补，修补干透后重做闭水。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">7</div>
+  <div class="step-content">
+    <p><strong>拍照留证</strong>：拍水位线照片 + 楼下天花板无渗水照片 + 时间。这些是验收凭证。</p>
+  </div>
+</div>
+
+<div class="svg-box">
+<svg width="700" height="300" viewBox="0 0 700 300">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">闭水试验剖面示意图</text>
+
+  <!-- 卫生间剖面 -->
+  <!-- 墙体 -->
+  <rect x="100" y="50" width="20" height="180" fill="#9ca3af" stroke="#6b7280"/>
+  <rect x="580" y="50" width="20" height="180" fill="#9ca3af" stroke="#6b7280"/>
+  <!-- 楼板 -->
+  <rect x="100" y="200" width="500" height="30" fill="#d1d5db" stroke="#9ca3af"/>
+  <text x="350" y="220" text-anchor="middle" font-size="10" fill="#666">楼板</text>
+  <!-- 防水层（绿色） -->
+  <rect x="120" y="195" width="460" height="5" fill="#10b981" stroke="#065f46" stroke-width="0.5"/>
+  <rect x="120" y="50" width="5" height="145" fill="#10b981" stroke="#065f46" stroke-width="0.5"/>
+  <rect x="575" y="50" width="5" height="145" fill="#10b981" stroke="#065f46" stroke-width="0.5"/>
+  <text x="180" y="65" font-size="10" fill="#065f46">防水层（绿色）</text>
+  <line x1="195" y1="62" x2="125" y2="58" stroke="#065f46" stroke-width="0.5"/>
+
+  <!-- 水 -->
+  <rect x="125" y="170" width="455" height="25" fill="#60a5fa" opacity="0.6"/>
+  <text x="350" y="186" text-anchor="middle" font-size="12" fill="#1e40af" font-weight="bold">蓄水 2~5cm</text>
+
+  <!-- 水位线 -->
+  <line x1="125" y1="170" x2="580" y2="170" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="600" y="173" font-size="9" fill="#dc2626">水位线</text>
+
+  <!-- 挡水坎 -->
+  <rect x="580" y="190" width="15" height="10" fill="#fbbf24" stroke="#92400e"/>
+  <text x="610" y="198" font-size="9" fill="#92400e">挡水坎</text>
+
+  <!-- 下水口封堵 -->
+  <circle cx="300" cy="195" r="10" fill="#92400e" stroke="#451a03"/>
+  <text x="300" y="199" text-anchor="middle" font-size="8" fill="#fff">沙袋</text>
+  <text x="280" y="215" font-size="9" fill="#92400e">地漏封堵</text>
+
+  <!-- 楼下 -->
+  <text x="350" y="255" text-anchor="middle" font-size="13" fill="#666">↓↓↓ 48 小时后去楼下看 ↓↓↓</text>
+  <rect x="100" y="265" width="500" height="25" fill="#f9fafb" stroke="#d1d5db"/>
+  <text x="250" y="282" text-anchor="middle" font-size="12" fill="#065f46" font-weight="bold">✓ 无水渍 = 合格</text>
+  <text x="500" y="282" text-anchor="middle" font-size="12" fill="#991b1b" font-weight="bold">✗ 有水渍 = 修补重做</text>
+</svg>
+</div>
+<p class="svg-caption">卫生间放水后，水只能靠防水层挡住。48 小时后去楼下看天花板，没有水渍说明防水层完好。</p>
+
+<div class="warn">
+  <span class="warn-title">⚠ 闭水试验常见坑：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>下水口没堵严</strong>——水从管道跑了，水位下降但楼下没渗水，你以为合格其实是假象。用沙袋堵，不是随便塞个塑料袋。</li>
+    <li><strong>只做 24 小时</strong>——慢渗 24 小时看不出来，必须 48 小时。潮湿地区建议 72 小时。</li>
+    <li><strong>没去楼下看</strong>——只在自己家看水位线不够，有些渗漏水量很小，水位看不出下降，但楼下天花板已经有阴湿了。</li>
+    <li><strong>闭水合格后贴砖时破坏了防水层</strong>——贴砖、开槽容易划伤防水层。建议贴砖后再做一次闭水（二次闭水）。</li>
+    <li><strong>门口没做防水上翻</strong>——水从卫生间门口底下渗到客厅/走廊，泡烂地板。这是最常见的漏水惨案。</li>
+  </ul>
+</div>
+</div>
+
+<!-- ========== 手电筒侧光 ========== -->
+<h2 id="shoudian">四、手电筒侧光检测 — 测墙面平整度</h2>
+
+<div class="card">
+<h3>这是什么？</h3>
+<p>墙面刮完腻子打磨后，白天看着挺白的挺平的，但一开灯就看到波浪纹。原因是人眼在正面自然光下看不出微小的凹凸。<strong>侧光检测就是用手电筒贴着墙面从侧面打光，凹凸面会在光线下形成明暗阴影，一目了然。</strong>这个方法零成本，手机手电就行。</p>
+
+<h3>怎么操作？</h3>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-content">
+    <p><strong>关灯</strong>：关掉房间所有灯，拉上窗帘，让房间尽量暗。越暗效果越明显。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-content">
+    <p><strong>手电筒贴墙</strong>：打开手机手电筒（或强光手电），贴着墙面，距离墙面 <strong>5~10cm</strong>，与墙面成 <strong>15~30 度角</strong>（几乎是贴着墙平行照）。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-content">
+    <p><strong>缓慢移动</strong>：贴着墙面缓慢移动手电筒，从上到下、从左到右扫一遍。光经过的地方，凹凸面会形成阴影。</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-content">
+    <p><strong>看阴影</strong>：墙面平整 = 光线均匀过渡，没有明显阴影。墙面不平 = 出现波浪状明暗交替的阴影，像地形图一样。有阴影的地方就是需要补的地方。</p>
+  </div>
+</div>
+
+<div class="svg-box">
+<svg width="700" height="260" viewBox="0 0 700 260">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">手电筒侧光检测 — 合格 vs 不合格</text>
+
+  <!-- 合格：墙面平整 -->
+  <text x="175" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">✓ 合格：墙面平整</text>
+  <!-- 墙面（直线） -->
+  <line x1="60" y1="120" x2="290" y2="120" stroke="#6b7280" stroke-width="3"/>
+  <!-- 手电筒光线 -->
+  <polygon points="65,120 280,118 280,125" fill="#fde68a" opacity="0.6"/>
+  <line x1="65" y1="120" x2="65" y2="100" stroke="#333" stroke-width="2"/>
+  <rect x="58" y="95" width="14" height="8" rx="2" fill="#333"/>
+  <text x="50" y="92" font-size="9" fill="#666">手电</text>
+  <!-- 光线均匀 -->
+  <text x="175" y="145" text-anchor="middle" font-size="11" fill="#065f46">光线均匀过渡，无阴影</text>
+  <text x="175" y="162" text-anchor="middle" font-size="11" fill="#065f46">墙面打磨到位 ✓</text>
+
+  <!-- 不合格：墙面波浪纹 -->
+  <text x="525" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">✗ 不合格：墙面有波浪纹</text>
+  <!-- 墙面（波浪线） -->
+  <path d="M 410 120 Q 440 110 470 120 T 530 120 T 590 120 T 650 120" stroke="#6b7280" stroke-width="3" fill="none"/>
+  <!-- 手电筒光线 -->
+  <polygon points="415,120 640,115 640,130" fill="#fde68a" opacity="0.6"/>
+  <line x1="415" y1="120" x2="415" y2="100" stroke="#333" stroke-width="2"/>
+  <rect x="408" y="95" width="14" height="8" rx="2" fill="#333"/>
+  <text x="400" y="92" font-size="9" fill="#666">手电</text>
+  <!-- 阴影标注 -->
+  <text x="470" y="140" text-anchor="middle" font-size="10" fill="#991b1b">↓凹</text>
+  <text x="530" y="140" text-anchor="middle" font-size="10" fill="#991b1b">凸↓</text>
+  <text x="590" y="140" text-anchor="middle" font-size="10" fill="#991b1b">↓凹</text>
+  <text x="525" y="162" text-anchor="middle" font-size="11" fill="#991b1b">明暗交替 = 波浪纹 ✗</text>
+  <text x="525" y="178" text-anchor="middle" font-size="11" fill="#991b1b">需要重新补腻子打磨</text>
+
+  <!-- 操作要点 -->
+  <text x="350" y="210" text-anchor="middle" font-size="13" fill="#333" font-weight="bold">操作要点</text>
+  <text x="350" y="230" text-anchor="middle" font-size="12" fill="#666">关灯 → 手电贴墙 5~10cm → 与墙面成 15~30°角 → 缓慢移动扫墙</text>
+  <text x="350" y="248" text-anchor="middle" font-size="12" fill="#666">最好在晚上做，自然光下看不出问题</text>
+</svg>
+</div>
+
+<div class="ok">
+  <span class="ok-title">✓ 什么时候做这个检测？</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>腻子打磨后、刷底漆前</strong>——这是最佳时机，发现问题还能补。</li>
+    <li>刷完漆再发现问题就晚了，要铲掉重做。</li>
+    <li>重点照：装柜子的那面墙（平整度要求最高）、灯照射的墙面、侧面看过去的墙面。</li>
+  </ul>
+</div>
+</div>
+
+<!-- ========== 其他零成本方法 ========== -->
+<h2 id="qita">五、其他零成本验收方法</h2>
+
+<div class="card">
+
+<h3>① 卷尺量管间距</h3>
+<p>地暖盘管铺好后，拿卷尺量相邻两根管子之间的距离。标准间距 150~200mm（15~20cm），误差不超过 10mm。每个房间随机量 3~5 处。太疏了地不热，太密了费管子。</p>
+
+<h3>② 硬币/木槌敲瓷砖测空鼓</h3>
+<p>贴完砖后，拿一枚硬币（或小木槌、甚至钥匙），逐块轻敲瓷砖的四角和中心。声音清脆实在 = 贴满了；声音空洞发闷 = 空鼓（里面没砂浆）。地砖不允许空鼓，墙砖单片空鼓率不超过 5%。</p>
+
+<h3>③ 透明胶带测反射膜</h3>
+<p>地暖反射膜铺好后，撕一段透明胶带粘在铝箔面上，用力按压贴紧，然后快速撕下来。看胶带上粘了多少铝——大面积银色脱落 = 劣质镀铝膜；不脱落或只有微量 = 真铝箔。这是测反射膜质量最简单有效的方法。</p>
+
+<h3>④ 指甲掐保温板</h3>
+<p>用拇指指甲掐 XPS 保温板表面——留不下明显凹痕 = 密度够（≥30kg/m³）；一掐一个坑 = 密度太低，劣质板。EPS 泡沫板一捏就碎，直接拒绝。</p>
+
+<h3>⑤ 对光看管子</h3>
+<p>拿一截 PE-RT 地暖管对着光源看——管壁透亮均匀、无杂质黑点 = 好料；管壁发黄发暗、有黑点杂质 = 回收料。管身喷码必须清晰可读，有品牌、型号（PE-RT II 型）、规格、执行标准号。</p>
+
+<h3>⑥ 手摸接头查渗水</h3>
+<p>打压测试时，不能只看压力表。用手摸（或用干纸巾擦）每一个管道接头、分水器阀门、堵头——有水渍就是渗水。特别盯分水器与主管道连接的铜件处。</p>
+
+<h3>⑦ 浇水测铲墙</h3>
+<p>铲墙皮后，往墙面上洒点水——如果水很快被吸进去、墙面冒泡、手一搓掉粉 = 老腻子不耐水，必须铲到砖墙。如果水不渗透、墙面坚硬 = 已经铲到结构层了。</p>
+
+</div>
+
+<!-- ========== 电路隐蔽工程 ========== -->
+<h2 id="dianlu">六、电路隐蔽工程 — 开槽、穿管、回路、强弱电分离</h2>
+
+<div class="card">
+
+<h3>6.1 开槽规范 — 墙上怎么开槽</h3>
+<p>电路要在墙上开槽埋 PVC 管，开槽方式直接影响结构安全和后期换线。<strong>核心原则：竖槽为主，横槽尽量短，承重墙和横梁绝对不能乱开。</strong></p>
+
+<div class="svg-box">
+<svg width="700" height="280" viewBox="0 0 700 280">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">墙面开槽规范 — 正确 vs 错误</text>
+
+  <text x="175" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">✓ 正确：竖槽为主</text>
+  <rect x="50" y="60" width="250" height="200" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.5"/>
+  <rect x="100" y="80" width="12" height="160" fill="#d1d5db" stroke="#6b7280"/>
+  <rect x="200" y="80" width="12" height="160" fill="#d1d5db" stroke="#6b7280"/>
+  <rect x="100" y="120" width="112" height="12" fill="#d1d5db" stroke="#6b7280"/>
+  <text x="120" y="75" font-size="9" fill="#065f46">竖槽</text>
+  <text x="220" y="75" font-size="9" fill="#065f46">竖槽</text>
+  <text x="156" y="116" font-size="9" fill="#065f46">短横槽≤30cm</text>
+  <rect x="92" y="240" width="28" height="20" fill="#fbbf24" stroke="#92400e"/>
+  <text x="106" y="253" text-anchor="middle" font-size="7" fill="#92400e">底盒</text>
+  <rect x="192" y="240" width="28" height="20" fill="#fbbf24" stroke="#92400e"/>
+  <text x="206" y="253" text-anchor="middle" font-size="7" fill="#92400e">底盒</text>
+
+  <text x="525" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">✗ 错误：横槽过长 + 横梁开槽</text>
+  <rect x="400" y="60" width="250" height="200" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.5"/>
+  <rect x="420" y="120" width="210" height="12" fill="#fecaca" stroke="#dc2626"/>
+  <text x="525" y="116" text-anchor="middle" font-size="9" fill="#991b1b">横槽过长！✗</text>
+  <rect x="400" y="170" width="250" height="25" fill="#9ca3af" stroke="#6b7280" stroke-width="2"/>
+  <text x="525" y="186" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">横梁/构造柱</text>
+  <rect x="470" y="172" width="100" height="21" fill="#fecaca" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="520" y="205" text-anchor="middle" font-size="9" fill="#991b1b">梁上开槽！严禁！✗</text>
+
+  <text x="350" y="270" text-anchor="middle" font-size="12" fill="#666">承重墙横槽 ≤30cm | 非承重墙横槽 ≤50cm | 横梁/构造柱绝对禁止开槽</text>
+</svg>
+</div>
+<p class="svg-caption">左边竖槽为主、横槽短，正确；右边横槽过长、在横梁上开槽，严重违规。</p>
+
+<h4>开槽尺寸（拿卷尺当场量）</h4>
+<table class="standard-table">
+  <tr><th>项目</th><th>标准</th><th>怎么量</th></tr>
+  <tr><td>槽深</td><td>≥管径 + 15mm（一般 ≥30mm）</td><td>卷尺量槽底到墙面</td></tr>
+  <tr><td>槽宽</td><td>≥管径 + 10mm（一般 ≥25mm）</td><td>卷尺量槽口宽度</td></tr>
+  <tr><td>底盒槽深</td><td>≥50mm</td><td>底盒放进去与墙面齐平</td></tr>
+  <tr><td>承重墙横槽</td><td>≤30cm</td><td>卷尺量横向长度</td></tr>
+  <tr><td>非承重墙横槽</td><td>≤50cm</td><td>卷尺量横向长度</td></tr>
+</table>
+
+<div class="warn">
+  <span class="warn-title">⚠ 开槽常见坑：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>直接拿锤子砸墙</strong>——必须先切割机切两道口再清理中间，砸的槽边缘碎裂、破坏墙体</li>
+    <li><strong>转弯处开直角槽</strong>——必须开大圆弧槽，直角槽电线过不去、后期换线拉不动</li>
+    <li><strong>横梁上开槽</strong>——绝对禁止，哪怕短槽也不行，破坏承重结构</li>
+    <li><strong>同一面墙开太多横槽</strong>——横槽削弱墙体，多道横槽等于把墙"切断"</li>
+  </ul>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>6.2 穿管规范 — 电线必须穿 PVC 管</h3>
+<p>电线绝不能直接埋在墙里或水泥里，必须穿 PVC 管。管子保护电线，也方便后期换线（"活线工艺"）。<strong>强电穿红色管，弱电穿蓝色管，分色管理。</strong></p>
+
+<div class="svg-box">
+<svg width="700" height="240" viewBox="0 0 700 240">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">穿线率 ≤40% — 合格 vs 塞太满</text>
+
+  <text x="175" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">✓ 合格：3根线，有空隙</text>
+  <circle cx="175" cy="110" r="40" fill="none" stroke="#6b7280" stroke-width="3"/>
+  <text x="175" y="115" text-anchor="middle" font-size="9" fill="#9ca3af">PVC管</text>
+  <circle cx="165" cy="100" r="8" fill="#dc2626" stroke="#991b1b"/>
+  <circle cx="185" cy="100" r="8" fill="#2563eb" stroke="#1e40af"/>
+  <circle cx="175" cy="120" r="8" fill="#fbbf24" stroke="#92400e"/>
+  <text x="175" y="170" text-anchor="middle" font-size="11" fill="#065f46">3根线 ≈ 30%，散热好</text>
+  <text x="175" y="185" text-anchor="middle" font-size="11" fill="#065f46">后期换线拉得动 ✓</text>
+
+  <text x="525" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">✗ 不合格：6根线，挤满</text>
+  <circle cx="525" cy="110" r="40" fill="none" stroke="#6b7280" stroke-width="3"/>
+  <circle cx="510" cy="95" r="8" fill="#dc2626" stroke="#991b1b"/>
+  <circle cx="525" cy="95" r="8" fill="#2563eb" stroke="#1e40af"/>
+  <circle cx="540" cy="95" r="8" fill="#fbbf24" stroke="#92400e"/>
+  <circle cx="510" cy="115" r="8" fill="#dc2626" stroke="#991b1b"/>
+  <circle cx="525" cy="115" r="8" fill="#2563eb" stroke="#1e40af"/>
+  <circle cx="540" cy="115" r="8" fill="#fbbf24" stroke="#92400e"/>
+  <text x="525" y="170" text-anchor="middle" font-size="11" fill="#991b1b">6根线 > 60%，散热差</text>
+  <text x="525" y="185" text-anchor="middle" font-size="11" fill="#991b1b">后期换线拉不动 ✗</text>
+
+  <text x="350" y="215" text-anchor="middle" font-size="12" fill="#666">弯曲半径 ≥ 6倍管径（20mm管 → 弯半径≥120mm）</text>
+  <text x="350" y="232" text-anchor="middle" font-size="12" fill="#666">管长超过15m或有两个直角弯 → 必须加接线盒</text>
+</svg>
+</div>
+<p class="svg-caption">左边管内电线之间有空隙，散热和换线都没问题；右边电线挤成一坨，散热差且后期拉不动。</p>
+
+<h4>穿管核心规则</h4>
+<table class="standard-table">
+  <tr><th>规则</th><th>标准</th><th>现场怎么看</th></tr>
+  <tr><td>必须穿管</td><td>电线不能直接埋墙/水泥</td><td>看槽里有没有 PVC 管</td></tr>
+  <tr><td>穿线率</td><td>≤40%（管截面积）</td><td>管口看电线间有没有空隙</td></tr>
+  <tr><td>管内禁止接头</td><td>接头必须在底盒/接线盒内</td><td>穿线时看有没有中间接线痕迹</td></tr>
+  <tr><td>弯曲半径</td><td>≥6倍管径</td><td>看转弯处是不是大圆弧</td></tr>
+  <tr><td>管卡固定</td><td>间距 ≤400mm</td><td>看管子有没有悬空晃动</td></tr>
+  <tr><td>强弱电分色</td><td>强电红管，弱电蓝管</td><td>看管子颜色</td></tr>
+</table>
+
+<div class="warn">
+  <span class="warn-title">⚠ 穿管最大的坑 — 管内有接头：</span>
+  <p style="margin: 8px 0 0 0;">工人图省事，线不够长就在管中间接一段，用电工胶布缠上塞进管里。这是<strong>火灾隐患</strong>——接触电阻大、发热、绝缘融化。管内绝对不允许接头，发现立刻要求返工。</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>6.3 电线选型 — 用什么线</h3>
+<table class="standard-table">
+  <tr><th>用途</th><th>型号</th><th>线径</th><th>执行标准</th></tr>
+  <tr><td>照明回路</td><td>ZC-BV（C级阻燃硬线）</td><td>1.5mm²</td><td>GB/T 5023 + CCC认证</td></tr>
+  <tr><td>普通插座</td><td>ZC-BV</td><td>2.5mm²</td><td>同上</td></tr>
+  <tr><td><strong>小厨宝（2000W）</strong></td><td>ZC-BV</td><td><strong>2.5~4mm²，单独一路</strong></td><td>同上</td></tr>
+  <tr><td>厨房总回路</td><td>ZC-BV</td><td>4mm²</td><td>同上</td></tr>
+  <tr><td>卫生间</td><td>ZC-BV</td><td>2.5mm²（带漏保）</td><td>同上</td></tr>
+  <tr><td>空调专线</td><td>ZC-BV</td><td>4mm²</td><td>同上</td></tr>
+  <tr><td>冰箱专线</td><td>ZC-BV</td><td>2.5mm²</td><td>同上</td></tr>
+  <tr><td>入户总线</td><td>ZC-BV</td><td>6~10mm²</td><td>同上</td></tr>
+</table>
+
+<div class="tool-box">
+  <h4>怎么判断电线质量</h4>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>看 CCC 标志</strong>：电线必须有 CCC 强制认证标志，没有就是三无产品</li>
+    <li><strong>看铜芯颜色</strong>：无氧铜截面亮金黄色；发黑发暗的是回收杂铜冒充的</li>
+    <li><strong>看足平方</strong>：标 2.5mm² 的线实际测量必须达标，杂牌线偷工减料不足平方（可用千分尺量线径，2.5mm² 铜线直径约 1.78mm）</li>
+    <li><strong>看绝缘层</strong>：用打火机烧一下，阻燃线离火自熄，劣质线会持续燃烧</li>
+  </ul>
+</div>
+
+<h4>电线分色（全屋必须统一）</h4>
+<table class="standard-table">
+  <tr><th>线</th><th>颜色</th><th>说明</th></tr>
+  <tr><td>火线 L</td><td><span style="color:#dc2626;font-weight:bold;">红色</span>或棕色</td><td>全屋统一，不能这个房间红、那个房间黑</td></tr>
+  <tr><td>零线 N</td><td><span style="color:#2563eb;font-weight:bold;">蓝色</span></td><td>全屋统一</td></tr>
+  <tr><td>地线 PE</td><td><span style="color:#16a34a;font-weight:bold;">黄绿双色</span></td><td>国家标准规定，不可用其他颜色代替</td></tr>
+</table>
+
+<div class="warn">
+  <span class="warn-title">⚠ 分色混用出人命：</span>
+  <p style="margin: 8px 0 0 0;">如果火线和零线颜色搞混了，后期维修时搞不清哪根是火线，触电风险极大。验收时拆开任意一个面板看里面线色是否统一。</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>6.4 回路划分 — 并联拓扑（电怎么从配电箱到各房间）</h3>
+<p>家庭电路全部是<strong>并联</strong>，没有串联。电从入户线进配电箱，从配电箱分出多条独立回路，每条走自己的线、过自己的空开（断路器），互不影响。一条跳闸不影响其他。</p>
+
+<div class="svg-box">
+<svg width="700" height="320" viewBox="0 0 700 320">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">家庭电路并联拓扑 — 从配电箱星型发散</text>
+
+  <line x1="350" y1="40" x2="350" y2="70" stroke="#333" stroke-width="3"/>
+  <text x="365" y="55" font-size="10" fill="#666">入户总线 6~10mm²</text>
+
+  <rect x="280" y="70" width="140" height="60" rx="6" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <text x="350" y="95" text-anchor="middle" font-size="13" fill="#fff" font-weight="bold">配电箱</text>
+  <text x="350" y="115" text-anchor="middle" font-size="10" fill="#94a3b8">总开 63A + 各路空开</text>
+
+  <path d="M 290 130 L 290 160 L 120 160 L 120 190" stroke="#f59e0b" stroke-width="2" fill="none"/>
+  <rect x="70" y="190" width="100" height="35" rx="4" fill="#fef3c7" stroke="#f59e0b"/>
+  <text x="120" y="207" text-anchor="middle" font-size="10" fill="#92400e" font-weight="bold">照明</text>
+  <text x="120" y="220" text-anchor="middle" font-size="9" fill="#92400e">1.5mm²</text>
+
+  <path d="M 310 130 L 310 170 L 240 170 L 240 190" stroke="#10b981" stroke-width="2" fill="none"/>
+  <rect x="190" y="190" width="100" height="35" rx="4" fill="#d1fae5" stroke="#10b981"/>
+  <text x="240" y="207" text-anchor="middle" font-size="10" fill="#065f46" font-weight="bold">普通插座</text>
+  <text x="240" y="220" text-anchor="middle" font-size="9" fill="#065f46">2.5mm²</text>
+
+  <path d="M 350 130 L 350 190" stroke="#dc2626" stroke-width="3" fill="none"/>
+  <rect x="300" y="190" width="100" height="35" rx="4" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+  <text x="350" y="207" text-anchor="middle" font-size="10" fill="#991b1b" font-weight="bold">小厨宝 ★</text>
+  <text x="350" y="220" text-anchor="middle" font-size="9" fill="#991b1b">2.5~4mm² 单独一路</text>
+
+  <path d="M 390 130 L 390 170 L 460 170 L 460 190" stroke="#3b82f6" stroke-width="2" fill="none"/>
+  <rect x="410" y="190" width="100" height="35" rx="4" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="460" y="207" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="bold">厨房插座</text>
+  <text x="460" y="220" text-anchor="middle" font-size="9" fill="#1e40af">4mm² + 漏保</text>
+
+  <path d="M 410 130 L 410 160 L 580 160 L 580 190" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+  <rect x="530" y="190" width="100" height="35" rx="4" fill="#ede9fe" stroke="#8b5cf6"/>
+  <text x="580" y="207" text-anchor="middle" font-size="10" fill="#5b21b6" font-weight="bold">卫生间</text>
+  <text x="580" y="220" text-anchor="middle" font-size="9" fill="#5b21b6">2.5mm² + 漏保</text>
+
+  <path d="M 290 130 L 290 250 L 200 250" stroke="#06b6d4" stroke-width="2" fill="none"/>
+  <rect x="100" y="240" width="100" height="30" rx="4" fill="#cffafe" stroke="#06b6d4"/>
+  <text x="150" y="258" text-anchor="middle" font-size="10" fill="#0e7490" font-weight="bold">冰箱（单独）</text>
+
+  <path d="M 410 130 L 410 250 L 500 250" stroke="#06b6d4" stroke-width="2" fill="none"/>
+  <rect x="500" y="240" width="100" height="30" rx="4" fill="#cffafe" stroke="#06b6d4"/>
+  <text x="550" y="258" text-anchor="middle" font-size="10" fill="#0e7490" font-weight="bold">空调（每台单独）</text>
+
+  <text x="350" y="300" text-anchor="middle" font-size="12" fill="#666">每条回路从配电箱独立出发 → 一条跳闸不影响其他</text>
+  <text x="350" y="315" text-anchor="middle" font-size="12" fill="#dc2626">★ 小厨宝 2000W 必须单独一路，不能和别的混用</text>
+</svg>
+</div>
+<p class="svg-caption">配电箱星型发散到各回路，每条回路独立。小厨宝必须单独一路（红色标注）。</p>
+
+<h4>同一条回路多个插座怎么接</h4>
+<p>同一条回路里多个插座，电气上仍然是<strong>并联</strong>（每个插座的火线并接在火线上、零线并接在零线上），但物理上有两种接法：</p>
+<table class="standard-table">
+  <tr><th>接法</th><th>说明</th><th>优缺点</th></tr>
+  <tr><td>放射式（推荐）</td><td>主线到分线盒，从分线盒分别引线到每个插座</td><td>互不影响，但费线</td></tr>
+  <tr><td>链式（常见）</td><td>线从上一个插座接到下一个，一个连一个</td><td>省线，但前面插座接线松了后面全断电</td></tr>
+</table>
+<p><strong>链式可以用，但有两个条件</strong>：①同一回路插座不超过 8-10 个；②接线必须在底盒内用 WAGO 端子或螺旋端子连接，不能拧一下用电工胶布缠。</p>
+
+<div class="warn">
+  <span class="warn-title">⚠ 老房子配电箱增容：</span>
+  <p style="margin: 8px 0 0 0;">你加了地暖、小厨宝、净水器、可能还有洗碗机，用电量比原来大很多。老房子配电箱很可能要<strong>增容</strong>——总开关至少 63A，卫生间和厨房回路必须装漏电保护（漏保）。如果不增容，加一堆大功率电器后跳闸不断。</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>6.5 强弱电分离 — 30cm 间距</h3>
+<p>强电（220V 电线）和弱电（网线、电话线、光纤）必须分开走管，否则强电的电磁场会干扰弱电信号，导致网速变慢、WiFi 卡顿。<strong>你儿子上网课受不受影响，就看这一条。</strong></p>
+
+<div class="svg-box">
+<svg width="700" height="240" viewBox="0 0 700 240">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">强弱电分离规范</text>
+
+  <text x="175" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">平行间距 ≥30cm</text>
+  <rect x="80" y="80" width="190" height="16" rx="3" fill="#dc2626" stroke="#991b1b"/>
+  <text x="100" y="92" font-size="10" fill="#fff" font-weight="bold">强电管（红色 PVC）</text>
+  <rect x="80" y="130" width="190" height="16" rx="3" fill="#2563eb" stroke="#1e40af"/>
+  <text x="100" y="142" font-size="10" fill="#fff" font-weight="bold">弱电管（蓝色 PVC）</text>
+  <line x1="50" y1="96" x2="50" y2="130" stroke="#333" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="45" y1="96" x2="55" y2="96" stroke="#333" stroke-width="1"/>
+  <line x1="45" y1="130" x2="55" y2="130" stroke="#333" stroke-width="1"/>
+  <text x="35" y="117" text-anchor="end" font-size="11" fill="#333" font-weight="bold">≥30cm</text>
+
+  <text x="525" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#333">交叉处 90° + 锡箔纸</text>
+  <rect x="430" y="103" width="190" height="16" rx="3" fill="#dc2626" stroke="#991b1b"/>
+  <text x="450" y="115" font-size="10" fill="#fff" font-weight="bold">强电管</text>
+  <rect x="517" y="70" width="16" height="100" rx="3" fill="#2563eb" stroke="#1e40af"/>
+  <text x="540" y="85" font-size="10" fill="#1e40af" font-weight="bold">弱电管</text>
+  <rect x="505" y="90" width="40" height="40" fill="#cbd5e1" stroke="#64748b" stroke-width="1" stroke-dasharray="2,2"/>
+  <text x="525" y="115" text-anchor="middle" font-size="8" fill="#333">锡箔纸</text>
+  <text x="525" y="185" text-anchor="middle" font-size="10" fill="#666">90°交叉干扰最小</text>
+  <text x="525" y="200" text-anchor="middle" font-size="10" fill="#666">+ 锡箔纸屏蔽弱电管</text>
+
+  <text x="350" y="225" text-anchor="middle" font-size="12" fill="#666">严禁同管同盒 | 平行≥30cm | 交叉90°+锡箔纸</text>
+</svg>
+</div>
+<p class="svg-caption">强电红管、弱电蓝管，平行间距至少 30cm；万一交叉必须 90°直角并包锡箔纸。</p>
+
+</div>
+
+<div class="card">
+
+<h3>6.6 接线方式 — 用 WAGO 不用胶布</h3>
+<p>电线接头必须在底盒/接线盒内完成，管内绝对不允许。接头方式直接决定后期会不会发热松脱。</p>
+<table class="standard-table">
+  <tr><th>方式</th><th>说明</th><th>评价</th></tr>
+  <tr><td>WAGO 连接器</td><td>把线头插进去，扳下压板就锁紧</td><td><strong>推荐 ✓</strong> 操作简单、牢固、不松动</td></tr>
+  <tr><td>螺旋端子</td><td>螺丝拧紧压线</td><td>合格，但螺丝可能松动需定期检查</td></tr>
+  <tr><td>拧线 + 电工胶布</td><td>几根线拧在一起，缠胶布</td><td><strong>不合格 ✗</strong> 易松动发热，火灾隐患</td></tr>
+</table>
+<div class="ok">
+  <span class="ok-title">✓ 怎么现场检查：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li>断电后拆开任意一个插座面板，看里面的线怎么接的</li>
+    <li>WAGO 端子或螺旋端子 = 合格</li>
+    <li>几根线拧在一起缠胶布 = 不合格，要求返工</li>
+  </ul>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>6.7 电路验收清单（封槽前必须做）</h3>
+<table class="standard-table">
+  <tr><th>#</th><th>验收项</th><th>怎么做</th><th>合格标准</th></tr>
+  <tr><td>1</td><td>拍照留档</td><td>所有管线走向拍照</td><td>每面墙都拍到，标注尺寸位置</td></tr>
+  <tr><td>2</td><td>穿线率</td><td>看管口电线之间有没有空隙</td><td>≤40%，拉得动</td></tr>
+  <tr><td>3</td><td>强弱电间距</td><td>卷尺量红蓝管外壁距离</td><td>平行≥30cm</td></tr>
+  <tr><td>4</td><td>管内无接头</td><td>穿线时看有没有中间接线</td><td>管内无任何接头</td></tr>
+  <tr><td>5</td><td>电线分色</td><td>拆面板看线色</td><td>火线红/棕、零线蓝、地线黄绿，全屋统一</td></tr>
+  <tr><td>6</td><td>接线方式</td><td>拆面板看接头</td><td>WAGO 或螺旋端子，不用胶布</td></tr>
+  <tr><td>7</td><td>回路通电测试</td><td>逐条回路送电</td><td>不跳闸、不漏电</td></tr>
+  <tr><td>8</td><td>配电箱空开数</td><td>数空开数量</td><td>≥7-8个（总开+各分路）</td></tr>
+  <tr><td>9</td><td>开槽规范</td><td>看墙面槽走向</td><td>竖槽为主，横槽不超标，梁上无槽</td></tr>
+</table>
+
+</div>
+
+
+<!-- ========== 网络布线 ========== -->
+<h2 id="wangluo">七、网络布线 — 网线、光纤、弱电箱、各房间点位</h2>
+
+<div class="card">
+
+<h3>7.1 网线选型 — 买超六类（Cat6A）</h3>
+<table class="standard-table">
+  <tr><th>类型</th><th>支持速率</th><th>家装建议</th><th>价格</th></tr>
+  <tr><td>超五类 Cat5e</td><td>千兆（百米内）</td><td>能用但建议跳过</td><td>便宜</td></tr>
+  <tr><td><strong>六类 Cat6</strong></td><td>千兆/5G</td><td>性价比首选</td><td>中等</td></tr>
+  <tr><td><strong>超六类 Cat6A</strong></td><td>万兆（37米内）</td><td><strong>你家首选</strong></td><td>稍贵</td></tr>
+  <tr><td>七类/八类</td><td>万兆+</td><td>智商税，别买</td><td>很贵</td></tr>
+</table>
+
+<div class="tool-box">
+  <h4>为什么选超六类 Cat6A？</h4>
+  <ul style="margin: 8px 0 0 20px;">
+    <li>你家面积不大（老小区），布线距离肯定在 37 米以内，超六类能稳定跑万兆</li>
+    <li>一次布线管在墙里 20 年不动，多花点钱买超六类比以后想升级拆墙强</li>
+    <li>儿子高一，网线至少用 6 年，万兆绰绰有余</li>
+  </ul>
+</div>
+
+<div class="warn">
+  <span class="warn-title">⚠ 最大的坑 — 五类头接六类线：</span>
+  <p style="margin: 8px 0 0 0;">六类线线径粗、中间有十字骨架，必须配<strong>六类专用水晶头和面板模块</strong>。很多施工队拿五类水晶头接六类线，结果网速达不到标准。<strong>自己买好水晶头和模块，或者找专业综合布线的人来端接。</strong></p>
+</div>
+
+<div class="warn">
+  <span class="warn-title">⚠ 七类/八类为什么不要：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li>价格贵 3-5 倍，配套水晶头和模块也贵</li>
+    <li>含屏蔽层需要专用弱电接地，普通住宅没有接地条件</li>
+    <li>穿管困难，线太粗太硬</li>
+    <li>想上万兆直接预埋光纤，比七类线便宜还好用</li>
+  </ul>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>7.2 走线方式 — 有地暖不能走地</h3>
+<p>你家装了地暖，地面从下到上是：楼板→找平→保温板→反射膜→地暖盘管→回填层→地砖。<strong>网线走地 = 地暖长期烘烤加速老化 + 换线要毁地暖。</strong>所以走地这条路直接堵死。</p>
+
+<div class="svg-box">
+<svg width="700" height="280" viewBox="0 0 700 280">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">三种走线方式对比</text>
+
+  <text x="120" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#991b1b">✗ 走地（绝对不行）</text>
+  <rect x="50" y="60" width="140" height="120" fill="#f3f4f6" stroke="#9ca3af"/>
+  <rect x="50" y="80" width="140" height="8" fill="#fbbf24" opacity="0.6"/>
+  <text x="120" y="76" text-anchor="middle" font-size="7" fill="#92400e">保温板</text>
+  <rect x="50" y="88" width="140" height="4" fill="#c0c0c0"/>
+  <rect x="50" y="92" width="140" height="12" fill="#dc2626" opacity="0.4"/>
+  <text x="120" y="101" text-anchor="middle" font-size="7" fill="#991b1b">地暖盘管 35-55℃</text>
+  <rect x="50" y="104" width="140" height="20" fill="#d1d5db"/>
+  <text x="120" y="116" text-anchor="middle" font-size="7" fill="#666">回填层</text>
+  <rect x="50" y="124" width="140" height="8" fill="#9ca3af"/>
+  <text x="120" y="131" text-anchor="middle" font-size="7" fill="#666">地砖</text>
+  <line x1="60" y1="114" x2="180" y2="114" stroke="#2563eb" stroke-width="3"/>
+  <text x="120" y="150" text-anchor="middle" font-size="9" fill="#991b1b">网线被地暖烘烤</text>
+  <text x="120" y="163" text-anchor="middle" font-size="9" fill="#991b1b">5-7年就老化</text>
+  <text x="120" y="176" text-anchor="middle" font-size="9" fill="#991b1b">换线=毁地暖</text>
+
+  <text x="350" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">✓ 走墙（客厅卧室）</text>
+  <rect x="280" y="60" width="140" height="120" fill="#f3f4f6" stroke="#9ca3af"/>
+  <rect x="340" y="70" width="10" height="100" fill="#d1d5db" stroke="#6b7280"/>
+  <rect x="342" y="72" width="6" height="96" fill="#2563eb" opacity="0.6"/>
+  <rect x="333" y="170" width="24" height="15" fill="#fbbf24" stroke="#92400e"/>
+  <text x="345" y="181" text-anchor="middle" font-size="6" fill="#92400e">面板</text>
+  <text x="350" y="200" text-anchor="middle" font-size="9" fill="#065f46">网线穿PVC管</text>
+  <text x="350" y="213" text-anchor="middle" font-size="9" fill="#065f46">走墙内不碰地暖</text>
+  <text x="350" y="226" text-anchor="middle" font-size="9" fill="#065f46">后期可换线</text>
+
+  <text x="580" y="50" text-anchor="middle" font-size="12" font-weight="bold" fill="#065f46">✓ 走顶（厨卫吊顶内）</text>
+  <rect x="510" y="60" width="140" height="120" fill="#f3f4f6" stroke="#9ca3af"/>
+  <rect x="510" y="70" width="140" height="8" fill="#e5e7eb" stroke="#9ca3af"/>
+  <text x="580" y="77" text-anchor="middle" font-size="7" fill="#666">铝扣板吊顶</text>
+  <rect x="520" y="80" width="120" height="6" fill="#2563eb" opacity="0.6" rx="2"/>
+  <text x="580" y="92" text-anchor="middle" font-size="7" fill="#1e40af">网线穿管在吊顶里</text>
+  <rect x="620" y="86" width="4" height="84" fill="#2563eb" opacity="0.6"/>
+  <rect x="610" y="170" width="24" height="15" fill="#fbbf24" stroke="#92400e"/>
+  <text x="622" y="181" text-anchor="middle" font-size="6" fill="#92400e">面板</text>
+  <text x="580" y="200" text-anchor="middle" font-size="9" fill="#065f46">拆几块扣板就能检修</text>
+  <text x="580" y="213" text-anchor="middle" font-size="9" fill="#065f46">不破坏瓷砖和防水</text>
+  <text x="580" y="226" text-anchor="middle" font-size="9" fill="#065f46">检修零成本</text>
+
+  <text x="350" y="260" text-anchor="middle" font-size="12" fill="#666">国标 JGJ 142 明确规定：地暖区域内不宜敷设其他管线</text>
+</svg>
+</div>
+<p class="svg-caption">走地会被地暖烘烤且换线要毁地暖；走墙穿 PVC 管不碰地面；走顶在吊顶内检修最方便。</p>
+
+<table class="standard-table">
+  <tr><th>房间</th><th>走线方式</th><th>原因</th></tr>
+  <tr><td>厨房 + 卫生间</td><td><strong>走顶</strong>（铝扣板内）</td><td>有吊顶好检修，不破坏瓷砖和防水</td></tr>
+  <tr><td>客厅 + 卧室 + 儿子房</td><td><strong>走墙</strong>（竖槽为主）</td><td>无吊顶，墙内穿管不影响地暖</td></tr>
+  <tr><td>过道 + 玄关</td><td>走墙或走顶</td><td>弱电箱起点，看结构选最短路径</td></tr>
+  <tr><td><strong>所有房间地面</strong></td><td><strong>绝对不走</strong></td><td>地暖层不能走任何管线</td></tr>
+</table>
+
+</div>
+
+<div class="card">
+
+<h3>7.3 光纤预埋 — 怎么留光纤</h3>
+<p><strong>"光纤不能断"说的是不能剪断再接，不是说不能提前穿管预埋。</strong>你预埋的是一根完整的、从头穿到尾的光纤，中间不剪、不接，就不存在"断"的问题。</p>
+
+<h4>你家涉及两根光纤</h4>
+<table class="standard-table">
+  <tr><th></th><th>运营商光纤</th><th>自预埋光纤</th></tr>
+  <tr><td>从哪到哪</td><td>楼道电信箱→弱电箱</td><td>弱电箱→客厅电视墙</td></tr>
+  <tr><td>谁负责</td><td>运营商安装维护</td><td>你自己买材料穿管</td></tr>
+  <tr><td>装修前要做什么</td><td>确认预埋管畅通</td><td>买蝶形光缆穿管</td></tr>
+  <tr><td>断了怎么办</td><td>打运营商电话</td><td>拉牵引绳换新光纤</td></tr>
+  <tr><td>花费</td><td>运营商承担</td><td>约 150 元</td></tr>
+</table>
+
+<h4>自预埋光纤怎么买</h4>
+<div class="tool-box">
+  <h4>认准两个参数</h4>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>G.657 型</strong>（抗弯光纤）——弯曲半径小，适合家装走弯角。千万别买 G.652 的，那种一弯就断</li>
+    <li><strong>非金属加强芯</strong>——必须是 FRP（玻璃纤维增强塑料）或 Kevlar（芳纶），<strong>绝对不能是钢丝</strong>。钢丝碰到电线有触电风险</li>
+    <li>买蝶形光缆，3-5 元一米，你家撑死 15-20 米，买 25 米足够</li>
+  </ul>
+</div>
+
+<div class="svg-box">
+<svg width="700" height="220" viewBox="0 0 700 220">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">光纤预埋方法 — 管内穿光纤 + 牵引绳</text>
+
+  <rect x="50" y="80" width="600" height="30" rx="4" fill="none" stroke="#6b7280" stroke-width="2"/>
+  <text x="350" y="75" text-anchor="middle" font-size="10" fill="#666">蓝色 PVC 管（≥20mm）</text>
+
+  <line x1="60" y1="90" x2="640" y2="90" stroke="#8b5cf6" stroke-width="3"/>
+  <text x="100" y="105" font-size="10" fill="#5b21b6" font-weight="bold">蝶形光缆（G.657，非金属加强芯）</text>
+
+  <line x1="60" y1="100" x2="640" y2="100" stroke="#10b981" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="500" y="115" font-size="10" fill="#065f46">尼龙牵引绳（以后换光纤用）</text>
+
+  <circle cx="50" cy="95" r="15" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="50" y="130" text-anchor="middle" font-size="9" fill="#5b21b6">盘留1-2m</text>
+  <text x="50" y="142" text-anchor="middle" font-size="9" fill="#5b21b6">弱电箱端</text>
+
+  <circle cx="650" cy="95" r="15" fill="none" stroke="#8b5cf6" stroke-width="2"/>
+  <text x="650" y="130" text-anchor="middle" font-size="9" fill="#5b21b6">盘留1-2m</text>
+  <text x="650" y="142" text-anchor="middle" font-size="9" fill="#5b21b6">电视墙端</text>
+
+  <path d="M 300 95 Q 340 60 380 95" fill="none" stroke="#8b5cf6" stroke-width="3"/>
+  <text x="340" y="50" text-anchor="middle" font-size="10" fill="#5b21b6">弯曲半径≥30mm</text>
+  <line x1="320" y1="75" x2="320" y2="55" stroke="#5b21b6" stroke-width="0.5"/>
+
+  <text x="350" y="170" text-anchor="middle" font-size="12" fill="#666">光纤穿在 PVC 管里 + 留一根牵引绳</text>
+  <text x="350" y="188" text-anchor="middle" font-size="12" fill="#065f46">光纤断了不心疼（几块钱一米）→ 拉牵引绳换新的就行</text>
+  <text x="350" y="206" text-anchor="middle" font-size="12" fill="#991b1b">真正不能坏的是管子 → 管子在墙里封死了，管子堵了才真麻烦</text>
+</svg>
+</div>
+<p class="svg-caption">预埋的不是"一根不能换的光纤"，而是"一根随时可以更换的光纤通道"——管子+牵引绳。</p>
+
+<div class="warn">
+  <span class="warn-title">⚠ 施工期间保护光纤 5 条铁律：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>弯曲半径 ≥30mm</strong>（约一元硬币直径的 2 倍）——硬折=玻璃芯断裂，外面皮没断里面芯断了你看不见</li>
+    <li><strong>不能用力拉拽</strong>——遇到阻力停下来检查，别硬拽。光纤抗拉力很弱（约 8 公斤）</li>
+    <li><strong>不能踩踏</strong>——施工期间工人在地上走来走去，走地面的光纤很容易被踩断（你家走墙走顶，这个问题不大）</li>
+    <li><strong>不能和强电同管</strong>——非金属加强芯的光纤虽不怕触电，但混走容易施工混线</li>
+    <li><strong>两端盘好的余量别剪</strong>——有些工人看余量"碍事"就给剪了</li>
+  </ul>
+</div>
+
+<div class="tool-box">
+  <h4>装修前第一件事：打运营商电话</h4>
+  <p>电信 10000 / 联通 10010 / 移动 10086，让装维师傅上门看——从楼道电信箱到你家弱电箱有没有预埋管、能不能穿线。老房子 20 年了，这段管子可能没有或堵了。如果有管子但堵了，趁装修前疏通；如果没有管子，装修时让水电工补一根 PVC 管。</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>7.4 弱电箱配置</h3>
+<table class="standard-table">
+  <tr><th>项目</th><th>要求</th><th>为什么</th></tr>
+  <tr><td>尺寸</td><td>≥330mm×480mm×135mm</td><td>太小放不下光猫+交换机+理线</td></tr>
+  <tr><td>内部电源</td><td>必须预留 220V 插座</td><td>交换机要供电，没电就是废箱子</td></tr>
+  <tr><td>位置</td><td>进门或过道（房屋中心最好）</td><td>到各房间距离短</td></tr>
+  <tr><td>散热空间</td><td>箱内别塞太满</td><td>设备发热量不小</td></tr>
+  <tr><td>底盒深度</td><td>要加深</td><td>普通底盒太浅，六类模块放不进去</td></tr>
+</table>
+
+<div class="warn">
+  <span class="warn-title">⚠ 最大的坑 — 开发商留的弱电箱太小或没电源：</span>
+  <p style="margin: 8px 0 0 0;">老房子的弱电箱多半又小又没电源。装修时必须换大箱子 + 预留电源，不然后期光猫交换机没地方放、没法供电。</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>7.5 各房间点位规划</h3>
+<p>按你家 3 代 4 口人的情况，建议全屋布约 <strong>9 条网线 + 1 条光纤</strong>。布线成本不高（超六类线约 3-5 元/米），但后期想加就得砸墙。</p>
+
+<table class="standard-table">
+  <tr><th>房间</th><th>网线数量</th><th>用途</th><th>说明</th></tr>
+  <tr><td><strong>客厅电视墙</strong></td><td>2网线 + 1光纤</td><td>IPTV + 路由器 + 光纤预留</td><td>最核心点位，别被电视柜挡住</td></tr>
+  <tr><td><strong>儿子房</strong></td><td>2网线</td><td>书桌台式机 + 备用</td><td>有线上网课比 WiFi 稳定</td></tr>
+  <tr><td>主卧</td><td>1网线</td><td>床头/书桌</td><td>位置避开衣柜</td></tr>
+  <tr><td>厨房</td><td>1网线</td><td>智能家电预留</td><td>带屏冰箱/智能厨电</td></tr>
+  <tr><td>门口/玄关</td><td>1网线</td><td>智能门锁/猫眼</td><td>门旁同时留电源</td></tr>
+  <tr><td>客餐厅天花板</td><td>1网线</td><td>吸顶AP预留</td><td>先预埋不吃亏</td></tr>
+  <tr><td>卫生间</td><td>1网线</td><td>预留</td><td>智能浴霸/紧急呼叫</td></tr>
+</table>
+
+<div class="ok">
+  <span class="ok-title">✓ 为什么儿子房要 2 条网线：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li>一条接台式机/笔记本电脑（有线上网课比 WiFi 稳定，尤其视频会议不掉线）</li>
+    <li>一条备用（NAS 存储/打印机/未来设备）</li>
+    <li>儿子高一，这网线至少用 6 年，多预留一条成本不到 50 块</li>
+  </ul>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>7.6 你的具体方案 — 配电箱在餐厅、弱电箱在电视墙</h3>
+<p>你决定：<strong>配电箱放餐厅，弱电箱放电视下面（用柜子挡住），光猫放柜子上面</strong>。两个箱子分在不同房间，干扰问题彻底解决。</p>
+
+<div class="svg-box">
+<svg width="700" height="400" viewBox="0 0 700 400">
+  <text x="350" y="20" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">你家网络拓扑 — 配电箱在餐厅、弱电箱在电视墙、光猫在柜子上</text>
+
+  <rect x="30" y="40" width="180" height="160" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="120" y="60" text-anchor="middle" font-size="12" font-weight="bold" fill="#92400e">餐厅</text>
+
+  <rect x="50" y="75" width="60" height="45" rx="4" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+  <text x="80" y="95" text-anchor="middle" font-size="9" fill="#fff" font-weight="bold">配电箱</text>
+  <text x="80" y="108" text-anchor="middle" font-size="7" fill="#94a3b8">强电 63A</text>
+
+  <rect x="130" y="75" width="60" height="45" rx="4" fill="#fbbf24" stroke="#92400e" stroke-width="2"/>
+  <text x="160" y="95" text-anchor="middle" font-size="9" fill="#92400e" font-weight="bold">分水器</text>
+  <text x="160" y="108" text-anchor="middle" font-size="7" fill="#92400e">地暖</text>
+
+  <text x="120" y="135" text-anchor="middle" font-size="9" fill="#991b1b">≥30cm间距</text>
+
+  <path d="M 80 120 L 80 280 L 350 280 L 350 250" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+  <text x="200" y="275" font-size="9" fill="#dc2626">电源线 2.5mm²（穿管走墙）→ 弱电箱内插座</text>
+
+  <path d="M 80 120 L 80 320 L 580 320" stroke="#dc2626" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+  <text x="400" y="315" font-size="9" fill="#dc2626">→ 电视墙插座（给光猫路由器供电）</text>
+
+  <rect x="280" y="40" width="390" height="160" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="475" y="60" text-anchor="middle" font-size="12" font-weight="bold" fill="#1e40af">客厅电视墙</text>
+
+  <rect x="350" y="75" width="70" height="35" rx="4" fill="#8b5cf6" stroke="#5b21b6" stroke-width="2"/>
+  <text x="385" y="90" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">光猫</text>
+  <text x="385" y="102" text-anchor="middle" font-size="7" fill="#fff">柜子上面</text>
+
+  <rect x="450" y="75" width="70" height="35" rx="4" fill="#10b981" stroke="#065f46" stroke-width="2"/>
+  <text x="485" y="90" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">路由器</text>
+  <text x="485" y="102" text-anchor="middle" font-size="7" fill="#fff">柜子上面</text>
+
+  <rect x="350" y="140" width="170" height="50" rx="4" fill="#1e40af" stroke="#1e3a8a" stroke-width="2"/>
+  <text x="435" y="158" text-anchor="middle" font-size="10" fill="#fff" font-weight="bold">弱电箱（墙内，柜子后面）</text>
+  <text x="435" y="173" text-anchor="middle" font-size="8" fill="#bfdbfe">光纤插座 + 交换机 + 各房间网线汇聚</text>
+  <text x="435" y="184" text-anchor="middle" font-size="7" fill="#bfdbfe">内有220V电源（给交换机供电）</text>
+
+  <path d="M 385 110 L 385 140" stroke="#8b5cf6" stroke-width="2" fill="none"/>
+  <text x="395" y="128" font-size="8" fill="#5b21b6">光纤跳线</text>
+
+  <path d="M 420 92 L 450 92" stroke="#2563eb" stroke-width="2" fill="none"/>
+  <text x="435" y="87" text-anchor="middle" font-size="7" fill="#1e40af">短网线</text>
+
+  <path d="M 485 110 L 485 140" stroke="#2563eb" stroke-width="2" fill="none"/>
+  <text x="495" y="128" font-size="8" fill="#1e40af">网线回传</text>
+
+  <path d="M 435 190 L 435 220 L 150 220 L 150 250" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+  <rect x="110" y="250" width="80" height="25" rx="3" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="150" y="265" text-anchor="middle" font-size="9" fill="#1e40af">儿子房×2</text>
+
+  <path d="M 435 190 L 435 230 L 300 230 L 300 250" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+  <rect x="260" y="250" width="80" height="25" rx="3" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="300" y="265" text-anchor="middle" font-size="9" fill="#1e40af">主卧×1</text>
+
+  <path d="M 435 190 L 435 230 L 500 230 L 500 250" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+  <rect x="460" y="250" width="80" height="25" rx="3" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="500" y="265" text-anchor="middle" font-size="9" fill="#1e40af">厨房×1</text>
+
+  <path d="M 435 190 L 435 230 L 620 230 L 620 250" stroke="#2563eb" stroke-width="1.5" fill="none"/>
+  <rect x="580" y="250" width="80" height="25" rx="3" fill="#dbeafe" stroke="#3b82f6"/>
+  <text x="620" y="265" text-anchor="middle" font-size="9" fill="#1e40af">其他×4</text>
+
+  <path d="M 350 165 L 280 165 L 280 380" stroke="#8b5cf6" stroke-width="2" fill="none" stroke-dasharray="4,2"/>
+  <text x="270" y="370" text-anchor="end" font-size="9" fill="#5b21b6">运营商光纤入户</text>
+
+  <path d="M 520 165 L 580 165 L 580 140" stroke="#8b5cf6" stroke-width="1.5" fill="none" stroke-dasharray="2,2"/>
+  <text x="590" y="150" font-size="8" fill="#5b21b6">预埋光纤</text>
+
+  <text x="350" y="395" text-anchor="middle" font-size="11" fill="#666">弱电箱是中转站：光纤进来转一道→光猫在柜子上→路由器→回弱电箱交换机→分到各房间</text>
+</svg>
+</div>
+<p class="svg-caption">光猫和路由器在柜子上面（散热好、好操作），弱电箱是中转站（光纤+交换机+各房间网线汇聚）。</p>
+
+<h4>这个方案的优点</h4>
+<div class="ok">
+  <span class="ok-title">✓ 光猫放柜子上面的好处：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li>散热好——不闷在柜子里，不会过热死机</li>
+    <li>好操作——重启光猫/路由器不用搬柜子</li>
+    <li>WiFi 信号好——如果用光猫自带 WiFi，天线露在外面不被遮挡</li>
+    <li>指示灯可见——出问题时看灯就知道什么故障</li>
+  </ul>
+</div>
+
+<h4>需要提前做的两件事</h4>
+<table class="standard-table">
+  <tr><th>位置</th><th>要预留什么</th><th>给谁供电</th></tr>
+  <tr><td>弱电箱内</td><td>220V 插座（从配电箱单独引一路 2.5mm²）</td><td>交换机</td></tr>
+  <tr><td>电视墙柜子上面</td><td>2 个强电插座</td><td>光猫 + 路由器</td></tr>
+  <tr><td>电视墙</td><td>2 条网线 + 1 条光纤</td><td>1条给光猫/路由器回传，1条给IPTV，光纤预留</td></tr>
+</table>
+
+</div>
+
+<div class="card">
+
+<h3>7.7 施工规范与验收</h3>
+
+<h4>弱电施工规范</h4>
+<table class="standard-table">
+  <tr><th>项目</th><th>标准</th></tr>
+  <tr><td>穿管</td><td>蓝色 PVC 管，管径 ≥20mm</td></tr>
+  <tr><td>穿线率</td><td>≤40%（和强电一样）</td></tr>
+  <tr><td>网线中间接头</td><td><strong>绝对不允许</strong>，整根从弱电箱到面板</td></tr>
+  <tr><td>标签</td><td>每根线两端贴标签，标明"客厅1""儿子房1"等</td></tr>
+  <tr><td>最大长度</td><td>≤40 米（你家老小区肯定不会超）</td></tr>
+  <tr><td>与强电管间距</td><td>平行 ≥30cm，交叉 90°+锡箔纸</td></tr>
+  <tr><td>转弯</td><td>弯曲半径 ≥6 倍管径，不能直角</td></tr>
+</table>
+
+<h4>网络验收清单（封槽前必须做）</h4>
+<table class="standard-table">
+  <tr><th>#</th><th>验收项</th><th>怎么做</th><th>合格标准</th></tr>
+  <tr><td>1</td><td>拍照留档</td><td>所有管线走向拍照</td><td>每面墙都拍到</td></tr>
+  <tr><td>2</td><td>网线测试</td><td>用网络测试仪逐条测</td><td>8 芯全通</td></tr>
+  <tr><td>3</td><td>标签核对</td><td>逐条核对两端标签</td><td>标签对应正确</td></tr>
+  <tr><td>4</td><td>网线型号</td><td>看线身喷码</td><td>Cat6A，有品牌型号</td></tr>
+  <tr><td>5</td><td>水晶头/模块</td><td>看是否六类专用</td><td>不能用五类头接六类线</td></tr>
+  <tr><td>6</td><td>强弱电间距</td><td>卷尺量</td><td>平行 ≥30cm</td></tr>
+  <tr><td>7</td><td>网线无接头</td><td>看管内有没有中间接线</td><td>整根无接头</td></tr>
+  <tr><td>8</td><td>弱电箱电源</td><td>看箱内有没有插座</td><td>有 220V 插座</td></tr>
+</table>
+
+<div class="warn">
+  <span class="warn-title">⚠ 弱电施工最大的三个坑：</span>
+  <ul style="margin: 8px 0 0 20px;">
+    <li><strong>网线中间有接头</strong>——施工时线不够长就接了一段，信号衰减网速不稳定</li>
+    <li><strong>没贴标签</strong>——9 条线分不清哪条是哪条，后期接面板全靠猜</li>
+    <li><strong>五类水晶头接六类线</strong>——网速达不到标准，测了才知道</li>
+  </ul>
+</div>
+
+</div>
+
+<!-- ========== 总结 ========== -->
+<div class="summary-box" id="summary">
+  <h3>总结：你必须到场的验收节点 + 要做的事</h3>
+  <ul>
+    <li><strong>材料进场日</strong> → 带手机拍照：合格证 + 型式检验报告 + 喷码特写，对不上不让施工</li>
+    <li><strong>水管铺设完、封槽前</strong> → 盯打压测试：0.8~1.0 MPa 保压 30 分钟不掉压</li>
+    <li><strong>电路穿线完、封槽前</strong> → 拍照留线路 + 查穿线率≤40% + 量强弱电间距≥30cm + 查接线方式(WAGO不用胶布) + 通电测试</li>
+    <li><strong>网线穿线完、封槽前</strong> → 网络测试仪逐条测8芯全通 + 核对标签 + 确认Cat6A + 检查无接头</li>
+    <li><strong>防水干透后、贴砖前</strong> → 闭水试验 48 小时，去楼下看天花板</li>
+    <li><strong>地暖盘管铺完、回填前</strong> → 盯打压测试：0.6~0.8 MPa 保压 24 小时 + 拍视频</li>
+    <li><strong>地暖回填时</strong> → 确认管内全程保压不撤 + 用木耙不用铁锹</li>
+    <li><strong>地暖回填后</strong> → 等待 7~14 天干透才能贴砖（催工期时拿出等待时间表）</li>
+    <li><strong>墙面腻子打磨后、刷漆前</strong> → 关灯用手电侧光扫墙，看有没有波浪纹</li>
+    <li><strong>贴砖后</strong> → 用硬币逐块敲，听有没有空鼓</li>
+    <li><strong>吊顶封板前</strong> → 确认排风管已固定 + 检修口位置对准分水器</li>
+  </ul>
+  <p style="margin-top: 16px; font-size: 14px; color: #fbbf24;">每一步拍照录像存档，这是日后出问题维权的第一证据。</p>
+</div>
+
+<div class="card" style="background: #fef3c7; border: 1px solid #fcd34d;">
+  <h3 style="color: #92400e; border-color: #f59e0b;">关联文档</h3>
+  <p>本图解是 <strong>《隐蔽工程完全指南.md》</strong> 的操作补充——指南里写了"验收什么、标准是什么"，本图解告诉你"具体怎么做、工具怎么用"。</p>
+  <p>两份文档配合使用：指南当标准手册，本图解当操作手册。</p>
+</div>
+
+</div>
+</body>
+</html>

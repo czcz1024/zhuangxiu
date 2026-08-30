@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>两份装修说明对比总结</title>
+<style>
+  :root {
+    --bg: #f8f7f4; --card-bg: #fff; --text: #2c2c2c; --muted: #6b6b6b;
+    --border: #e8e4dc; --accent: #2c7a4b; --accent-light: #e8f5e9;
+    --warn: #c0392b; --warn-light: #fdecea; --blue: #2471a3; --blue-light: #eaf2f8;
+    --gold: #b8860b; --gold-light: #fef9e7;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--text); line-height:1.7; padding:2rem 1rem;
+  }
+  .container { max-width:1180px; margin:0 auto; }
+
+  .header { text-align:center; padding:2rem 0 2.2rem; border-bottom:1px solid var(--border); margin-bottom:2rem; }
+  .header h1 { font-size:1.85rem; font-weight:700; }
+  .header .subtitle { color:var(--muted); font-size:0.98rem; margin-top:0.35rem; }
+  .header .meta { font-size:0.82rem; color:#999; margin-top:0.5rem; }
+
+  .nav { position:sticky; top:0; z-index:100; background:var(--card-bg); border-bottom:1px solid var(--border); padding:0.6rem 0; margin-bottom:2rem; display:flex; flex-wrap:wrap; gap:0.4rem; justify-content:center; }
+  .nav a { font-size:0.8rem; text-decoration:none; color:var(--muted); padding:4px 10px; border-radius:14px; white-space:nowrap; }
+  .nav a:hover { background:var(--accent-light); color:var(--accent); font-weight:600; }
+
+  .sec { margin-bottom:2.6rem; scroll-margin-top:56px; }
+  .sec h2 { font-size:1.22rem; font-weight:700; padding-bottom:0.4rem; border-bottom:2px solid var(--accent); margin-bottom:1rem; }
+  .sec h2 .num { display:inline-block; width:28px; height:28px; background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:28px; font-size:0.85rem; margin-right:0.5rem; }
+  .sec p { font-size:0.9rem; margin:0.45rem 0; }
+  .intro { font-size:0.9rem; color:var(--muted); margin-bottom:1rem; }
+
+  .legend { display:flex; flex-wrap:wrap; gap:0.8rem; margin:0.8rem 0 1.2rem; }
+  .legend span { font-size:0.82rem; padding:4px 10px; border-radius:8px; border:1px solid var(--border); background:#fff; }
+  .legend .ok { background:#fff; }
+  .legend .bad { background:var(--warn-light); border-color:#f5c6cb; color:var(--warn); font-weight:600; }
+  .legend .only { background:var(--gold-light); border-color:#f9e79f; color:#7d6608; }
+
+  .stat { display:grid; grid-template-columns:repeat(3,1fr); gap:0.8rem; margin:1rem 0 1.4rem; }
+  .stat-card { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); padding:1rem 1.1rem; text-align:center; }
+  .stat-card .n { font-size:1.6rem; font-weight:700; }
+  .stat-card .t { font-size:0.82rem; color:var(--muted); }
+  .n-ok { color:var(--accent); }
+  .n-bad { color:var(--warn); }
+  .n-only { color:var(--gold); }
+
+  .compare-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin:0.4rem 0 1.2rem; background:#fff; border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
+  .compare-table thead th { background:#f0ede6; padding:0.6rem 0.7rem; text-align:left; font-weight:600; border-bottom:2px solid var(--border); }
+  .compare-table tbody td { padding:0.55rem 0.7rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  .compare-table tbody tr:last-child td { border-bottom:none; }
+  .compare-table .item { font-weight:700; width:14%; white-space:nowrap; }
+  tr.diff td { background:var(--warn-light) !important; }
+  tr.only td { background:var(--gold-light); }
+  .tag { display:inline-block; font-size:0.7rem; padding:1px 7px; border-radius:8px; font-weight:600; margin-left:0.25rem; vertical-align:middle; }
+  .tag-ok { background:var(--accent-light); color:var(--accent); }
+  .tag-bad { background:#c0392b; color:#fff; }
+  .tag-only { background:#b8860b; color:#fff; }
+
+  .card { background:var(--card-bg); border-radius:10px; box-shadow:var(--shadow); margin-bottom:1rem; }
+  .card-body { padding:1.15rem 1.25rem; }
+  .card-title { font-weight:700; font-size:1rem; margin-bottom:0.5rem; padding-bottom:0.35rem; border-bottom:1px dashed var(--border); }
+
+  .warn-box { background:var(--warn-light); border:1px solid #f5c6cb; border-radius:10px; padding:0.9rem 1.2rem; margin:1rem 0; }
+  .warn-box .lbl { font-weight:700; color:var(--warn); font-size:0.95rem; }
+  .warn-box ul { margin:0.3rem 0 0 1.2rem; font-size:0.86rem; }
+  .warn-box li { padding:3px 0; }
+
+  .tip-box { background:var(--blue-light); border:1px solid #aed6f1; border-radius:10px; padding:0.9rem 1.2rem; margin:1rem 0; }
+  .tip-box .lbl { font-weight:700; color:var(--blue); font-size:0.95rem; }
+  .tip-box ul, .tip-box p { margin:0.3rem 0 0; font-size:0.86rem; }
+  .tip-box ul { margin-left:1.2rem; }
+
+  .verdict-box { background:var(--accent-light); border:1px solid var(--accent); border-radius:10px; padding:1rem 1.3rem; margin:1rem 0; }
+  .verdict-box .lbl { font-size:0.78rem; font-weight:600; color:var(--accent); letter-spacing:1px; }
+  .verdict-box .main { font-size:1.02rem; font-weight:700; color:#1a5e3a; margin-top:0.3rem; }
+  .verdict-box p { font-size:0.86rem; margin-top:0.4rem; }
+
+  .note { font-size:0.83rem; color:var(--muted); margin-top:0.5rem; }
+  .src { font-size:0.75rem; color:#999; display:block; margin-top:0.15rem; }
+
+  @media (max-width: 900px) {
+    .stat { grid-template-columns:1fr; }
+    .compare-table { font-size:0.78rem; }
+    .compare-table .item { white-space:normal; }
+  }
+  @media print {
+    .nav { position:static; }
+    tr.diff td { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>两份装修说明对比总结</h1>
+  <div class="subtitle">针对本项目（太原 5 层老楼 3 层 · 三代四口 · 地暖翻新 · 硬装约 12 万）逐项对照</div>
+  <div class="meta">A 源：csor/硬装小白实施手册.html &nbsp;|&nbsp; B 源：wb/ 专题文件夹 &nbsp;|&nbsp; 2026-08-17</div>
+</div>
+
+<nav class="nav">
+  <a href="#how">怎么读</a>
+  <a href="#core">前提与供暖</a>
+  <a href="#pipe">管材水电</a>
+  <a href="#floor">地面防水</a>
+  <a href="#kitchen">厨卫橱柜</a>
+  <a href="#finish">面层门窗</a>
+  <a href="#accept">验收工艺</a>
+  <a href="#unique">只在一方有</a>
+  <a href="#end">拍板建议</a>
+</nav>
+
+<section class="sec" id="how">
+  <h2><span class="num">0</span>先说明对照范围</h2>
+  <p class="intro">两份材料不是同一本书拆成两份，而是两个 AI 各写了一套。<strong>硬装小白实施手册</strong>是一本按施工顺序写的硬装操作书；<strong>wb 文件夹</strong>是一串专题页（选项对比、管材线材、隐蔽工程图解、橱柜、厨房门、公司对比等）。下面只对照「你家已经要做的具体项目」，不比文笔。</p>
+
+  <div class="legend">
+    <span class="ok">白底 = 两边结论一致（或可互相补充、不打架）</span>
+    <span class="bad">红底 = 有分歧，施工时必须拍板</span>
+    <span class="only">黄底 = 只有一方写到，不算打架，但漏看会漏项</span>
+  </div>
+
+  <div class="stat">
+    <div class="stat-card">
+      <div class="n n-ok">21</div>
+      <div class="t">无分歧（可直接当已定）</div>
+    </div>
+    <div class="stat-card">
+      <div class="n n-bad">13</div>
+      <div class="t">有分歧（红底，建议先拍板）</div>
+    </div>
+    <div class="stat-card">
+      <div class="n n-only">10</div>
+      <div class="t">仅一方覆盖（黄底，互补）</div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="lbl">分歧里真正会改施工做法的 5 件大事</div>
+    <ul>
+      <li><strong>热源怎么接</strong>：手册按「现在单位锅炉 + 以后预留大暖 + 必须混水」写；wb 多数按「已经接集中供热、50–60℃ 直接进地暖」写。</li>
+      <li><strong>卧室地面</strong>：手册钉死全屋柔光地砖；wb 多处仍建议卧室可用木地板。</li>
+      <li><strong>橱柜柜体</strong>：手册几乎不写橱柜；wb 早期推多层板，后期已定颗粒板——wb 自己前后也不一致。</li>
+      <li><strong>照明线径</strong>：手册 / wb 后期水电文是 1.5mm²；wb《选项指南》写成 2.5mm²。</li>
+      <li><strong>承重墙横槽</strong>：手册和 wb《管材》禁止承重墙开横槽；wb《隐蔽工程图解》写成「承重墙横槽 ≤30cm」。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ==================== 前提与供暖 ==================== -->
+<section class="sec" id="core">
+  <h2><span class="num">1</span>项目前提 · 供暖 · 地暖构造</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>硬装小白实施手册（A）</th>
+        <th>wb 系列（B）</th>
+        <th>对照结论</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">房子与预算</td>
+        <td>太原 5 层住 3 层，约 100㎡；硬装约 12 万；面层可中档，管子/电线/防水/地暖不能省。</td>
+        <td>太原老小区 5 层/3 层、三代四口、预算 12 万；不砸墙、家具家电保留。</td>
+        <td><span class="tag tag-ok">一致</span><br>面积手册写成「约 100㎡」，wb 和长期记录仍是「待实测」——数字不冲突，只是手册先估了一个数。</td>
+      </tr>
+      <tr>
+        <td class="item">不砸墙 / 沿用物品</td>
+        <td>保持原格局；窗户不换；拆旧保护窗框；马桶、吸顶灯拆下收好不要扔。</td>
+        <td>不砸墙；窗/马桶/吸顶灯/热水器沿用；法兰圈换新；马桶旁留防水插座。</td>
+        <td><span class="tag tag-ok">一致</span><br>马桶、灯、窗这三项两边都按「沿用」处理。</td>
+      </tr>
+      <tr>
+        <td class="item">适老化</td>
+        <td>客卧柔光砖、厨卫防滑、尽量无高差；厨卫不做 3–5cm 高台阶。</td>
+        <td>地面防滑 R10+、淋浴无门槛、预留扶手加固、通道考虑轮椅。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr class="diff">
+        <td class="item">供热来源</td>
+        <td><strong>现在单位锅炉暖气片，以后可能接市政大暖。</strong>立管不能割断；楼道预留供回口；房内混水中心 + 阀门 A/B 互锁，禁止两路同时开。出水 35–45℃ 再进餐厅分水器。板换现在不装，只留位置。</td>
+        <td>多数页面按「<strong>已接 / 将接集中供热</strong>」写，水温按 50–60℃，认为 PE-RT 可直接胜任。没有双热源切换、没有混水中心、没有「立管严禁切断」专章。</td>
+        <td><span class="tag tag-bad">分歧</span><br><strong>这是最大前提差。</strong>手册把你家当成「锅炉高温水 + 预留大暖」；wb 当成「普通集中供热地暖」。混水做不做、立管能不能动，完全取决于你现在到底是单位锅炉还是已经进大暖。</td>
+      </tr>
+      <tr class="diff">
+        <td class="item">厨房要不要做地暖</td>
+        <td>厨房在阴面阳台，<strong>必须做地暖</strong>（防冻），且厨房按卫生间同等防水。</td>
+        <td>全屋地暖默认包含厨卫，但没有「阴面阳台厨房不供暖会冻管」这条硬条件，也没有「厨房按卫生间级防水」的单独铁律。</td>
+        <td><span class="tag tag-bad">分歧（力度不同）</span><br>两边都倾向厨卫铺地暖，但手册把它升成防冻刚需。若厨房确实在封过的阴面阳台，应按手册做。</td>
+      </tr>
+      <tr>
+        <td class="item">分水器位置</td>
+        <td>餐厅；底部距完成地面 ≥300mm；正上方检修口 ≥30×30cm；与配电箱间距 ≥30cm。厨房吊顶不为分水器留口。</td>
+        <td>餐厅（与配电箱同在餐厅但要隔开）；厨房吊顶不留分水器检修口。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr>
+        <td class="item">地暖管</td>
+        <td>乔治费歇尔或伟星 PE-RT <strong>II 型 + EVOH</strong>，De20×2.0mm；备选日丰同规格；填充层内禁止接头。客卧间距 15–20cm，厨卫 10–15cm。</td>
+        <td>《管材》同样：乔治费歇尔首选、伟星/日丰/金牛国产线，II 型 + EVOH、De20×2.0、间距相同、禁止接头。<span class="src">《选项指南》另列了 PEX，但推荐仍是 PERT。</span></td>
+        <td><span class="tag tag-ok">一致</span><br>管材规格、间距、禁接头三条完全对得上。</td>
+      </tr>
+      <tr>
+        <td class="item">保温板 / 反射膜 / 回填</td>
+        <td>XPS <strong>3cm</strong>，密度 ≥30kg/m³，压缩 ≥250kPa；真铝箔反射膜；豆石 5–15mm 圆形；管上覆盖 ≥30mm；回填时管内保压。</td>
+        <td>指甲掐保温板、胶带撕反射膜、回填保压 24h，标准相同。《管材》卡钉也按 3cm 板写。手册把 XPS 厚度和豆石形状写得更死。</td>
+        <td><span class="tag tag-ok">一致</span><br>手册更细（3cm、≥250kPa、拒碎石片），wb 验收方法与之配套，没有唱反调。</td>
+      </tr>
+      <tr>
+        <td class="item">地暖打压</td>
+        <td>0.6–0.8MPa，稳压 1h 压降 ≤0.05MPa，再保压 24h；回填全程挂表不撤压。</td>
+        <td>0.6–0.8MPa 保压 24 小时不掉压，回填全程保压。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 管材水电 ==================== -->
+<section class="sec" id="pipe">
+  <h2><span class="num">2</span>走线原则 · 水管 · 电线 · 弱电</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>硬装小白实施手册（A）</th>
+        <th>wb 系列（B）</th>
+        <th>对照结论</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">走顶还是走地</td>
+        <td>有地暖，给水、电线一律不走地。客厅/卧室竖槽走墙；厨卫「横干走顶 + 竖分走墙」；电上水下，吊卡打进楼板不搭龙骨。</td>
+        <td>同一套口诀：有地暖不走地、电上水下、厨卫横干走顶竖分走墙、槽内先刷防水再埋管。</td>
+        <td><span class="tag tag-ok">一致</span><br>这是两边重合最多的一块，几乎逐条相同。</td>
+      </tr>
+      <tr>
+        <td class="item">PPR 水管</td>
+        <td>伟星 PP-R <strong>S2.5</strong> 全屋（冷水也用）；主管 De25×3.5、分支 De20×2.8；同品牌管件；热熔 260–280℃，加热 5–8 秒；打压 0.8–1.0MPa、30–60 分钟。</td>
+        <td>参数表与手册相同：伟星首选、日丰备选、S2.5、De25/De20、热熔温度和时间、打压值全部对得上。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr>
+        <td class="item">水管保温 / 防冻</td>
+        <td>吊顶内和靠外墙的冷热水管套 9mm 闭孔橡塑棉；水管从室内吊顶过来，<strong>不走外墙夹层</strong>。</td>
+        <td>同样建议 9mm 橡塑套；没有单独强调「阴面阳台不走外墙」四条防冻铁律。</td>
+        <td><span class="tag tag-ok">一致（手册更严）</span><br>保温规格一致；防冻路径是手册针对你家厨房加的。</td>
+      </tr>
+      <tr>
+        <td class="item">线管</td>
+        <td>联塑阻燃 PVC，壁厚 ≥1.5mm；红强电蓝弱电；穿线率 ≤40%。</td>
+        <td>联塑首选、中财/伟星备选；壁厚 ≥1.5mm（建议 ≥1.6mm 重型）；红蓝分色；穿线率 ≤40%。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr class="diff">
+        <td class="item">照明线径</td>
+        <td>照明 <strong>1.5mm²</strong>；普通插座 2.5；厨房/空调 4；小厨宝单独一路 2.5–4；冰箱单独 2.5。品牌：远东首选，熊猫/正泰/德力西备选。</td>
+        <td>《管材》《隐蔽工程图解》：照明 <strong>1.5mm²</strong>，与手册相同。<br><strong>《选项指南》写成照明 2.5mm²</strong>，卫生间还写成 4mm²（按电热水器）。</td>
+        <td><span class="tag tag-bad">分歧</span><br>手册与 wb 后期水电文一致（照明 1.5）。冲突来自 wb 早期《选项指南》。施工合同应写 1.5，避免被《选项指南》带偏。</td>
+      </tr>
+      <tr>
+        <td class="item">总开 / 漏保</td>
+        <td>老房增容考虑总开 63A；厨卫回路装漏电保护。</td>
+        <td>总开 63A；厨卫漏保；入户线可能要从 6mm² 增到 10mm²。</td>
+        <td><span class="tag tag-ok">一致</span><br>wb 多写了入户线 10mm² 这一条，手册只写「看入户线径是否要增容」。</td>
+      </tr>
+      <tr>
+        <td class="item">强弱电间距</td>
+        <td>平行 ≥30cm，交叉 90° + 弱电外包锡箔。</td>
+        <td>完全相同。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr class="diff">
+        <td class="item">承重墙横槽</td>
+        <td>承重墙只许浅竖槽；<strong>不能横槽切断钢筋、不能开很深</strong>。非承重墙横槽单面 ≤50cm。</td>
+        <td>《管材》：<strong>承重墙禁止开横槽</strong>，只许竖槽、深度 ≤ 墙厚 1/3。<br>《隐蔽工程图解》：<strong>承重墙横槽 ≤30cm</strong>，非承重 ≤50cm。</td>
+        <td><span class="tag tag-bad">分歧</span><br>手册 ≈ wb《管材》（更严：承重墙不开横槽）。wb《图解》给了 30cm 口子。老楼建议按「承重墙不准横槽」执行，不要用 30cm 当许可。</td>
+      </tr>
+      <tr class="diff">
+        <td class="item">线管固定间距</td>
+        <td>管卡 80–100cm 一个。</td>
+        <td>《管材》：线管管卡 80–100cm。<br>《隐蔽工程图解》：管卡间距 <strong>≤400mm（40cm）</strong>。</td>
+        <td><span class="tag tag-bad">分歧</span><br>手册与《管材》同为 80–100cm；《图解》严一倍。按规范「宁密勿疏」，40cm 更稳，但成本/工期更高。建议：走顶吊卡按《管材》80–100cm；墙槽内可按更密。</td>
+      </tr>
+      <tr>
+        <td class="item">接线</td>
+        <td>WAGO 221；备选合格螺旋端子；禁用拧线+电工胶布；墙内禁止接头。</td>
+        <td>同样 WAGO，禁用胶布；管内严禁接头。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr class="diff">
+        <td class="item">BV / BVR</td>
+        <td>写「BV 单芯硬线<strong>或 BVR 多股软线</strong>」都算合格方向。</td>
+        <td>《管材》：家装首选 BV 硬线，<strong>BVR 不推荐</strong>（贵、端子要求高）。</td>
+        <td><span class="tag tag-bad">分歧（小）</span><br>不影响品牌，但合同应写死用 BV 硬线，避免工人混用软线。</td>
+      </tr>
+      <tr>
+        <td class="item">网线 / 弱电箱</td>
+        <td>康普/安普 Cat6A UTP 23AWG；拒七类/八类；约 9 条网线 + 1 条光纤；弱电箱在电视墙下方，光猫放柜子上不塞箱里；配电箱在餐厅。</td>
+        <td>同一套：Cat6A、点位方案、光纤 G.657、弱电箱 ≥330×480×135、箱内留 220V、光猫在电视柜上。</td>
+        <td><span class="tag tag-ok">一致</span><br>wb《图解》把拓扑图画全了，手册是压缩版同一方案。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 地面防水 ==================== -->
+<section class="sec" id="floor">
+  <h2><span class="num">3</span>地面 · 防水 · 瓷砖</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>硬装小白实施手册（A）</th>
+        <th>wb 系列（B）</th>
+        <th>对照结论</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="diff">
+        <td class="item">全屋地面材料</td>
+        <td><strong>全屋地砖</strong>钉死：客卧过道 600×600 柔光瓷质砖；厨卫防滑 R10/R11。品牌：东鹏 / 马可波罗 / 诺贝尔中端。亮面砖、木地板不在推荐里。</td>
+        <td>《选项指南》推荐瓷砖（地暖最佳）。<br><strong>《细节大全》《避坑总览》建议卧室可用实木复合地板</strong>，客厅厨卫瓷砖。</td>
+        <td><span class="tag tag-bad">分歧</span><br>手册 = 全屋通铺瓷砖。wb 后半部分把卧室改回「可铺木地板」。有老人 + 地暖 + 无高差，手册方案更自洽；若卧室坚持木地板，要额外处理交界压条和地暖专用地板。</td>
+      </tr>
+      <tr class="diff">
+        <td class="item">砖缝宽度</td>
+        <td>砖缝 <strong>2–3mm</strong>；地暖靠墙留伸缩缝，美缝剂不要填死，用弹性硅酮。</td>
+        <td>《避坑总览》：留缝 <strong>1–2mm</strong>，「别听无缝好」。</td>
+        <td><span class="tag tag-bad">分歧</span><br>地暖房建议按手册 2–3mm，1mm 偏紧，热胀更容易挤砖。</td>
+      </tr>
+      <tr class="diff">
+        <td class="item">美缝</td>
+        <td>厨卫推荐环氧彩砂（德高/卓高）。地暖伸缩缝用弹性硅酮，不要刚性美缝填死。</td>
+        <td>《细节大全》：厨卫阳台阳光区用<strong>聚脲</strong>，客卧环氧彩砂。<br>《避坑总览》：环氧彩砂/真瓷胶即可。</td>
+        <td><span class="tag tag-bad">分歧（档次）</span><br>都反对白水泥填缝。手册偏「厨卫环氧彩砂」；wb 细节页把厨卫升到聚脲。预算紧跟手册，怕黄变跟 wb 分区做法。</td>
+      </tr>
+      <tr>
+        <td class="item">贴砖工艺</td>
+        <td>地暖上必须柔性瓷砖胶 C2TE / C2TES1，禁止普通水泥砂浆贴 ≥600 砖；大砖满浆+背涂；贴完 21 天左右才首次缓慢升温。</td>
+        <td>空鼓敲击、2 米靠尺 ≤2mm；没有把「C2TE 瓷砖胶」写成死规定。</td>
+        <td><span class="tag tag-ok">一致（手册更严）</span><br>验收标准能对上；胶型号是手册补上的硬指标，wb 没反对。</td>
+      </tr>
+      <tr>
+        <td class="item">厨卫防水</td>
+        <td>厨房按卫生间做。雨虹/德高 JS 或柔性防水；地面干膜 ≥1.5mm，墙 ≥1.2mm；淋浴墙 ≥1.8m；门槛上翻 ≥10cm；<strong>闭水 48h、下楼看天花板</strong>。槽内先刷防水再埋管。</td>
+        <td>闭水 48h、下楼看；淋浴区墙 1.8m（最好到顶），其它墙 30cm；槽内防水工艺与手册同。额外建议<strong>贴砖后再做一次二次闭水</strong>。</td>
+        <td><span class="tag tag-ok">一致</span><br>闭水时长、下楼看、槽内防水一致。手册把厨房防水级别提高；wb 多一条二次闭水（可做，手册没写不等于反对）。</td>
+      </tr>
+      <tr>
+        <td class="item">闭水水深</td>
+        <td>蓄水 ≥20mm，有条件 30mm 更好。</td>
+        <td>《图解》：水深 2–5cm（最浅处不少于 2cm）。</td>
+        <td><span class="tag tag-ok">一致</span><br>下限都是大约 2cm，wb 上限更高一点。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 厨卫橱柜 ==================== -->
+<section class="sec" id="kitchen">
+  <h2><span class="num">4</span>厨房 · 卫生间 · 橱柜</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>硬装小白实施手册（A）</th>
+        <th>wb 系列（B）</th>
+        <th>对照结论</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">厨卫吊顶</td>
+        <td>铝扣板 + 轻钢龙骨（不用木龙骨）；板厚 <strong>≥0.5mm</strong>；哑光白/浅灰；300×600；检修空间 ≥15cm。否决木龙骨、封板后再走排风管。</td>
+        <td>铝扣板首选，否决石膏板/PVC；300×600。规格细节在《细节大全》写成板厚 <strong>≥0.6mm</strong>。</td>
+        <td><span class="tag tag-ok">材质一致</span><br>都选铝扣板。厚度 0.5 vs 0.6 差 0.1mm，采购时按 <strong>≥0.6mm</strong> 买不会错。</td>
+      </tr>
+      <tr class="diff">
+        <td class="item">铝扣板厚度</td>
+        <td>≥0.5mm</td>
+        <td>《细节大全》≥0.6mm</td>
+        <td><span class="tag tag-bad">分歧（参数）</span><br>差一档规格。建议合同按 0.6mm 写，与更严的一方对齐。</td>
+      </tr>
+      <tr>
+        <td class="item">烟机排风</td>
+        <td>直排窗外；墙洞 160/180mm + 止逆阀 + 防雨帽；吊顶前先打洞。</td>
+        <td>贴砖前装止逆阀、玻璃胶密封。wb 另有「无公共烟道、风压需求低」的决策背景。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr>
+        <td class="item">厨房门轨道</td>
+        <td>铺砖时嵌入<strong>超薄地轨</strong>，凸出 ≤8mm，尽量与地砖齐平。</td>
+        <td>专题页结论相同：超薄地轨；否决吊轨和传统高地轨；铝合金实心厚壁、尼龙密封轮、5mm 钢化玻璃门。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr class="diff">
+        <td class="item">橱柜柜体</td>
+        <td>硬装手册几乎不写橱柜选型（只在铺砖时提到地轨）。不属于这本实施手册的主战场。</td>
+        <td>《选项指南》《细节大全》推荐 <strong>多层实木柜体</strong>，颗粒板当「预算紧替代」且警告水槽柜易烂。<br><strong>《橱柜方案决策》最终已定为全柜统一颗粒板</strong>（爱格/可丽芙级别 + PUR 封边 + 水槽柜铝箔包底）。</td>
+        <td><span class="tag tag-bad">分歧在 wb 内部</span><br>不是 A vs B 打架，是 B 自己早晚期打架。以《橱柜方案决策》为准：颗粒板已定。早期「多层板才是标准答案」作废。</td>
+      </tr>
+      <tr class="diff">
+        <td class="item">石英石台面厚度</td>
+        <td>未写台面厚度（手册不覆盖橱柜采购）。</td>
+        <td>《橱柜方案决策》：石英石 <strong>≥15mm</strong>、石英砂 ≥90%、压制成型。<br>《细节大全》：石英石 <strong>≥20mm</strong>。</td>
+        <td><span class="tag tag-bad">分歧在 wb 内部</span><br>15mm 与 20mm 差一档价格和刚度。嵌入式灶开大洞，20mm 更稳；若预算卡死可 15mm 但要认准压制成型品牌板。</td>
+      </tr>
+      <tr>
+        <td class="item">水槽</td>
+        <td>预留净水器进回水、小厨宝进出水（水槽柜下）。马桶能不移位就不移。</td>
+        <td>已定单槽；《细节大全》推 304 不锈钢大单槽 + 台下盆；材质（不锈钢 vs 石英石盆）仍可再选。小厨宝/净水器预留与手册相同。</td>
+        <td><span class="tag tag-ok">预留一致</span><br>槽型都是单槽方向；盆材质未在手册里拍板。</td>
+      </tr>
+      <tr class="diff">
+        <td class="item">厨房灯光</td>
+        <td>全屋现有吸顶灯沿用；手册没要求厨房加灯带（与「最简单吸顶灯」方向一致）。</td>
+        <td>《选项指南》吸顶灯沿用。<br><strong>《避坑总览》写「吊柜下方加灯带照亮切菜区」</strong>，并主张分层布光、别只装主灯。</td>
+        <td><span class="tag tag-bad">分歧</span><br>已定决策是厨房只要简单吸顶灯、不要灯带/轨道灯。《避坑总览》是通用攻略，和你家已定方案冲突。</td>
+      </tr>
+      <tr>
+        <td class="item">卫生间适老化</td>
+        <td>防滑地砖、无高差微坡排水、保留地漏。</td>
+        <td>R10+、淋浴不做门槛、墙内预埋木工板以便以后装扶手、可加折叠浴凳；马桶旁防水插座。</td>
+        <td><span class="tag tag-ok">一致</span><br>wb 多了「扶手预埋木工板」，手册没写，可并入施工。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 面层门窗 ==================== -->
+<section class="sec" id="finish">
+  <h2><span class="num">5</span>墙面 · 门窗 · 油漆</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>硬装小白实施手册（A）</th>
+        <th>wb 系列（B）</th>
+        <th>对照结论</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">墙面基层</td>
+        <td>老房必须铲到砖；浇水试；墙固；耐水腻子 N 型（美巢/莱恩斯/百得/立邦）；每遍腻子间隔 24 小时；夜间手电侧照。</td>
+        <td>铲腻子→墙固→挂网→2–3 遍腻子→底漆→两遍面漆；强调耐水腻子；浇水测铲墙。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr>
+        <td class="item">乳胶漆</td>
+        <td>底漆 + 两遍面漆，立邦/多乐士中端即可；遍遍等干。</td>
+        <td>推荐乳胶漆，立邦/多乐士；墙布、艺术漆当备选不是全屋方案。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr>
+        <td class="item">窗户不换 + 补救</td>
+        <td>发泡胶填框缝 + <strong>EPDM（三元乙丙）密封条</strong> + 厚窗帘；窗台必须外坡排水；手电照缝不透光。</td>
+        <td>换密封条、发泡胶填缝、厚窗帘；可加透明保温膜。避坑页也写三元乙丙密封条、A4 纸抽门缝。</td>
+        <td><span class="tag tag-ok">一致</span><br>wb 多一个「冬季贴保温膜」的廉价补丁，与手册不冲突。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">室内门</td>
+        <td>未作为专章（只处理厨房推拉地轨）。</td>
+        <td>推荐实木复合烤漆门（儿子房隔音）；免漆门不推荐长期自住。</td>
+        <td><span class="tag tag-only">仅 B 有</span></td>
+      </tr>
+      <tr class="only">
+        <td class="item">开关插座品牌</td>
+        <td>未指定面板品牌。</td>
+        <td>推荐公牛 G12/G28；施耐德/西门子为备选。智能开关预留：所有开关底盒拉零线。</td>
+        <td><span class="tag tag-only">仅 B 有</span></td>
+      </tr>
+      <tr class="only">
+        <td class="item">踢脚线</td>
+        <td>未写。</td>
+        <td>《细节大全》推铝合金 6cm，跟门框同色。<br>《避坑总览》又写实木复合/密度板性价比高，或跟地板同色——<strong>wb 内部也不统一</strong>。</td>
+        <td><span class="tag tag-only">仅 B 有，且 B 自己打架</span><br>全屋地砖时铝合金或瓷砖踢脚更合理；不要跟《避坑总览》的木地板逻辑混用。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 验收 ==================== -->
+<section class="sec" id="accept">
+  <h2><span class="num">6</span>验收方法 · 等待时间</h2>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>硬装小白实施手册（A）</th>
+        <th>wb 系列（B）</th>
+        <th>对照结论</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="item">必须到场节点</td>
+        <td>材料进场、封槽前打压/通电、双热源阀门、地暖打压、闭水 48h、贴砖空鼓、铲墙浇水、腻子侧光、吊顶封板前、门窗打胶。</td>
+        <td>靠尺、打压、闭水、手电侧光、胶带撕膜、指甲掐板、浇水铲墙；电路封槽前、网线测试。</td>
+        <td><span class="tag tag-ok">一致</span><br>wb 把「工具怎么用」画成图；手册把「哪一天去」排成工期表。互补，不打架。</td>
+      </tr>
+      <tr>
+        <td class="item">靠尺标准</td>
+        <td>地暖找平 2 米靠尺 ≤5mm；贴砖基层 ≤3mm；贴完地砖 ≤2mm，相邻砖高低差 ≤0.5mm。</td>
+        <td>找平铺保温板前 ≤5mm；贴完地砖 ≤2mm；墙面 ≤3mm。</td>
+        <td><span class="tag tag-ok">一致</span></td>
+      </tr>
+      <tr>
+        <td class="item">等待时间</td>
+        <td>地暖打压 24h；闭水 48h；回填养护 3–7 天再干 7–14 天才能贴砖；贴砖后约 21 天首次升温；腻子每遍 24h。</td>
+        <td>打压/闭水时长相同；对回填到贴砖、首次升温的天数写得少。</td>
+        <td><span class="tag tag-ok">一致（手册更完整）</span></td>
+      </tr>
+      <tr class="diff">
+        <td class="item">空鼓率</td>
+        <td>地砖尽量零空鼓；墙砖单片空鼓率 ≤5%，<strong>中心不许空</strong>。</td>
+        <td>《避坑总览》：空鼓率 &lt;5%，厨卫 &lt;3%。</td>
+        <td><span class="tag tag-bad">分歧（松紧）</span><br>地暖地面按手册「尽量零空鼓」更合理；厨卫 &lt;3% 可作为补充指标。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ==================== 仅一方 ==================== -->
+<section class="sec" id="unique">
+  <h2><span class="num">7</span>只在一方写到的内容（不算打架）</h2>
+  <p class="intro">这些不是对错，是两套材料的分工不同。漏看会漏项，但不必当成「两边吵起来」。</p>
+
+  <table class="compare-table">
+    <thead>
+      <tr>
+        <th>项目</th>
+        <th>谁写了</th>
+        <th>写了什么</th>
+        <th>对施工的含义</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="only">
+        <td class="item">双热源混水接法</td>
+        <td>仅手册 A</td>
+        <td>阀门 A（锅炉）/ 阀门 B（大暖）+ 止回阀 + 过滤器 + 循环泵 + 恒温混水，标牌禁止同时开；楼道预留 De25。</td>
+        <td>若你家现在仍是单位锅炉，这份是刚需，wb 补不上。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">地暖长期性能怎么验</td>
+        <td>仅手册 A（3b 章）</td>
+        <td>CMA/CNAS 型式检验报告 + 胶带撕膜、弯管、掐板、掂分水器重量。</td>
+        <td>进场验收用，与 wb 的小测试方法同源，手册写得更完整。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">拆除刨地铁律</td>
+        <td>仅手册 A</td>
+        <td>刨到楼板即停；立管不能割；垃圾不能从窗口倒；当天下楼看裂缝。</td>
+        <td>开工第一周就用，wb 没有专章。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">橱柜全流程</td>
+        <td>仅 wb B</td>
+        <td>柜体/台面/封边/五金、水电预留、时间线、水浸传感器兜底。</td>
+        <td>手册不管橱柜采购，橱柜以 wb《橱柜方案决策》为准（颗粒板已定）。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">网络点位图 / 光纤</td>
+        <td>主要是 wb B</td>
+        <td>9 条网线+光纤拓扑、弱电箱尺寸、装修前打运营商电话查预埋管。</td>
+        <td>手册只写了结论句，施工画图用 wb《图解》第七章。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">智能预留</td>
+        <td>仅 wb B</td>
+        <td>开关底盒拉零线、窗帘盒插座、玄关中控底盒、马桶旁防水插座。</td>
+        <td>花小钱，手册没反对。零线预留建议做。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">窗帘 / 淋浴隔断</td>
+        <td>仅 wb B</td>
+        <td>窗帘盒+布艺；厨房铝合金百叶；干湿分离玻璃隔断 ≥1.9m 或浴帘+止水条。</td>
+        <td>面层选择，等硬装出标高再定即可。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">太原装修公司</td>
+        <td>仅 wb B</td>
+        <td>四家公司参数、面谈顺序、必问 5 题。</td>
+        <td>选谁施工的问题，与工艺标准无关。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">家具摆放工具</td>
+        <td>仅 wb B</td>
+        <td>平面户型图上的交互摆家具。</td>
+        <td>不进入硬装合同。</td>
+      </tr>
+      <tr class="only">
+        <td class="item">合同付款 / 选公司避坑</td>
+        <td>仅 wb B《避坑总览》</td>
+        <td>报价单、合同、付款节点、每周去工地。</td>
+        <td>手册最后只提醒「节点合格才付下笔款」，wb 写得更偏商务。</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="sec" id="end">
+  <h2><span class="num">8</span>怎么用这两份材料</h2>
+
+  <div class="verdict-box">
+    <div class="lbl">建议的阅读分工</div>
+    <div class="main">施工现场按《硬装小白实施手册》走工序和等待时间；水电品牌参数两份已经对齐，可合并当进场清单。橱柜、弱电点位图、公司对比，用 wb 专题页补齐。</div>
+    <p>红底那些项不要「两份各采一半」：同一堵承重墙不能既禁止横槽又允许 30cm；同一间卧室不能既通铺地砖又预定木地板。</p>
+  </div>
+
+  <div class="tip-box">
+    <div class="lbl">建议你拍板的优先顺序</div>
+    <ul>
+      <li><strong>1. 现在的热源到底是什么</strong>——还是单位锅炉、还是已经能接大暖？答案决定要不要混水中心和楼道预留。手册这一章只在「锅炉仍在」时成立。</li>
+      <li><strong>2. 卧室是否通铺瓷砖</strong>——手册已按全屋地砖写完适老化和无高差；若改木地板，整章瓷砖胶/无高差要重写交界做法。</li>
+      <li><strong>3. 橱柜以哪份 wb 为准</strong>——以《橱柜方案决策》颗粒板为准，忽略《选项指南》《细节大全》里的多层板推荐。</li>
+      <li><strong>4. 照明线写 1.5 还是 2.5</strong>——跟手册和后期水电文，写 1.5mm²。</li>
+      <li><strong>5. 承重墙横槽</strong>——跟手册 +《管材》，禁止。不要引用《图解》的 30cm。</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <div class="card-title">一句话归纳两边脾气</div>
+      <p><strong>手册 A</strong>：把你家特殊条件（锅炉/大暖预留、阴面厨房、全屋砖、适老无高差）钉进每道工序，适合拿着去工地喊停。</p>
+      <p><strong>wb B</strong>：选项多、图多、橱柜和弱电细，但早期通用攻略和后期已定决策并存在同一文件夹里，需要对着「已定事项」筛一遍。</p>
+      <p class="note">对照只解决「哪句和哪句打架」。没写进任何一份的现场尺寸（层高、墙厚、入户线实测），仍要开工前量。</p>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
