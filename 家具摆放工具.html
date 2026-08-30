@@ -29,6 +29,7 @@ body{font-family:-apple-system,"Microsoft YaHei",sans-serif;background:#f0f0f0;h
 .side-close:hover{background:#f5f5f5;color:#333}
 .side-panel label{font-size:12px;color:#666;display:block;margin-bottom:2px}
 .side-panel input[type=text],.side-panel input[type=number]{width:100%;padding:7px 9px;border:1px solid #ccc;border-radius:6px;font-size:13px;outline:none}
+.side-panel select{width:100%;padding:7px 9px;border:1px solid #ccc;border-radius:6px;font-size:13px;outline:none;background:#fff}
 .side-panel input:focus{border-color:#185FA5}
 .side-row{display:flex;gap:8px}
 .side-row>div{flex:1}
@@ -47,6 +48,7 @@ canvas{display:block;position:absolute;top:0;left:0}
 .modal h3{margin-bottom:16px;font-size:16px;font-weight:500}
 .modal label{display:block;margin-bottom:4px;font-size:13px;color:#555}
 .modal input{width:100%;padding:8px 10px;margin-bottom:12px;border:1px solid #ccc;border-radius:6px;font-size:14px;outline:none}
+.modal select{width:100%;padding:8px 10px;margin-bottom:12px;border:1px solid #ccc;border-radius:6px;font-size:14px;outline:none;background:#fff}
 .modal input:focus{border-color:#185FA5}
 .modal .btn-row{display:flex;gap:8px;margin-top:4px}
 .modal .btn-row button{flex:1;padding:8px;border-radius:6px;border:1px solid #ccc;background:#fff;font-size:14px;cursor:pointer}
@@ -63,17 +65,51 @@ canvas{display:block;position:absolute;top:0;left:0}
 .calib-panel .btn-row{display:flex;gap:8px}
 .calib-panel .btn-row button{flex:1;padding:8px;border-radius:6px;border:1px solid #ccc;background:#fff;font-size:14px;cursor:pointer}
 .calib-panel .btn-row button.primary{background:#185FA5;color:#fff;border-color:#185FA5}
+.point-bar{padding:6px 12px;display:flex;gap:4px;flex-wrap:wrap;border-bottom:1px solid #eee;align-items:center;background:#fbfbfb}
+.point-bar button{padding:3px 10px;border:1px solid #ddd;background:#fff;border-radius:12px;cursor:pointer;font-size:12px;color:#555;white-space:nowrap}
+.point-bar button:hover{background:#e3f0ff;border-color:#185FA5;color:#185FA5}
+.point-bar button.armed{color:#fff;border-color:#185FA5}
+.point-bar .group-label{font-size:11px;color:#999;font-weight:600;padding:0 8px 0 2px;white-space:nowrap;letter-spacing:1px}
+#pointListBody table{width:100%;border-collapse:collapse;font-size:12px}
+#pointListBody th,#pointListBody td{border:1px solid #ddd;padding:5px 8px;text-align:left;word-break:break-all}
+#pointListBody th{background:#f5f5f5;font-weight:600}
+#heightRefBody table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px}
+#heightRefBody th,#heightRefBody td{border:1px solid #ddd;padding:5px 8px;text-align:left}
+#heightRefBody th{background:#f5f5f5;white-space:nowrap}
+#heightRefBody td:first-child{white-space:nowrap;font-weight:500}
+.elev-overlay{position:fixed;inset:0;background:#f0f0f0;z-index:100;display:none;flex-direction:column}
+.elev-overlay.show{display:flex}
+.elev-overlay .toolbar{background:#fff;padding:8px 12px;display:flex;gap:6px;align-items:center;border-bottom:1px solid #ddd;flex-wrap:wrap}
+.elev-overlay .toolbar button{padding:6px 12px;border:1px solid #ccc;background:#fff;border-radius:6px;cursor:pointer;font-size:13px;white-space:nowrap}
+.elev-overlay .toolbar button:hover{background:#e8e8e8}
+.elev-overlay .toolbar button.accent{background:#185FA5;color:#fff;border-color:#185FA5}
+.elev-overlay .toolbar input[type=number]{padding:5px 6px;border:1px solid #ccc;border-radius:6px;width:80px;font-size:13px}
+.elev-overlay .toolbar .lbl{font-size:12px;color:#666}
+.wall-tabs{display:flex;gap:4px;flex-wrap:wrap}
+.wall-tabs button{padding:4px 12px;border:1px solid #bbb;background:#fff;border-radius:14px;cursor:pointer;font-size:12px;color:#555}
+.wall-tabs button.cur{background:#185FA5;color:#fff;border-color:#185FA5}
+.elev-wrap{flex:1;position:relative;overflow:hidden}
+#elevCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:default}
+.elev-side{position:absolute;right:0;top:0;bottom:0;width:230px;background:#fff;box-shadow:-2px 0 12px rgba(0,0,0,0.1);z-index:30;display:none;flex-direction:column;padding:16px;gap:6px;overflow-y:auto;border-left:1px solid #e0e0e0}
+.elev-side.show{display:flex}
+.elev-side label{font-size:11px;color:#888;margin-top:4px}
+.elev-side input{padding:6px 8px;border:1px solid #ccc;border-radius:6px;font-size:13px}
+.elev-side .side-del{margin-top:14px;padding:8px;border:1px solid #e74c3c;color:#e74c3c;background:#fff;border-radius:6px;cursor:pointer;font-size:13px}
+.elev-side .side-del:hover{background:#e74c3c;color:#fff}
+.elev-hint{position:absolute;left:12px;top:12px;background:rgba(24,95,165,0.92);color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;z-index:40;max-width:70%;display:none}
 </style>
 </head>
 <body>
 
 <div class="toolbar">
   <button onclick="importImage()">导入户型图</button>
+  <button onclick="showRoomModal()">自定义房间</button>
   <button id="placeBtn" class="accent" onclick="enterPlaceMode()">摆放</button>
   <button id="scaleBtn" onclick="startCalibrate()">设置比例尺</button>
   <button id="measureBtn" onclick="startMeasure()">测量距离</button>
   <span class="sep"></span>
   <button onclick="showAddModal()" class="accent">自定义家具</button>
+  <button onclick="showOpeningModal()">添加门窗</button>
   <button onclick="rotateSelected()">旋转</button>
   <button onclick="deleteSelected()">删除</button>
   <span class="sep"></span>
@@ -83,11 +119,18 @@ canvas{display:block;position:absolute;top:0;left:0}
   <button onclick="exportJSON()">导出存档</button>
   <button onclick="document.getElementById('jsonInput').click()">导入存档</button>
   <span class="sep"></span>
+  <button onclick="exportPointList()">点位清单</button>
+  <button onclick="showHeightRef()">高度参考</button>
+  <button class="accent" onclick="openElevation()" title="也可点平面图四边墙名，直接看那一面墙">立面视图</button>
+  <span id="wallJumpBar" class="wall-tabs"></span>
+  <span class="sep"></span>
   <label class="opacity-label">透明 <input type="range" id="opacitySlider" min="15" max="100" value="50" oninput="onOpacityChange()"></label>
-  <span class="info" id="info">请先导入户型图</span>
+  <span class="info" id="info">请先导入户型图或自定义房间</span>
 </div>
 
 <div class="preset-bar" id="presetBar"></div>
+
+<div class="point-bar" id="pointBar"></div>
 
 <div class="canvas-wrap" id="canvasWrap">
   <canvas id="canvas"></canvas>
@@ -104,10 +147,47 @@ canvas{display:block;position:absolute;top:0;left:0}
       <div><label>深度(mm)</label><input type="number" id="sideH" oninput="onSideSize()"></div>
     </div>
     <div class="side-row">
+      <div><label>高度(mm，立面)</label><input type="number" id="sideElevH" placeholder="如衣柜2200" oninput="onSideSize()"></div>
+      <div><label>底部距地(mm)</label><input type="number" id="sideElevY" placeholder="0=落地" oninput="onSideSize()"></div>
+    </div>
+    <div class="side-row">
       <div><label>方块颜色</label><input type="color" id="sideColor" oninput="onSideColor()"></div>
       <div><label>文字颜色</label><input type="color" id="sideTextColor" value="#ffffff" oninput="onSideColor()"></div>
     </div>
     <button class="side-del" onclick="deleteSelected()">删除此家具</button>
+  </div>
+  <div class="side-panel" id="openingPanel">
+    <div class="side-head">
+      <span class="side-title" id="opSideTitle">门窗设置</span>
+      <button class="side-close" onclick="deselectOpening()">✕</button>
+    </div>
+    <div id="opSideBody"></div>
+    <button class="side-del" onclick="deleteOpening()">删除此门窗</button>
+  </div>
+  <div class="side-panel" id="pointPanel">
+    <div class="side-head">
+      <span class="side-title" id="ptSideTitle">点位设置</span>
+      <button class="side-close" onclick="deselectPoint()">✕</button>
+    </div>
+    <label>名称</label>
+    <input type="text" id="ptName" oninput="onPointEdit()">
+    <label>高度 (mm，距地面完成面)</label>
+    <input type="number" id="ptH" oninput="onPointEdit()">
+    <label>所在墙面（点立面入口看这面墙）</label>
+    <select id="ptWall" onchange="onPointEdit()">
+      <option value="">未贴墙</option>
+      <option value="top">上墙</option>
+      <option value="bottom">下墙</option>
+      <option value="left">左墙</option>
+      <option value="right">右墙</option>
+    </select>
+    <label>距该墙立面左端 (mm)</label>
+    <input type="number" id="ptAlongElev" placeholder="面向墙站立时的左侧" oninput="onPointEdit()">
+    <label>颜色</label>
+    <input type="color" id="ptColor" oninput="onPointEdit()">
+    <label>位置说明（给水电工看）</label>
+    <input type="text" id="ptDesc" placeholder="例如：沙发左侧墙上 / 床头柜后方" oninput="onPointEdit()">
+    <button class="side-del" onclick="deletePoint()">删除此点位</button>
   </div>
   <div class="calib-panel" id="calibPanel">
     <h3>校准比例尺</h3>
@@ -139,8 +219,139 @@ canvas{display:block;position:absolute;top:0;left:0}
   </div>
 </div>
 
+<div class="modal-bg" id="roomModal">
+  <div class="modal">
+    <h3 id="roomModalTitle">自定义房间</h3>
+    <div class="txt" id="roomModalHint">不导入户型图，直接输入房间实际尺寸，自动生成房间平面用于摆放家具。</div>
+    <label>房间宽度 (mm)</label>
+    <input type="number" id="roomW" placeholder="例如：4000">
+    <label>房间深度 (mm)</label>
+    <input type="number" id="roomH" placeholder="例如：3000">
+    <div class="btn-row">
+      <button onclick="cancelRoomModal()">取消</button>
+      <button class="primary" onclick="confirmRoom()">确定</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="openingModal">
+  <div class="modal">
+    <h3 id="openingModalTitle">添加门窗</h3>
+    <label>类型</label>
+    <select id="opType" onchange="toggleDoorOpts()">
+      <option value="door">门（含扇形开门面积）</option>
+      <option value="window">窗</option>
+    </select>
+    <label>所在墙面</label>
+    <select id="opWall">
+      <option value="top">上墙</option>
+      <option value="bottom">下墙</option>
+      <option value="left">左墙</option>
+      <option value="right">右墙</option>
+    </select>
+    <label>位置：距墙起点 (mm)</label>
+    <input type="number" id="opOffset" placeholder="例如：500">
+    <label>宽度 (mm)</label>
+    <input type="number" id="opW" placeholder="门800-900 / 窗1000-1800">
+    <div id="doorOpts">
+      <label>开门方向</label>
+      <select id="opInward">
+        <option value="1">向房间内开</option>
+        <option value="0">向房间外开</option>
+      </select>
+      <label>铰链侧</label>
+      <select id="opSide">
+        <option value="1">正向</option>
+        <option value="-1">反向</option>
+      </select>
+    </div>
+    <div class="btn-row">
+      <button onclick="cancelOpening()">取消</button>
+      <button class="primary" onclick="confirmOpening()">添加</button>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-bg" id="pointListModal">
+  <div class="modal" style="min-width:520px;max-width:680px">
+    <h3>水电点位清单</h3>
+    <div class="txt" id="pointListSummary"></div>
+    <div style="max-height:380px;overflow:auto" id="pointListBody"></div>
+    <div class="btn-row">
+      <button onclick="closePointList()">关闭</button>
+      <button onclick="downloadPointCSV()">下载CSV</button>
+      <button class="primary" onclick="printPointList()">打印/存PDF</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="heightRefModal">
+  <div class="modal" style="min-width:560px;max-width:680px">
+    <h3>常见点位高度参考（距地面完成面）</h3>
+    <div style="max-height:420px;overflow:auto" id="heightRefBody">
+      <table>
+        <tr><th>点位</th><th>高度 (mm)</th><th>备注</th></tr>
+        <tr><td>灯开关（单/双控）</td><td>1300~1400</td><td>离门框 150~200，别被门扇挡住</td></tr>
+        <tr><td>普通五孔插座</td><td>300</td><td>同一面墙多个建议同一高度</td></tr>
+        <tr><td>床头插座</td><td>600~750</td><td>床头柜上方，伸手可够</td></tr>
+        <tr><td>书桌/梳妆台上方</td><td>950~1000</td><td>桌面 750 + 200~250</td></tr>
+        <tr><td>挂墙电视插座</td><td>950~1000</td><td>藏电视正后方，看不见线</td></tr>
+        <tr><td>壁挂空调插座</td><td>1800~2000</td><td>柜机 300，靠墙角避开出风</td></tr>
+        <tr><td>厨房台面插座</td><td>1100</td><td>台面 800 + 300；避开灶台和水槽正后方</td></tr>
+        <tr><td>油烟机插座</td><td>2100~2200</td><td>吊顶内或下沿</td></tr>
+        <tr><td>水槽柜下（净水/小厨宝）</td><td>500</td><td>柜内，小厨宝必须单独回路</td></tr>
+        <tr><td>冰箱插座</td><td>500</td><td>冰箱侧后方，不拔电</td></tr>
+        <tr><td>洗衣机插座</td><td>1200~1300</td><td>高于机身，防溅水</td></tr>
+        <tr><td>电热水器插座</td><td>1800~2200</td><td>视机型，避开淋水直击</td></tr>
+        <tr><td>智能马桶插座</td><td>400 左右</td><td>带防溅盒，距马桶边缘留距离</td></tr>
+        <tr><td>网口 / 电视口</td><td>300（或随设备）</td><td>一般与旁边插座同高；挂墙电视处藏电视后方</td></tr>
+        <tr><td>弱电箱</td><td>300~400</td><td>尽量隐蔽但要留电源插座</td></tr>
+        <tr><td>配电箱</td><td>底边 ≥1800</td><td>入户处，方便够到</td></tr>
+      </table>
+      <div class="txt" style="margin-bottom:0">提示：先摆好家具家电，再定点位——插座永远跟着电器走。沙发两侧、床头、书桌、电视墙是容易漏的地方，宁多勿少。</div>
+    </div>
+    <div class="btn-row">
+      <button class="primary" onclick="closeHeightRef()">关闭</button>
+    </div>
+  </div>
+</div>
 
 <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="loadImage(event)">
+
+<div class="elev-overlay" id="elevOverlay">
+  <div class="toolbar">
+    <button class="accent" onclick="closeElevation()">← 返回平面图</button>
+    <span class="wall-tabs" id="elevWallTabs"></span>
+    <button onclick="addElevWall()">+ 新增墙面</button>
+    <button onclick="editElevWallLen()">改墙长</button>
+    <button onclick="genWallsFromRoom()">同步四面墙</button>
+    <span class="sep"></span>
+    <span class="lbl">层高(mm)</span>
+    <input type="number" id="elevWallH" value="2800" min="2200" max="4000" step="50" oninput="onElevWallHEdit()">
+    <span class="sep"></span>
+    <button onclick="runOcclusionCheck()">遮挡检查</button>
+    <button onclick="deleteElevWall()">删除当前墙</button>
+    <span class="info" id="elevInfo" style="margin-left:auto;font-size:12px;color:#888"></span>
+  </div>
+  <div class="point-bar" id="elevItemBar"></div>
+  <div class="point-bar" id="elevPointBar"></div>
+  <div class="elev-wrap" id="elevWrap">
+    <canvas id="elevCanvas"></canvas>
+    <div class="elev-hint" id="elevHint"></div>
+    <div class="elev-side" id="elevSide"></div>
+  </div>
+</div>
+
+<div class="modal-bg" id="elevCheckModal">
+  <div class="modal" style="min-width:480px;max-width:640px">
+    <h3>遮挡检查结果</h3>
+    <div style="max-height:380px;overflow:auto" id="elevCheckBody"></div>
+    <div class="btn-row">
+      <button class="primary" onclick="document.getElementById('elevCheckModal').classList.remove('show')">关闭</button>
+    </div>
+  </div>
+</div>
 <input type="file" id="jsonInput" accept=".json,application/json" style="display:none" onchange="importJSON(event)">
 
 <script>
@@ -185,6 +396,7 @@ const PRESETS = [
 
 let bgImage = null;
 let bgDataUrl = null;
+let room = null;
 let viewScale = 1, viewX = 0, viewY = 0;
 let pixelsPerMm = null;
 let furniture = [];
@@ -197,15 +409,29 @@ let dragData = null;
 let panData = null;
 let measure = {p1:null, p2:null};
 let dragPt = null;
+let dragOpening = null;
+let openings = [];
+let nextOpeningId = 1;
+let selectedOpeningId = null;
 let lastScaleDist = '';
+let points = [];
+let nextPointId = 1;
+let selectedPointId = null;
+let pendingPoint = null;
+let hoverWall = null;
+let wallLabelHits = [];
 const STORAGE_KEY = 'furniture_layout_autosave';
 let saveTimer = null;
+const FURN_WALL_SNAP = 220;
+const POINT_WALL_SNAP = 450;
 
 function init() {
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
   bindEvents();
+  bindElevEvents();
   buildPresetBar();
+  buildPointBar();
   if (loadFromStorage() && bgImage) {
     bgImage.onload = ()=>{
       updateInfo();
@@ -223,7 +449,7 @@ function init() {
 function resizeCanvas() {
   canvas.width = wrap.clientWidth;
   canvas.height = wrap.clientHeight;
-  if (!bgImage) fitView();
+  if (!bgImage && !room) fitView();
   render();
 }
 
@@ -254,15 +480,45 @@ function render() {
 
   if (bgImage) {
     ctx.drawImage(bgImage, 0, 0);
+  } else if (room && pixelsPerMm) {
+    let rw = room.w * pixelsPerMm;
+    let rh = room.h * pixelsPerMm;
+    ctx.fillStyle = '#fafafa';
+    ctx.fillRect(0, 0, rw, rh);
+    ctx.strokeStyle = '#ececec';
+    ctx.lineWidth = 1 / viewScale;
+    let grid = 500 * pixelsPerMm;
+    for (let x = grid; x < rw; x += grid) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,rh); ctx.stroke(); }
+    for (let y = grid; y < rh; y += grid) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(rw,y); ctx.stroke(); }
+    ctx.strokeStyle = '#333';
+    ctx.lineWidth = 3 / viewScale;
+    ctx.strokeRect(0, 0, rw, rh);
+    ctx.fillStyle = '#666';
+    let fs = 14 / viewScale;
+    ctx.font = `${fs}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText(room.w + ' mm', rw/2, -8/viewScale);
+    ctx.save();
+    ctx.translate(-8/viewScale, rh/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText(room.h + ' mm', 0, 0);
+    ctx.restore();
   } else {
     ctx.fillStyle = '#e8e8e8';
     ctx.fillRect(0,0,800,600);
     ctx.fillStyle = '#999';
     ctx.font = '18px sans-serif';
     ctx.textAlign = 'center';
-    ctx.fillText('点击左上角"导入户型图"',400,290);
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText('点击左上角"导入户型图"或"自定义房间"',400,290);
     ctx.font = '14px sans-serif';
-    ctx.fillText('上传你家户型图开始摆放',400,315);
+    ctx.fillText('上传户型图或输入房间尺寸开始摆放',400,315);
+  }
+
+  if (room && pixelsPerMm) {
+    renderOpenings();
+    renderWallLabels();
   }
 
   calibPoints.forEach((p,i)=>{
@@ -336,6 +592,8 @@ function render() {
     ctx.restore();
   });
 
+  renderPoints();
+
   // 测量线
   if (measure.p1 || measure.p2) {
     if (measure.p1) {
@@ -401,7 +659,7 @@ function hitTest(f, wx, wy) {
 
 function bindEvents() {
   canvas.addEventListener('wheel', e=>{
-    if (!bgImage) return;
+    if (!bgImage && !room) return;
     e.preventDefault();
     let rect = canvas.getBoundingClientRect();
     let sx = e.clientX - rect.left, sy = e.clientY - rect.top;
@@ -441,6 +699,74 @@ function bindEvents() {
       return;
     }
 
+    if (pendingPoint) {
+      let wallHit = hitTestWallLabel(world);
+      if (wallHit) { disarmPending(); openElevation(wallHit); return; }
+      placePointAt(world);
+      return;
+    }
+
+    // 点位命中检测（优先于门窗/家具）
+    for (let i=points.length-1; i>=0; i--) {
+      let p = points[i];
+      let r = 12/viewScale;
+      if (Math.abs(world.x-p.x)<r && Math.abs(world.y-p.y)<r) {
+        if (selectedPointId === p.id) {
+          mode = 'dragging';
+          dragData = {id: p.id, isPoint: true, ox: world.x-p.x, oy: world.y-p.y};
+          wrap.classList.add('dragging');
+        } else {
+          selectedPointId = p.id;
+          selectedId = null;
+          selectedOpeningId = null;
+          updateSidebar();
+          updateOpeningSidebar();
+          updatePointSidebar();
+          mode = 'idle';
+          points.push(points.splice(i,1)[0]);
+        }
+        render();
+        return;
+      }
+    }
+
+    if (room && pixelsPerMm) {
+      // 优先检测选中门窗的端点手柄（调整大小）
+      if (selectedOpeningId!==null) {
+        let sop = openings.find(o=>o.id===selectedOpeningId);
+        if (sop) {
+          let ep = openingEndpointsPx(sop);
+          let hr = 9/viewScale;
+          if (distPoint(world, ep.a) < hr) {
+            dragOpening = {id:sop.id, mode:'resizeA'};
+            wrap.classList.add('dragging');
+            render(); return;
+          }
+          if (distPoint(world, ep.b) < hr) {
+            dragOpening = {id:sop.id, mode:'resizeB'};
+            wrap.classList.add('dragging');
+            render(); return;
+          }
+        }
+      }
+      for (let i=openings.length-1; i>=0; i--) {
+        if (hitTestOpening(openings[i], world.x, world.y)) {
+          selectedOpeningId = openings[i].id;
+          selectedId = null;
+          selectedPointId = null;
+          updateSidebar();
+          updatePointSidebar();
+          updateOpeningSidebar();
+          // 开始沿墙拖动（移动整扇门窗）
+          let op0 = openings[i];
+          dragOpening = {id:op0.id, mode:'move', startWallPos:wallPosMm(world,op0.wall), origOffset:op0.offset};
+          wrap.classList.add('dragging');
+          render();
+          return;
+        }
+      }
+    }
+
     for (let i=furniture.length-1; i>=0; i--) {
       if (hitTest(furniture[i], world.x, world.y)) {
         if (selectedId === furniture[i].id) {
@@ -451,7 +777,11 @@ function bindEvents() {
         } else {
           // 点另一个家具 → 切换选中
           selectedId = furniture[i].id;
+          selectedOpeningId = null;
+          selectedPointId = null;
           updateSidebar();
+          updateOpeningSidebar();
+          updatePointSidebar();
           mode = 'idle';
           let f = furniture.splice(i,1)[0];
           furniture.push(f);
@@ -461,9 +791,19 @@ function bindEvents() {
       }
     }
 
+    let wallHit = hitTestWallLabel(world);
+    if (wallHit) {
+      openElevation(wallHit);
+      return;
+    }
+
     // 点击空白 → 取消选中 + 画布拖动
     selectedId = null;
+    selectedOpeningId = null;
+    selectedPointId = null;
     updateSidebar();
+    updateOpeningSidebar();
+    updatePointSidebar();
     mode = 'panning';
     panData = {sx, sy, vx: viewX, vy: viewY};
     wrap.style.cursor = 'grabbing';
@@ -485,12 +825,36 @@ function bindEvents() {
       return;
     }
 
-    if (mode === 'dragging' && dragData) {
-      let f = furniture.find(f=>f.id===dragData.id);
-      if (f) {
-        f.x = world.x - dragData.ox;
-        f.y = world.y - dragData.oy;
+    if (dragOpening) {
+      let op = openings.find(o=>o.id===dragOpening.id);
+      if (op) {
+        dragUpdateOpening(op, dragOpening, world);
+        syncOpeningInputs();
         render();
+      }
+      return;
+    }
+
+    if (mode === 'dragging' && dragData) {
+      if (dragData.isPoint) {
+        let p = points.find(p=>p.id===dragData.id);
+        if (p) {
+          p.x = world.x - dragData.ox;
+          p.y = world.y - dragData.oy;
+          if (room && pixelsPerMm) {
+            let n = nearestWallOfPoint({x:p.x/pixelsPerMm, y:p.y/pixelsPerMm});
+            if (n.dist <= 350) snapPointToWall(p, n.wall, n.along);
+            else p.wall = '';
+          }
+          render();
+        }
+      } else {
+        let f = furniture.find(f=>f.id===dragData.id);
+        if (f) {
+          f.x = world.x - dragData.ox;
+          f.y = world.y - dragData.oy;
+          render();
+        }
       }
     } else if (mode === 'panning' && panData) {
       viewX = panData.vx + (sx - panData.sx);
@@ -498,19 +862,62 @@ function bindEvents() {
       render();
     }
 
-    if (mode === 'idle' && bgImage) {
-      let over = furniture.some(f=>hitTest(f, world.x, world.y));
-      wrap.style.cursor = over ? 'pointer' : 'grab';
-      if (over && selectedId!==null) {
-        // 悬停在已选中的家具上 → 提示可拖拽
-        let overSelected = furniture.some(f=>hitTest(f, world.x, world.y) && f.id===selectedId);
-        wrap.style.cursor = overSelected ? 'move' : 'pointer';
+    if (mode === 'idle' && (bgImage || room)) {
+      let cursor = 'grab';
+      if (pendingPoint) cursor = 'crosshair';
+      // 点位悬停
+      let overPt = points.some(p=>Math.abs(world.x-p.x)<12/viewScale && Math.abs(world.y-p.y)<12/viewScale);
+      if (overPt) {
+        if (hoverWall){ hoverWall=null; render(); }
+        wrap.style.cursor = (points.some(p=>p.id===selectedPointId && Math.abs(world.x-p.x)<12/viewScale && Math.abs(world.y-p.y)<12/viewScale)) ? 'move' : 'pointer';
+        return;
       }
+      // 选中门窗的端点手柄 → 调整大小光标
+      if (room && pixelsPerMm && selectedOpeningId!==null) {
+        let sop = openings.find(o=>o.id===selectedOpeningId);
+        if (sop) {
+          let ep = openingEndpointsPx(sop);
+          let hr = 9/viewScale;
+          if (distPoint(world, ep.a) < hr || distPoint(world, ep.b) < hr) {
+            if (hoverWall){ hoverWall=null; render(); }
+            cursor = (sop.wall==='top'||sop.wall==='bottom') ? 'ew-resize' : 'ns-resize';
+            wrap.style.cursor = cursor;
+            return;
+          }
+        }
+      }
+      // 家具悬停
+      let overF = furniture.some(f=>hitTest(f, world.x, world.y));
+      if (overF) {
+        if (hoverWall){ hoverWall=null; render(); }
+        let overSel = furniture.some(f=>hitTest(f, world.x, world.y) && f.id===selectedId);
+        wrap.style.cursor = overSel ? 'move' : 'pointer';
+        return;
+      }
+      // 门窗本体悬停
+      if (room && pixelsPerMm) {
+        let ho = openings.find(o=>hitTestOpening(o, world.x, world.y));
+        if (ho) {
+          if (hoverWall){ hoverWall=null; render(); }
+          wrap.style.cursor = (ho.id===selectedOpeningId) ? 'move' : 'pointer';
+          return;
+        }
+      }
+      let hw = hitTestWallLabel(world);
+      if (hw !== hoverWall) { hoverWall = hw; render(); }
+      if (hw) {
+        wrap.style.cursor = 'pointer';
+        return;
+      }
+      wrap.style.cursor = cursor;
     }
   });
 
   canvas.addEventListener('mouseup', ()=>{endDrag();});
-  canvas.addEventListener('mouseleave', ()=>{endDrag();});
+  canvas.addEventListener('mouseleave', ()=>{
+    if (hoverWall){ hoverWall=null; render(); }
+    endDrag();
+  });
 
   canvas.addEventListener('dblclick', e=>{
     let rect = canvas.getBoundingClientRect();
@@ -527,15 +934,22 @@ function bindEvents() {
   });
 
   document.addEventListener('keydown', e=>{
-    if (selectedId===null) return;
-    if (document.activeElement.tagName==='INPUT') return;
+    if (e.key==='Escape' && pendingPoint) { disarmPending(); render(); return; }
+    if (selectedId===null && selectedOpeningId===null && selectedPointId===null) return;
+    if (document.activeElement.tagName==='INPUT' || document.activeElement.tagName==='SELECT') return;
     if (e.key==='Delete'||e.key==='Backspace') deleteSelected();
-    if (e.key==='r'||e.key==='R') rotateSelected();
+    if ((e.key==='r'||e.key==='R') && selectedId!==null) rotateSelected();
   });
 }
 
 function endDrag() {
   if (dragPt) { dragPt=null; autoSave(); }
+  if (dragOpening) {
+    dragOpening = null;
+    wrap.classList.remove('dragging');
+    wrap.style.cursor = 'grab';
+    autoSave();
+  }
   if (mode==='dragging'||mode==='panning') {
     mode = 'idle';
     dragData = null;
@@ -587,12 +1001,14 @@ function addFurniture(name, w, h) {
 }
 
 function updateInfo() {
+  buildWallJumpBar();
   if (pixelsPerMm) {
-    infoEl.textContent = `1mm=${pixelsPerMm.toFixed(2)}px | 家具:${furniture.length}件`;
+    let prefix = room ? `房间 ${room.w}×${room.h}mm | ` : '';
+    infoEl.textContent = `${prefix}1mm=${pixelsPerMm.toFixed(3)}px | 家具:${furniture.length}件 | 点位:${points.length}个`;
   } else if (bgImage) {
-    infoEl.textContent = `未校准比例尺 | 家具:${furniture.length}件`;
+    infoEl.textContent = `未校准比例尺 | 家具:${furniture.length}件 | 点位:${points.length}个`;
   } else {
-    infoEl.textContent = '请先导入户型图';
+    infoEl.textContent = '请先导入户型图或自定义房间';
   }
 }
 
@@ -609,8 +1025,17 @@ function loadImage(e) {
     let img = new Image();
     img.onload = ()=>{
       bgImage = img;
+      room = null;
       furniture = [];
       selectedId = null;
+      points = [];
+      selectedPointId = null;
+      pendingPoint = null;
+      elevations = [];
+      elevNextId = 1;
+      curElevId = null;
+      updatePointBarActive();
+      updatePointSidebar();
       pixelsPerMm = null;
       calibPoints = [];
       lastScaleDist = '';
@@ -637,6 +1062,7 @@ function setActiveModeBtn(activeId) {
 function enterPlaceMode() {
   mode = 'idle';
   setActiveModeBtn('placeBtn');
+  disarmPending();
   wrap.classList.remove('calibrating');
   document.getElementById('calibPanel').classList.remove('show');
   hideHint();
@@ -645,7 +1071,9 @@ function enterPlaceMode() {
 
 function startCalibrate() {
   if (mode==='calibrating') { enterPlaceMode(); return; }
+  if (room) { alert('自定义房间已自动设置比例尺，无需校准。如需修改请点"自定义房间"按钮。'); return; }
   if (!bgImage) {alert('请先导入户型图'); return;}
+  disarmPending();
   mode = 'calibrating';
   setActiveModeBtn('scaleBtn');
   wrap.classList.add('calibrating');
@@ -695,8 +1123,9 @@ function cancelCalibrate() {
 
 function startMeasure() {
   if (mode==='measuring') { enterPlaceMode(); return; }
-  if (!bgImage) {alert('请先导入户型图'); return;}
+  if (!bgImage && !room) {alert('请先导入户型图或自定义房间'); return;}
   if (!pixelsPerMm) {alert('请先"设置比例尺"校准后再测量'); return;}
+  disarmPending();
   mode = 'measuring';
   setActiveModeBtn('measureBtn');
   wrap.classList.add('calibrating');
@@ -717,6 +1146,744 @@ function cancelAdd() {
   document.getElementById('fH').value='';
 }
 
+// ---- 自定义房间 ----
+function showRoomModal() {
+  let title = document.getElementById('roomModalTitle');
+  let hint = document.getElementById('roomModalHint');
+  if (room) {
+    title.textContent = '编辑房间尺寸';
+    hint.textContent = '修改房间尺寸，已有家具会按物理位置自动保留在房间内。';
+    document.getElementById('roomW').value = room.w;
+    document.getElementById('roomH').value = room.h;
+  } else {
+    title.textContent = '自定义房间';
+    hint.textContent = '不导入户型图，直接输入房间实际尺寸，自动生成房间平面用于摆放家具。';
+    document.getElementById('roomW').value = '';
+    document.getElementById('roomH').value = '';
+  }
+  document.getElementById('roomModal').classList.add('show');
+  document.getElementById('roomW').focus();
+}
+
+function cancelRoomModal() {
+  document.getElementById('roomModal').classList.remove('show');
+}
+
+function confirmRoom() {
+  let w = parseFloat(document.getElementById('roomW').value);
+  let h = parseFloat(document.getElementById('roomH').value);
+  if (!w||!h||w<=0||h<=0) { alert('请输入有效的房间尺寸'); return; }
+  if (room) editRoomSize(w, h);
+  else createRoom(w, h);
+  cancelRoomModal();
+}
+
+function computeRoomScale(w, h) {
+  let availW = canvas.width * 0.82;
+  let availH = canvas.height * 0.82;
+  return Math.min(availW / w, availH / h);
+}
+
+function fitRoomView() {
+  if (!room || !pixelsPerMm) return;
+  let rw = room.w * pixelsPerMm;
+  let rh = room.h * pixelsPerMm;
+  viewScale = 1;
+  viewX = (canvas.width - rw) / 2;
+  viewY = (canvas.height - rh) / 2;
+}
+
+function createRoom(w, h) {
+  room = {w, h};
+  bgImage = null;
+  bgDataUrl = null;
+  furniture = [];
+  selectedId = null;
+  points = [];
+  selectedPointId = null;
+  pendingPoint = null;
+  updatePointBarActive();
+  updatePointSidebar();
+  openings = [];
+  selectedOpeningId = null;
+  elevations = [];
+  elevNextId = 1;
+  curElevId = null;
+  calibPoints = [];
+  lastScaleDist = '';
+  measure = {p1:null, p2:null};
+  dragPt = null;
+  pixelsPerMm = computeRoomScale(w, h);
+  fitRoomView();
+  enterPlaceMode();
+  updateInfo();
+  render();
+  autoSave();
+  showHint('房间已创建，开始摆放家具吧');
+  setTimeout(hideHint, 2500);
+}
+
+function editRoomSize(w, h) {
+  if (!room) { createRoom(w, h); return; }
+  let oldPpm = pixelsPerMm;
+  furniture.forEach(f => { f.x = f.x / oldPpm; f.y = f.y / oldPpm; });
+  points.forEach(p => { p.x = p.x / oldPpm; p.y = p.y / oldPpm; });
+  if (measure.p1) measure.p1 = {x: measure.p1.x/oldPpm, y: measure.p1.y/oldPpm};
+  if (measure.p2) measure.p2 = {x: measure.p2.x/oldPpm, y: measure.p2.y/oldPpm};
+  room.w = w; room.h = h;
+  pixelsPerMm = computeRoomScale(w, h);
+  furniture.forEach(f => { f.x = f.x * pixelsPerMm; f.y = f.y * pixelsPerMm; });
+  points.forEach(p => { p.x = p.x * pixelsPerMm; p.y = p.y * pixelsPerMm; });
+  if (measure.p1) measure.p1 = {x: measure.p1.x*pixelsPerMm, y: measure.p1.y*pixelsPerMm};
+  if (measure.p2) measure.p2 = {x: measure.p2.x*pixelsPerMm, y: measure.p2.y*pixelsPerMm};
+  fitRoomView();
+  render();
+  autoSave();
+  showHint('房间尺寸已更新');
+  setTimeout(hideHint, 2000);
+}
+
+// ---- 门窗 ----
+function toggleDoorOpts() {
+  let t = document.getElementById('opType').value;
+  document.getElementById('doorOpts').style.display = (t==='door') ? 'block' : 'none';
+  let w = document.getElementById('opW');
+  if (t==='door') w.placeholder = '例如：800';
+  else w.placeholder = '例如：1500';
+}
+
+function showOpeningModal() {
+  if (!room) { alert('请先"自定义房间"后再添加门窗'); return; }
+  document.getElementById('openingModal').classList.add('show');
+  document.getElementById('opType').value = 'door';
+  document.getElementById('opWall').value = 'top';
+  document.getElementById('opOffset').value = '';
+  document.getElementById('opW').value = '';
+  document.getElementById('opInward').value = '1';
+  document.getElementById('opSide').value = '1';
+  toggleDoorOpts();
+  document.getElementById('opOffset').focus();
+}
+
+function cancelOpening() {
+  document.getElementById('openingModal').classList.remove('show');
+}
+
+function confirmOpening() {
+  let type = document.getElementById('opType').value;
+  let wall = document.getElementById('opWall').value;
+  let offset = parseFloat(document.getElementById('opOffset').value);
+  let w = parseFloat(document.getElementById('opW').value);
+  if (isNaN(offset)||offset<0||!w||w<=0) { alert('请输入有效的位置和宽度'); return; }
+  let op = {id:nextOpeningId++, type, wall, offset, w};
+  if (type==='door') {
+    op.inward = document.getElementById('opInward').value==='1';
+    op.side = parseInt(document.getElementById('opSide').value);
+    op.color = '#2E7D32';
+  } else {
+    op.color = '#1565C0';
+  }
+  openings.push(op);
+  selectedOpeningId = op.id;
+  selectedId = null;
+  updateSidebar();
+  updateOpeningSidebar();
+  cancelOpening();
+  render();
+  autoSave();
+}
+
+function getWallGeom(wall, offset, ppm) {
+  let rw = room.w * ppm;
+  let rh = room.h * ppm;
+  let dirs = {
+    top:    {wallDir:{x:1,y:0}, inDir:{x:0,y:1}},
+    bottom: {wallDir:{x:1,y:0}, inDir:{x:0,y:-1}},
+    left:   {wallDir:{x:0,y:1}, inDir:{x:1,y:0}},
+    right:  {wallDir:{x:0,y:1}, inDir:{x:-1,y:0}},
+  };
+  let d = dirs[wall];
+  let hinge;
+  if (wall==='top') hinge={x:offset*ppm,y:0};
+  else if (wall==='bottom') hinge={x:offset*ppm,y:rh};
+  else if (wall==='left') hinge={x:0,y:offset*ppm};
+  else hinge={x:rw,y:offset*ppm};
+  return {hinge, wallDir:d.wallDir, inDir:d.inDir, rw, rh};
+}
+
+function distPoint(p, q) {
+  return Math.sqrt((p.x-q.x)**2 + (p.y-q.y)**2);
+}
+
+// 门窗两端点（世界像素坐标）：a=铰链/起点，b=远端
+function openingEndpointsPx(op) {
+  let ppm = pixelsPerMm;
+  let g = getWallGeom(op.wall, op.offset, ppm);
+  let sign = op.type==='door' ? op.side : 1;
+  let w = op.w * ppm;
+  let a = {x: g.hinge.x, y: g.hinge.y};
+  let b = {x: g.hinge.x + g.wallDir.x*sign*w, y: g.hinge.y + g.wallDir.y*sign*w};
+  return {a, b, g, sign};
+}
+
+// 鼠标世界坐标投影到墙的1D位置(mm)
+function wallPosMm(world, wall) {
+  let ppm = pixelsPerMm;
+  if (wall==='top' || wall==='bottom') return world.x / ppm;
+  return world.y / ppm;
+}
+
+function wallLenMm(wall) {
+  return (wall==='top'||wall==='bottom') ? room.w : room.h;
+}
+
+const WALL_META = {
+  top:    {name:'上墙', face:'面向北看 · 立面左端接右墙'},
+  bottom: {name:'下墙', face:'面向南看 · 立面左端接左墙'},
+  left:   {name:'左墙', face:'面向西看 · 立面左端接下墙'},
+  right:  {name:'右墙', face:'面向东看 · 立面左端接上墙'},
+};
+
+function inferElevProfile(name) {
+  let n = name || '';
+  const rules = [
+    [/挂墙电视|壁挂电视/, {h:650, y:1000}],
+    [/空调挂|挂机/, {h:350, y:2200}],
+    [/空调/, {h:1800, y:0}],
+    [/油烟/, {h:650, y:1550}],
+    [/吊柜/, {h:700, y:1500}],
+    [/沙发/, {h:850, y:0}],
+    [/茶几/, {h:450, y:0}],
+    [/电视柜/, {h:450, y:0}],
+    [/床头柜/, {h:500, y:0}],
+    [/床/, {h:1000, y:0}],
+    [/大衣柜|衣柜/, {h:2200, y:0}],
+    [/斗柜|白柜|抽屉/, {h:800, y:0}],
+    [/书桌|电脑桌|写字台|条桌|移动桌/, {h:750, y:0}],
+    [/书柜|书架/, {h:1800, y:0}],
+    [/冰箱/, {h:1800, y:0}],
+    [/冰柜/, {h:850, y:0}],
+    [/洗衣机/, {h:850, y:0}],
+    [/酒柜/, {h:1200, y:0}],
+    [/微波炉/, {h:800, y:0}],
+  ];
+  for (let i=0;i<rules.length;i++) if (rules[i][0].test(n)) return rules[i][1];
+  return {h:800, y:0};
+}
+
+function furnitureElevSize(f) {
+  let inf = inferElevProfile(f.name);
+  return {
+    h: (f.elevH != null && f.elevH > 0) ? f.elevH : inf.h,
+    y: (f.elevY != null && f.elevY >= 0) ? f.elevY : inf.y
+  };
+}
+
+function furnitureMmBox(f) {
+  let fx = f.x / pixelsPerMm, fy = f.y / pixelsPerMm;
+  let pw = f.rot ? f.h : f.w;
+  let ph = f.rot ? f.w : f.h;
+  return {x0: fx-pw/2, x1: fx+pw/2, y0: fy-ph/2, y1: fy+ph/2, fx, fy, pw, ph};
+}
+
+function planAlongToElevX(wall, along) {
+  let len = wallLenMm(wall);
+  if (wall==='top' || wall==='left') return len - along;
+  return along;
+}
+
+function elevXToPlanAlong(wall, elevX) {
+  let len = wallLenMm(wall);
+  if (wall==='top' || wall==='left') return len - elevX;
+  return elevX;
+}
+
+function elevSpanFromAlong(wall, a, b) {
+  let ea = planAlongToElevX(wall, a);
+  let eb = planAlongToElevX(wall, b);
+  return {x: Math.min(ea, eb), w: Math.abs(eb - ea)};
+}
+
+function nearestWallOfPoint(mm) {
+  let cands = [
+    {wall:'top', dist: Math.abs(mm.y), along: mm.x},
+    {wall:'bottom', dist: Math.abs(mm.y - room.h), along: mm.x},
+    {wall:'left', dist: Math.abs(mm.x), along: mm.y},
+    {wall:'right', dist: Math.abs(mm.x - room.w), along: mm.y}
+  ];
+  cands.forEach(c=>{
+    c.along = Math.max(0, Math.min(wallLenMm(c.wall), c.along));
+  });
+  cands.sort((a,b)=>a.dist-b.dist);
+  return cands[0];
+}
+
+function snapPointToWall(p, wall, along) {
+  let ppm = pixelsPerMm;
+  p.wall = wall;
+  if (along==null) along = (wall==='top'||wall==='bottom') ? p.x/ppm : p.y/ppm;
+  along = Math.max(0, Math.min(wallLenMm(wall), along));
+  if (wall==='top') { p.x = along*ppm; p.y = 0; }
+  else if (wall==='bottom') { p.x = along*ppm; p.y = room.h*ppm; }
+  else if (wall==='left') { p.x = 0; p.y = along*ppm; }
+  else { p.x = room.w*ppm; p.y = along*ppm; }
+}
+
+function pointPlanAlong(p) {
+  if (!pixelsPerMm) return 0;
+  if (p.wall==='top'||p.wall==='bottom') return p.x / pixelsPerMm;
+  return p.y / pixelsPerMm;
+}
+
+function pointElevX(p) {
+  if (!p.wall || !room || !pixelsPerMm) return '';
+  return Math.round(planAlongToElevX(p.wall, pointPlanAlong(p)));
+}
+
+function assignPointWalls(snapMove) {
+  if (!room || !pixelsPerMm) return;
+  points.forEach(p=>{
+    let n = nearestWallOfPoint({x:p.x/pixelsPerMm, y:p.y/pixelsPerMm});
+    if (n.dist <= POINT_WALL_SNAP) {
+      p.wall = n.wall;
+      if (snapMove) snapPointToWall(p, n.wall, n.along);
+    }
+  });
+}
+
+function furnitureAgainstWall(f, wall) {
+  if (!room || !pixelsPerMm) return null;
+  let box = furnitureMmBox(f);
+  let dist;
+  if (wall==='top') dist = box.y0;
+  else if (wall==='bottom') dist = room.h - box.y1;
+  else if (wall==='left') dist = box.x0;
+  else dist = room.w - box.x1;
+  if (dist > FURN_WALL_SNAP) return null;
+  let a, b;
+  if (wall==='top'||wall==='bottom') { a=box.x0; b=box.x1; }
+  else { a=box.y0; b=box.y1; }
+  let sp = elevSpanFromAlong(wall, a, b);
+  let sz = furnitureElevSize(f);
+  return {x: sp.x, w: Math.max(40, sp.w), h: sz.h, y: sz.y, dist: Math.round(Math.max(0, dist))};
+}
+
+function openingToElevItem(op) {
+  let sign = op.type==='door' ? op.side : 1;
+  let a = op.offset;
+  let b = op.offset + sign * op.w;
+  let sp = elevSpanFromAlong(op.wall, a, b);
+  if (op.type==='door') return {t:'门', w:sp.w, h:2100, x:sp.x, y:0, door:true, linked:true, src:'opening', srcId:op.id};
+  return {t:'窗', w:sp.w, h:1500, y:900, x:sp.x, win:true, linked:true, src:'opening', srcId:op.id};
+}
+
+function getElevScene(e) {
+  let items = [];
+  let pts = [];
+  if (e && e.wall && room && pixelsPerMm) {
+    openings.filter(o=>o.wall===e.wall).forEach(op=>items.push(openingToElevItem(op)));
+    furniture.forEach(f=>{
+      let pr = furnitureAgainstWall(f, e.wall);
+      if (!pr) return;
+      items.push({t:f.name, w:pr.w, h:pr.h, x:pr.x, y:pr.y, dist:pr.dist, linked:true, src:'furniture', srcId:f.id, color:f.color});
+    });
+    points.filter(p=>p.wall===e.wall).forEach(p=>{
+      pts.push({
+        id: p.id, name: p.name, sym: p.sym, h: p.h, color: p.color, desc: p.desc||'',
+        x: planAlongToElevX(e.wall, pointPlanAlong(p)),
+        linked: true, src: 'planPoint', srcId: p.id
+      });
+    });
+  }
+  if (e) {
+    (e.items||[]).forEach(it=>items.push(it));
+    (e.points||[]).forEach(p=>pts.push(p));
+  }
+  return {items, points: pts};
+}
+
+function isSelElevItem(it) {
+  if (!elevSelected || elevSelected.kind!=='item') return false;
+  if (it.linked) return !!(elevSelected.linked && elevSelected.src===it.src && elevSelected.srcId===it.srcId);
+  return !elevSelected.linked && elevSelected.id===it.id;
+}
+
+function isSelElevPoint(p) {
+  if (!elevSelected || elevSelected.kind!=='point') return false;
+  if (p.linked) return !!(elevSelected.linked && elevSelected.srcId===p.srcId);
+  return !elevSelected.linked && elevSelected.id===p.id;
+}
+
+function pointInRotatedRect(px, py, cx, cy, w, h, rot) {
+  let dx = px-cx, dy = py-cy;
+  let c = Math.cos(-rot), s = Math.sin(-rot);
+  let lx = dx*c - dy*s, ly = dx*s + dy*c;
+  return Math.abs(lx)<=w/2 && Math.abs(ly)<=h/2;
+}
+
+function renderWallLabels() {
+  wallLabelHits = [];
+  if (!room || !pixelsPerMm) return;
+  let rw = room.w * pixelsPerMm, rh = room.h * pixelsPerMm;
+  let fs = 12 / viewScale;
+  ctx.font = `600 ${fs}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  let labels = [
+    {wall:'top', x:rw/2, y:-26/viewScale, text:'上墙 · 点此看立面', rot:0},
+    {wall:'bottom', x:rw/2, y:rh+26/viewScale, text:'下墙 · 点此看立面', rot:0},
+    {wall:'left', x:-26/viewScale, y:rh/2, text:'左墙 · 点此看立面', rot:-Math.PI/2},
+    {wall:'right', x:rw+26/viewScale, y:rh/2, text:'右墙 · 点此看立面', rot:Math.PI/2}
+  ];
+  labels.forEach(lb=>{
+    ctx.save();
+    ctx.translate(lb.x, lb.y);
+    ctx.rotate(lb.rot);
+    let tw = ctx.measureText(lb.text).width;
+    let padX = 9/viewScale, padY = 6/viewScale;
+    let hot = hoverWall===lb.wall;
+    ctx.fillStyle = hot ? '#185FA5' : 'rgba(24,95,165,0.14)';
+    ctx.strokeStyle = '#185FA5';
+    ctx.lineWidth = 1.2/viewScale;
+    let x0 = -tw/2-padX, y0 = -fs/2-padY, w=tw+padX*2, h=fs+padY*2;
+    ctx.beginPath();
+    if (ctx.roundRect) ctx.roundRect(x0, y0, w, h, 6/viewScale);
+    else ctx.rect(x0, y0, w, h);
+    ctx.fill(); ctx.stroke();
+    ctx.fillStyle = hot ? '#fff' : '#185FA5';
+    ctx.fillText(lb.text, 0, 0);
+    ctx.restore();
+    wallLabelHits.push({wall:lb.wall, cx:lb.x, cy:lb.y, w:w, h:h, rot:lb.rot});
+    if (hot) {
+      ctx.strokeStyle = '#185FA5';
+      ctx.lineWidth = 5/viewScale;
+      ctx.beginPath();
+      if (lb.wall==='top') { ctx.moveTo(0,0); ctx.lineTo(rw,0); }
+      else if (lb.wall==='bottom') { ctx.moveTo(0,rh); ctx.lineTo(rw,rh); }
+      else if (lb.wall==='left') { ctx.moveTo(0,0); ctx.lineTo(0,rh); }
+      else { ctx.moveTo(rw,0); ctx.lineTo(rw,rh); }
+      ctx.stroke();
+    }
+  });
+}
+
+function hitTestWallLabel(world) {
+  for (let i=0;i<wallLabelHits.length;i++) {
+    let b = wallLabelHits[i];
+    if (pointInRotatedRect(world.x, world.y, b.cx, b.cy, b.w, b.h, b.rot)) return b.wall;
+  }
+  return null;
+}
+
+function buildWallJumpBar() {
+  let bar = document.getElementById('wallJumpBar');
+  if (!bar) return;
+  bar.innerHTML = '';
+  if (!room) return;
+  [['left','左墙立面'],['top','上墙立面'],['right','右墙立面'],['bottom','下墙立面']].forEach(d=>{
+    let b = document.createElement('button');
+    b.textContent = d[1];
+    b.title = '打开这面墙的立面：看插座/网口/电视口高度，以及家具是否挡住';
+    b.onclick = ()=>openElevation(d[0]);
+    bar.appendChild(b);
+  });
+}
+
+function moveFurnitureAlongWall(f, wall, dAlongMm) {
+  if (!pixelsPerMm) return;
+  if (wall==='top'||wall==='bottom') f.x += dAlongMm * pixelsPerMm;
+  else f.y += dAlongMm * pixelsPerMm;
+}
+
+function clampWallPos(op, pos) {
+  return Math.max(0, Math.min(wallLenMm(op.wall), pos));
+}
+
+// 拖拽中更新门窗参数（仅沿墙的维度变化）
+function dragUpdateOpening(op, dg, world) {
+  let MINW = 100;
+  let wl = wallLenMm(op.wall);
+  let wp = clampWallPos(op, wallPosMm(world, op.wall));
+  let sign = op.type==='door' ? op.side : 1;
+  if (dg.mode === 'move') {
+    let delta = wp - dg.startWallPos;
+    op.offset = dg.origOffset + delta;
+    let endPos = op.offset + sign * op.w;
+    if (sign > 0) {
+      if (endPos > wl) op.offset = wl - op.w;
+      if (op.offset < 0) op.offset = 0;
+    } else {
+      if (endPos < 0) op.offset = op.w;
+      if (op.offset > wl) op.offset = wl;
+    }
+  } else if (dg.mode === 'resizeA') {
+    // 拖动铰链/起点端，远端固定
+    let bPos = op.offset + sign * op.w;
+    let newA = wp;
+    let newW = Math.abs(bPos - newA);
+    if (newW < MINW) newW = MINW;
+    op.offset = newA;
+    op.w = newW;
+    if (op.type==='door') op.side = (bPos >= newA) ? 1 : -1;
+  } else if (dg.mode === 'resizeB') {
+    // 铰链/起点固定，拖动远端
+    let newB = wp;
+    let newW = Math.abs(newB - op.offset);
+    if (newW < MINW) newW = MINW;
+    op.w = newW;
+    if (op.type==='door') op.side = (newB >= op.offset) ? 1 : -1;
+  }
+}
+
+// 拖拽时同步侧边栏输入框数值（不重建HTML，避免闪烁）
+function syncOpeningInputs() {
+  let op = openings.find(o=>o.id===selectedOpeningId);
+  if (!op) return;
+  let offEl = document.getElementById('opSOffset');
+  let wEl = document.getElementById('opSW');
+  if (offEl) offEl.value = Math.round(op.offset);
+  if (wEl) wEl.value = Math.round(op.w);
+  if (op.type==='door') {
+    let sideEl = document.getElementById('opSSide');
+    if (sideEl) sideEl.value = op.side>0?'1':'-1';
+  }
+}
+
+// 选中门窗时在两端绘制可拖拽手柄
+function renderOpeningHandles(op) {
+  let ep = openingEndpointsPx(op);
+  let r = 6/viewScale;
+  ctx.fillStyle = '#fff';
+  ctx.strokeStyle = op.color;
+  ctx.lineWidth = 2/viewScale;
+  [ep.a, ep.b].forEach(pt=>{
+    ctx.beginPath();
+    ctx.arc(pt.x, pt.y, r, 0, Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+  });
+}
+
+function renderOpenings() {
+  openings.forEach(op=>{
+    if (op.type==='door') renderDoor(op);
+    else renderWindow(op);
+  });
+  if (selectedOpeningId!==null) {
+    let op = openings.find(o=>o.id===selectedOpeningId);
+    if (op) renderOpeningHandles(op);
+  }
+}
+
+function renderDoor(op) {
+  let ppm = pixelsPerMm;
+  let g = getWallGeom(op.wall, op.offset, ppm);
+  let w = op.w * ppm;
+  let hinge = g.hinge;
+  let bd = {x:g.wallDir.x*op.side, y:g.wallDir.y*op.side};
+  let od = {x:g.inDir.x*(op.inward?1:-1), y:g.inDir.y*(op.inward?1:-1)};
+  let startAng = Math.atan2(bd.y, bd.x);
+  let endAng = Math.atan2(od.y, od.x);
+  let sel = (selectedOpeningId===op.id);
+
+  // 门洞：覆盖墙线
+  let he = {x:hinge.x+bd.x*w, y:hinge.y+bd.y*w};
+  ctx.strokeStyle = '#fafafa';
+  ctx.lineWidth = 6/viewScale;
+  ctx.beginPath(); ctx.moveTo(hinge.x,hinge.y); ctx.lineTo(he.x,he.y); ctx.stroke();
+
+  // 扇形开门面积
+  let diff = endAng - startAng;
+  while (diff>Math.PI) diff-=2*Math.PI;
+  while (diff<-Math.PI) diff+=2*Math.PI;
+  let anti = diff < 0;
+  ctx.fillStyle = op.color + '30';
+  ctx.beginPath();
+  ctx.moveTo(hinge.x, hinge.y);
+  ctx.arc(hinge.x, hinge.y, w, startAng, endAng, anti);
+  ctx.closePath();
+  ctx.fill();
+  ctx.strokeStyle = op.color;
+  ctx.lineWidth = (sel?2.5:1.5)/viewScale;
+  if (sel) ctx.setLineDash([4/viewScale,3/viewScale]);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // 门板（打开90度状态）
+  ctx.strokeStyle = op.color;
+  ctx.lineWidth = 3/viewScale;
+  ctx.beginPath();
+  ctx.moveTo(hinge.x, hinge.y);
+  ctx.lineTo(hinge.x+od.x*w, hinge.y+od.y*w);
+  ctx.stroke();
+
+  // 铰链点
+  ctx.fillStyle = op.color;
+  ctx.beginPath();
+  ctx.arc(hinge.x, hinge.y, 3.5/viewScale, 0, Math.PI*2);
+  ctx.fill();
+
+  // 标签
+  let bisect = {x:bd.x+od.x, y:bd.y+od.y};
+  let blen = Math.sqrt(bisect.x*bisect.x+bisect.y*bisect.y);
+  if (blen>0){bisect.x/=blen;bisect.y/=blen;}
+  ctx.fillStyle = op.color;
+  let fs = Math.max(10, 11/viewScale);
+  ctx.font = `600 ${fs}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('门', hinge.x+bisect.x*w*0.55, hinge.y+bisect.y*w*0.55);
+}
+
+function renderWindow(op) {
+  let ppm = pixelsPerMm;
+  let g = getWallGeom(op.wall, op.offset, ppm);
+  let w = op.w * ppm;
+  let hinge = g.hinge;
+  let end = {x:hinge.x+g.wallDir.x*w, y:hinge.y+g.wallDir.y*w};
+  let sel = (selectedOpeningId===op.id);
+
+  // 窗洞
+  ctx.strokeStyle = '#fafafa';
+  ctx.lineWidth = 6/viewScale;
+  ctx.beginPath(); ctx.moveTo(hinge.x,hinge.y); ctx.lineTo(end.x,end.y); ctx.stroke();
+
+  // 窗框双线
+  let perp = {x:-g.wallDir.y, y:g.wallDir.x};
+  let off = 4/viewScale;
+  ctx.strokeStyle = op.color;
+  ctx.lineWidth = (sel?2.5:1.5)/viewScale;
+  if (sel) ctx.setLineDash([4/viewScale,3/viewScale]);
+  ctx.beginPath();
+  ctx.moveTo(hinge.x+perp.x*off, hinge.y+perp.y*off);
+  ctx.lineTo(end.x+perp.x*off, end.y+perp.y*off);
+  ctx.moveTo(hinge.x-perp.x*off, hinge.y-perp.y*off);
+  ctx.lineTo(end.x-perp.x*off, end.y-perp.y*off);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // 玻璃中线
+  ctx.strokeStyle = op.color + '88';
+  ctx.lineWidth = 1/viewScale;
+  ctx.beginPath(); ctx.moveTo(hinge.x,hinge.y); ctx.lineTo(end.x,end.y); ctx.stroke();
+
+  // 标签
+  ctx.fillStyle = op.color;
+  let fs = Math.max(10, 11/viewScale);
+  ctx.font = `600 ${fs}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('窗', (hinge.x+end.x)/2, (hinge.y+end.y)/2);
+}
+
+function angInArc(ang, start, end) {
+  let d = (a,b)=>{let x=a-b;while(x>Math.PI)x-=2*Math.PI;while(x<-Math.PI)x+=2*Math.PI;return x;};
+  let ds = d(end, start);
+  let dp = d(ang, start);
+  if (ds>0) return dp>=0 && dp<=ds;
+  return dp<=0 && dp>=ds;
+}
+
+function distToSeg(p, a, b) {
+  let dx=b.x-a.x, dy=b.y-a.y;
+  let l2=dx*dx+dy*dy;
+  if (l2===0) return Math.sqrt((p.x-a.x)**2+(p.y-a.y)**2);
+  let t=Math.max(0,Math.min(1,((p.x-a.x)*dx+(p.y-a.y)*dy)/l2));
+  return Math.sqrt((p.x-(a.x+t*dx))**2+(p.y-(a.y+t*dy))**2);
+}
+
+function hitTestOpening(op, wx, wy) {
+  let ppm = pixelsPerMm;
+  let g = getWallGeom(op.wall, op.offset, ppm);
+  let w = op.w * ppm;
+  let hinge = g.hinge;
+  if (op.type==='door') {
+    let bd = {x:g.wallDir.x*op.side, y:g.wallDir.y*op.side};
+    let od = {x:g.inDir.x*(op.inward?1:-1), y:g.inDir.y*(op.inward?1:-1)};
+    let startAng = Math.atan2(bd.y, bd.x);
+    let endAng = Math.atan2(od.y, od.x);
+    let dist = Math.sqrt((wx-hinge.x)**2+(wy-hinge.y)**2);
+    if (dist <= w*1.05) {
+      let ang = Math.atan2(wy-hinge.y, wx-hinge.x);
+      if (angInArc(ang, startAng, endAng)) return true;
+    }
+    let mx=hinge.x+od.x*w, my=hinge.y+od.y*w;
+    if (distToSeg({x:wx,y:wy}, hinge, {x:mx,y:my}) < 12/viewScale) return true;
+    return false;
+  } else {
+    let end = {x:hinge.x+g.wallDir.x*w, y:hinge.y+g.wallDir.y*w};
+    return distToSeg({x:wx,y:wy}, hinge, end) < 12/viewScale;
+  }
+}
+
+function deselectOpening() {
+  selectedOpeningId = null;
+  updateOpeningSidebar();
+  render();
+}
+
+function deleteOpening() {
+  if (selectedOpeningId===null) return;
+  openings = openings.filter(o=>o.id!==selectedOpeningId);
+  selectedOpeningId = null;
+  updateOpeningSidebar();
+  render();
+  autoSave();
+}
+
+function updateOpeningSidebar() {
+  let panel = document.getElementById('openingPanel');
+  let fpanel = document.getElementById('sidePanel');
+  if (selectedOpeningId===null) { panel.classList.remove('show'); return; }
+  let op = openings.find(o=>o.id===selectedOpeningId);
+  if (!op) { panel.classList.remove('show'); return; }
+  fpanel.classList.remove('show');
+  panel.classList.add('show');
+  document.getElementById('opSideTitle').textContent = (op.type==='door'?'门':'窗')+'设置';
+  let wallNames = {top:'上墙',bottom:'下墙',left:'左墙',right:'右墙'};
+  let html = '';
+  html += '<label>墙面</label><select id="opSWall" onchange="onOpeningEdit()">';
+  ['top','bottom','left','right'].forEach(w=>{
+    html += `<option value="${w}" ${op.wall===w?'selected':''}>${wallNames[w]}</option>`;
+  });
+  html += '</select>';
+  html += '<label>位置：距墙起点 (mm)</label>';
+  html += `<input type="number" id="opSOffset" value="${op.offset}" oninput="onOpeningEdit()">`;
+  html += '<label>宽度 (mm)</label>';
+  html += `<input type="number" id="opSW" value="${op.w}" oninput="onOpeningEdit()">`;
+  html += '<label>颜色</label>';
+  html += `<input type="color" id="opSColor" value="${op.color}" oninput="onOpeningEdit()">`;
+  if (op.type==='door') {
+    html += '<label>开门方向</label><select id="opSInward" onchange="onOpeningEdit()">';
+    html += `<option value="1" ${op.inward?'selected':''}>向房间内开</option>`;
+    html += `<option value="0" ${!op.inward?'selected':''}>向房间外开</option>`;
+    html += '</select>';
+    html += '<label>铰链侧</label><select id="opSSide" onchange="onOpeningEdit()">';
+    html += `<option value="1" ${op.side===1?'selected':''}>正向</option>`;
+    html += `<option value="-1" ${op.side===-1?'selected':''}>反向</option>`;
+    html += '</select>';
+    html += '<div style="font-size:11px;color:#999;margin-top:4px;line-height:1.4">切换"铰链侧"/"开门方向"可调整门扇朝向，画布实时更新</div>';
+  }
+  document.getElementById('opSideBody').innerHTML = html;
+}
+
+function onOpeningEdit() {
+  let op = openings.find(o=>o.id===selectedOpeningId);
+  if (!op) return;
+  op.wall = document.getElementById('opSWall').value;
+  let off = parseFloat(document.getElementById('opSOffset').value);
+  let w = parseFloat(document.getElementById('opSW').value);
+  if (!isNaN(off)&&off>=0) op.offset = off;
+  if (!isNaN(w)&&w>0) op.w = w;
+  op.color = document.getElementById('opSColor').value;
+  if (op.type==='door') {
+    op.inward = document.getElementById('opSInward').value==='1';
+    op.side = parseInt(document.getElementById('opSSide').value);
+  }
+  render();
+  autoSave();
+}
+
 function addCustom() {
   let n = document.getElementById('fName').value.trim()||'家具';
   let w = parseFloat(document.getElementById('fW').value);
@@ -733,10 +1900,22 @@ function rotateSelected() {
 }
 
 function deleteSelected() {
-  if (selectedId===null) return;
-  furniture = furniture.filter(f=>f.id!==selectedId);
-  selectedId = null;
-  updateSidebar();
+  if (selectedId===null && selectedOpeningId===null && selectedPointId===null) return;
+  if (selectedId!==null) {
+    furniture = furniture.filter(f=>f.id!==selectedId);
+    selectedId = null;
+    updateSidebar();
+  }
+  if (selectedOpeningId!==null) {
+    openings = openings.filter(o=>o.id!==selectedOpeningId);
+    selectedOpeningId = null;
+    updateOpeningSidebar();
+  }
+  if (selectedPointId!==null) {
+    points = points.filter(p=>p.id!==selectedPointId);
+    selectedPointId = null;
+    updatePointSidebar();
+  }
   updateInfo();
   render();
   autoSave();
@@ -744,7 +1923,9 @@ function deleteSelected() {
 
 function deselectAll() {
   selectedId = null;
+  selectedOpeningId = null;
   updateSidebar();
+  updateOpeningSidebar();
   render();
 }
 
@@ -769,6 +1950,10 @@ function onSideSize() {
   let h = parseFloat(document.getElementById('sideH').value);
   if (w>0) f.w = w;
   if (h>0) f.h = h;
+  let eh = parseFloat(document.getElementById('sideElevH').value);
+  let ey = parseFloat(document.getElementById('sideElevY').value);
+  if (eh>0) f.elevH = Math.round(eh);
+  if (!isNaN(ey) && ey>=0) f.elevY = Math.round(ey);
   render();
   autoSave();
 }
@@ -795,17 +1980,21 @@ function updateSidebar() {
   document.getElementById('sideName').value = f.name;
   document.getElementById('sideW').value = f.w;
   document.getElementById('sideH').value = f.h;
+  let sz = furnitureElevSize(f);
+  document.getElementById('sideElevH').value = f.elevH != null ? f.elevH : sz.h;
+  document.getElementById('sideElevY').value = f.elevY != null ? f.elevY : sz.y;
   document.getElementById('sideColor').value = f.color;
   document.getElementById('sideTextColor').value = f.textColor || '#ffffff';
 }
 
 function resetView() {
   if (bgImage) {fitView(bgImage);render();autoSave();}
+  else if (room) {fitRoomView();render();autoSave();}
   else {viewScale=1;viewX=0;viewY=0;render();}
 }
 
 function saveImage() {
-  if (!bgImage&&furniture.length===0){alert('还没有内容可以保存');return;}
+  if (!bgImage&&!room&&furniture.length===0){alert('还没有内容可以保存');return;}
   let a=document.createElement('a');
   a.download='家具摆放布局.png';
   a.href=canvas.toDataURL('image/png');
@@ -829,7 +2018,7 @@ function compressImage(img, maxDim, quality) {
 
 function getProjectData(fullImg) {
   return {
-    version: 2,
+    version: 6,
     savedAt: new Date().toISOString(),
     pixelsPerMm,
     calibPoints,
@@ -839,6 +2028,13 @@ function getProjectData(fullImg) {
     nextId,
     globalOpacity,
     viewScale, viewX, viewY,
+    room: room || null,
+    openings,
+    nextOpeningId,
+    points,
+    nextPointId,
+    elevations,
+    elevNextId,
     bgDataUrl: bgImage ? (fullImg ? bgDataUrl : compressImage(bgImage, 1600, 0.7)) : null
   };
 }
@@ -870,11 +2066,22 @@ function loadFromStorage() {
     viewScale = data.viewScale || 1;
     viewX = data.viewX || 0;
     viewY = data.viewY || 0;
+    room = data.room || null;
+    openings = data.openings || [];
+    nextOpeningId = data.nextOpeningId || 1;
+    points = data.points || [];
+    nextPointId = data.nextPointId || 1;
+    elevations = data.elevations || [];
+    elevNextId = data.elevNextId || 1;
+    selectedPointId = null;
+    if (room && pixelsPerMm) assignPointWalls(false);
     if (data.bgDataUrl) {
       bgDataUrl = data.bgDataUrl;
       bgImage = new Image();
       bgImage.onload = ()=>{ updateInfo(); render(); };
       bgImage.src = data.bgDataUrl;
+    } else if (room && pixelsPerMm) {
+      fitRoomView();
     }
     return true;
   } catch(e) {
@@ -884,7 +2091,7 @@ function loadFromStorage() {
 }
 
 function exportJSON() {
-  if (!bgImage && furniture.length===0) { alert('没有内容可导出'); return; }
+  if (!bgImage && !room && furniture.length===0) { alert('没有内容可导出'); return; }
   let blob = new Blob([JSON.stringify(getProjectData(true))], {type:'application/json'});
   let a = document.createElement('a');
   a.download = '家具摆放存档.json';
@@ -913,8 +2120,22 @@ function importJSON(e) {
       viewScale = data.viewScale || 1;
       viewX = data.viewX || 0;
       viewY = data.viewY || 0;
+      room = data.room || null;
+      openings = data.openings || [];
+      nextOpeningId = data.nextOpeningId || 1;
+      points = data.points || [];
+      nextPointId = data.nextPointId || 1;
+      elevations = data.elevations || [];
+      elevNextId = data.elevNextId || 1;
+      selectedPointId = null;
+      selectedOpeningId = null;
       selectedId = null;
+      pendingPoint = null;
+      if (room && pixelsPerMm) assignPointWalls(false);
+      updatePointBarActive();
       updateSidebar();
+      updateOpeningSidebar();
+      updatePointSidebar();
       if (data.bgDataUrl) {
         bgDataUrl = data.bgDataUrl;
         bgImage = new Image();
@@ -923,6 +2144,7 @@ function importJSON(e) {
       } else {
         bgImage = null;
         bgDataUrl = null;
+        if (room && pixelsPerMm) fitRoomView();
       }
       updateInfo();
       render();
@@ -935,6 +2157,1010 @@ function importJSON(e) {
   };
   r.readAsText(file);
   e.target.value = '';
+}
+
+// ---- 水电点位 ----
+const POINT_TYPES = [
+  {t:'五孔插座', sym:'插', h:300, color:'#E67E22', tip:'普通墙面插座'},
+  {t:'开关', sym:'开', h:1400, color:'#C0392B', tip:'灯开关，离门框150~200'},
+  {t:'双控开关', sym:'双', h:1400, color:'#C0392B', tip:'门口+床头双控'},
+  {t:'网口', sym:'网', h:300, color:'#2980B9', tip:'网线面板，与插座同高'},
+  {t:'电视口', sym:'视', h:300, color:'#8E44AD', tip:'有线电视面板'},
+  {t:'空调插座', sym:'空', h:1800, color:'#16A085', tip:'挂机1800/柜机300，16A'},
+  {t:'床头插座', sym:'床', h:700, color:'#E67E22', tip:'床头柜上方600~750'},
+  {t:'书桌插座', sym:'桌', h:950, color:'#E67E22', tip:'桌面750+200'},
+  {t:'电视挂墙插座', sym:'电', h:1000, color:'#E67E22', tip:'藏电视正后方'},
+  {t:'厨房台面插座', sym:'厨', h:1100, color:'#D35400', tip:'台面800+300，带开关款'},
+  {t:'油烟机插座', sym:'烟', h:2200, color:'#D35400', tip:'吊顶下沿'},
+  {t:'水槽柜下插座', sym:'净', h:500, color:'#D35400', tip:'净水器/小厨宝，柜内'},
+  {t:'冰箱插座', sym:'冰', h:500, color:'#D35400', tip:'冰箱侧后方，不拔电'},
+  {t:'洗衣机插座', sym:'洗', h:1300, color:'#D35400', tip:'高于机身防溅水'},
+  {t:'热水器插座', sym:'热', h:1800, color:'#D35400', tip:'视机型，防溅盒'},
+  {t:'智能马桶插座', sym:'卫', h:400, color:'#D35400', tip:'带防溅盒'},
+  {t:'弱电箱', sym:'箱', h:350, color:'#34495E', tip:'光纤/路由收纳，留电源'},
+  {t:'配电箱', sym:'配', h:1800, color:'#34495E', tip:'入户处，底边≥1800'},
+];
+
+function buildPointBar(){
+  let bar = document.getElementById('pointBar');
+  bar.innerHTML = '';
+  let label = document.createElement('span');
+  label.className = 'group-label';
+  label.textContent = '水电点位';
+  bar.appendChild(label);
+  POINT_TYPES.forEach(pt=>{
+    let btn = document.createElement('button');
+    btn.textContent = pt.t;
+    btn.title = pt.tip + '（距地' + pt.h + 'mm），点击后到图上点一下放置';
+    btn.dataset.type = pt.t;
+    btn.onclick = ()=>armPoint(pt, btn);
+    bar.appendChild(btn);
+  });
+  let tip = document.createElement('span');
+  tip.style.cssText = 'font-size:11px;color:#999;margin-left:6px';
+  tip.textContent = '先点类型再点图，自动吸到最近的墙；点四边墙名可看该墙立面';
+  bar.appendChild(tip);
+}
+
+function armPoint(pt){
+  if (pendingPoint && pendingPoint.t===pt.t) { disarmPending(); render(); return; }
+  if (mode!=='idle') enterPlaceMode();
+  pendingPoint = {...pt};
+  wrap.classList.add('calibrating');
+  updatePointBarActive();
+  showHint('在户型图上点击位置放置「'+pt.t+'」，Esc或再点类型可取消');
+}
+
+function disarmPending(){
+  pendingPoint = null;
+  wrap.classList.remove('calibrating');
+  updatePointBarActive();
+  hideHint();
+}
+
+function updatePointBarActive(){
+  document.querySelectorAll('#pointBar button').forEach(b=>{
+    let active = pendingPoint && b.dataset.type===pendingPoint.t;
+    b.classList.toggle('armed', !!active);
+    b.style.background = active ? pendingPoint.color : '';
+  });
+}
+
+function placePointAt(world){
+  if (!pendingPoint) return;
+  let p = {
+    id: nextPointId++,
+    name: pendingPoint.t,
+    sym: pendingPoint.sym,
+    h: pendingPoint.h,
+    color: pendingPoint.color,
+    x: world.x, y: world.y,
+    desc: '',
+    wall: ''
+  };
+  if (room && pixelsPerMm) {
+    let n = nearestWallOfPoint({x:world.x/pixelsPerMm, y:world.y/pixelsPerMm});
+    snapPointToWall(p, n.wall, n.along);
+  }
+  points.push(p);
+  selectedPointId = p.id;
+  selectedId = null;
+  selectedOpeningId = null;
+  updateSidebar();
+  updateOpeningSidebar();
+  updatePointSidebar();
+  disarmPending();
+  updateInfo();
+  render();
+  autoSave();
+}
+
+function renderPoints(){
+  points.forEach(p=>{
+    let r = 9/viewScale;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    if (selectedPointId===p.id){
+      ctx.strokeStyle = '#185FA5';
+      ctx.lineWidth = 2.5/viewScale;
+      ctx.setLineDash([4/viewScale, 3/viewScale]);
+      ctx.beginPath(); ctx.arc(0, 0, r+5/viewScale, 0, Math.PI*2); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle = p.color;
+    ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5/viewScale;
+    ctx.stroke();
+    if (p.wall && room && pixelsPerMm) {
+      let tick = 11/viewScale;
+      let dx=0, dy=0;
+      if (p.wall==='top') dy = tick;
+      else if (p.wall==='bottom') dy = -tick;
+      else if (p.wall==='left') dx = tick;
+      else dx = -tick;
+      ctx.strokeStyle = p.color;
+      ctx.lineWidth = 2/viewScale;
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(dx,dy); ctx.stroke();
+    }
+    ctx.fillStyle = '#fff';
+    let fs = Math.max(9, 10/viewScale);
+    ctx.font = `700 ${fs}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(p.sym, 0, 0.5);
+    ctx.fillStyle = p.color;
+    ctx.textBaseline = 'top';
+    ctx.font = `700 ${fs}px sans-serif`;
+    ctx.fillText(selectedPointId===p.id ? (p.name+' '+p.h) : (''+p.h), 0, r+3/viewScale);
+    ctx.restore();
+  });
+}
+
+function updatePointSidebar(){
+  let panel = document.getElementById('pointPanel');
+  if (selectedPointId===null) { panel.classList.remove('show'); return; }
+  let p = points.find(p=>p.id===selectedPointId);
+  if (!p) { panel.classList.remove('show'); return; }
+  document.getElementById('sidePanel').classList.remove('show');
+  document.getElementById('openingPanel').classList.remove('show');
+  panel.classList.add('show');
+  document.getElementById('ptSideTitle').textContent = '点位：'+p.name;
+  document.getElementById('ptName').value = p.name;
+  document.getElementById('ptH').value = p.h;
+  document.getElementById('ptColor').value = p.color;
+  document.getElementById('ptDesc').value = p.desc || '';
+  document.getElementById('ptWall').value = p.wall || '';
+  document.getElementById('ptAlongElev').value = p.wall ? pointElevX(p) : '';
+}
+
+function onPointEdit(){
+  let p = points.find(p=>p.id===selectedPointId);
+  if (!p) return;
+  p.name = document.getElementById('ptName').value || '点位';
+  let h = parseFloat(document.getElementById('ptH').value);
+  if (!isNaN(h) && h>=0 && h<=3000) p.h = Math.round(h);
+  p.color = document.getElementById('ptColor').value;
+  p.desc = document.getElementById('ptDesc').value;
+  let wall = document.getElementById('ptWall').value;
+  if (room && pixelsPerMm) {
+    if (wall) {
+      let elevX = parseFloat(document.getElementById('ptAlongElev').value);
+      if (isNaN(elevX)) elevX = planAlongToElevX(wall, (wall==='top'||wall==='bottom') ? p.x/pixelsPerMm : p.y/pixelsPerMm);
+      snapPointToWall(p, wall, elevXToPlanAlong(wall, elevX));
+      let elevInp = document.getElementById('ptAlongElev');
+      if (elevInp && document.activeElement !== elevInp) elevInp.value = pointElevX(p);
+    } else {
+      p.wall = '';
+    }
+  }
+  document.getElementById('ptSideTitle').textContent = '点位：'+p.name;
+  render();
+  autoSave();
+}
+
+function deselectPoint(){
+  selectedPointId = null;
+  updatePointSidebar();
+  render();
+}
+
+function deletePoint(){
+  if (selectedPointId===null) return;
+  points = points.filter(p=>p.id!==selectedPointId);
+  selectedPointId = null;
+  updatePointSidebar();
+  updateInfo();
+  render();
+  autoSave();
+}
+
+function escapeHtml(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+}
+
+function exportPointList(){
+  let total = points.length + elevations.reduce((s,e)=>s+e.points.length, 0);
+  if (total===0){ alert('还没有放置点位。平面图：在"水电点位"一排点一个类型，再到图上点一下放置（会吸到最近的墙）；然后点四边墙名看该墙立面。'); return; }
+  let html = '<table><tr><th>#</th><th>墙面</th><th>名称</th><th>高度(mm)</th><th>距立面左端(mm)</th><th>位置说明</th></tr>';
+  points.forEach((p,i)=>{
+    let wallName = (p.wall && WALL_META[p.wall]) ? WALL_META[p.wall].name : '未贴墙';
+    let ex = p.wall ? pointElevX(p) : '';
+    html += '<tr><td>'+(i+1)+'</td><td>'+wallName+'</td><td>'+escapeHtml(p.name)+'</td><td>'+p.h+'</td><td>'+ex+'</td><td>'+(p.desc?escapeHtml(p.desc):'&nbsp;')+'</td></tr>';
+  });
+  html += '</table>';
+  elevations.forEach(e=>{
+    if (!e.points.length) return;
+    html += '<div style="font-weight:700;margin:10px 0 4px;font-size:13px">'+escapeHtml(e.name)+'（立面手摆，未进平面）</div>';
+    html += '<table><tr><th>#</th><th>名称</th><th>高度(mm)</th><th>距墙左端(mm)</th><th>位置说明</th></tr>';
+    e.points.forEach((p,i)=>{
+      html += '<tr><td>'+(i+1)+'</td><td>'+escapeHtml(p.name)+'</td><td>'+p.h+'</td><td>'+p.x+'</td><td>'+(p.desc?escapeHtml(p.desc):'&nbsp;')+'</td></tr>';
+    });
+    html += '</table>';
+  });
+  document.getElementById('pointListBody').innerHTML = html;
+  document.getElementById('pointListSummary').textContent = '共 '+total+' 个点位。平面点位已按所在墙列出距立面左端尺寸（面向墙站立时的左侧）。高度为距地面完成面。';
+  document.getElementById('pointListModal').classList.add('show');
+}
+
+function closePointList(){
+  document.getElementById('pointListModal').classList.remove('show');
+}
+
+function downloadPointCSV(){
+  let planCount = points.length;
+  let elevCount = 0;
+  elevations.forEach(e=>elevCount += e.points.length);
+  if (planCount+elevCount===0){ alert('还没有点位可导出'); return; }
+  let csv = '\uFEFF编号,区域,名称,高度mm,水平位置mm,位置说明\n';
+  points.forEach((p,i)=>{
+    let wallName = (p.wall && WALL_META[p.wall]) ? WALL_META[p.wall].name : '平面未贴墙';
+    let ex = p.wall ? ('距立面左端'+pointElevX(p)) : '';
+    csv += [i+1, wallName, p.name, p.h, ex, (p.desc||'').replace(/,/g,'，')].join(',') + '\n';
+  });
+  let idx = planCount;
+  elevations.forEach(e=>{
+    e.points.forEach(p=>{
+      idx++;
+      csv += [idx, e.name+'(立面)', p.name, p.h, '距墙左端'+p.x, (p.desc||'').replace(/,/g,'，')].join(',') + '\n';
+    });
+  });
+  let blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  let a = document.createElement('a');
+  a.download = '水电点位清单.csv';
+  a.href = URL.createObjectURL(blob);
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showHint('CSV已下载（平面'+planCount+'个+立面'+elevCount+'个）');
+  setTimeout(hideHint, 2500);
+}
+
+function printPointList(){
+  let total = points.length + elevations.reduce((s,e)=>s+e.points.length, 0);
+  if (total===0){ alert('没有点位可打印'); return; }
+  let html = '<html><head><meta charset="utf-8"><title>水电点位清单</title><style>body{font-family:"Microsoft YaHei",sans-serif;padding:24px}h2{font-size:18px;margin-bottom:4px}h3{font-size:15px;margin:16px 0 6px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #999;padding:6px 10px;text-align:left}th{background:#eee}p{color:#666;font-size:12px}</style></head><body>';
+  html += '<h2>水电点位清单</h2><p>高度为距地面完成面尺寸，共 '+total+' 个点位；水电交底时逐个现场核对</p>';
+  if (points.length){
+    html += '<h3>平面图点位（按墙）</h3><table><tr><th>#</th><th>墙面</th><th>名称</th><th>高度(mm)</th><th>距立面左端(mm)</th><th>位置说明</th></tr>';
+    points.forEach((p,i)=>{
+      let wallName = (p.wall && WALL_META[p.wall]) ? WALL_META[p.wall].name : '未贴墙';
+      html += '<tr><td>'+(i+1)+'</td><td>'+escapeHtml(wallName)+'</td><td>'+escapeHtml(p.name)+'</td><td>'+p.h+'</td><td>'+(p.wall?pointElevX(p):'')+'</td><td>'+escapeHtml(p.desc||'')+'</td></tr>';
+    });
+    html += '</table>';
+  }
+  elevations.forEach(e=>{
+    if (!e.points.length) return;
+    html += '<h3>'+escapeHtml(e.name)+'（立面，距墙左端 mm）</h3><table><tr><th>#</th><th>名称</th><th>高度(mm)</th><th>距墙左端(mm)</th><th>位置说明</th></tr>';
+    e.points.forEach((p,i)=>{
+      html += '<tr><td>'+(i+1)+'</td><td>'+escapeHtml(p.name)+'</td><td>'+p.h+'</td><td>'+p.x+'</td><td>'+escapeHtml(p.desc||'')+'</td></tr>';
+    });
+    html += '</table>';
+  });
+  html += '</body></html>';
+  let w = window.open('', '_blank');
+  if (!w){ alert('弹窗被浏览器拦截，请允许弹窗后重试'); return; }
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  setTimeout(()=>w.print(), 300);
+}
+
+function showHeightRef(){
+  document.getElementById('heightRefModal').classList.add('show');
+}
+
+function closeHeightRef(){
+  document.getElementById('heightRefModal').classList.remove('show');
+}
+
+// ---- 立面视图 ----
+let elevations = [];
+let curElevId = null;
+let elevSelected = null; // {kind:'item'|'point', id}
+let elevPending = null;  // {kind, def}
+let elevNextId = 1;
+let elevDrag = null;
+
+const ELEV_ITEMS = [
+  {t:'沙发', w:1800, h:850, y:0},
+  {t:'单人沙发', w:900, h:850, y:0},
+  {t:'茶几', w:1200, h:450, y:0},
+  {t:'电视柜', w:1800, h:450, y:0},
+  {t:'挂墙电视', w:1200, h:650, y:1000},
+  {t:'床(含床头)', w:1500, h:1000, y:0},
+  {t:'床头柜', w:500, h:500, y:0},
+  {t:'衣柜', w:1800, h:2200, y:0},
+  {t:'斗柜', w:800, h:800, y:0},
+  {t:'书桌', w:1200, h:750, y:0},
+  {t:'书架', w:800, h:1800, y:0},
+  {t:'冰箱', w:700, h:1800, y:0},
+  {t:'洗衣机', w:600, h:850, y:0},
+  {t:'油烟机', w:900, h:650, y:1550},
+  {t:'吊柜', w:800, h:700, y:1500},
+  {t:'空调挂机', w:900, h:350, y:2450},
+  {t:'门', w:900, h:2100, y:0, door:true},
+  {t:'窗', w:1500, h:1500, y:900, win:true},
+];
+
+function curElev(){
+  return elevations.find(e=>e.id===curElevId) || null;
+}
+
+function migrateElevWallKeys() {
+  elevations.forEach(e=>{
+    if (e.wall) return;
+    if (/左/.test(e.name)) e.wall = 'left';
+    else if (/上|北/.test(e.name)) e.wall = 'top';
+    else if (/右/.test(e.name)) e.wall = 'right';
+    else if (/下|南/.test(e.name)) e.wall = 'bottom';
+  });
+}
+
+function ensureRoomWalls() {
+  if (!room) return;
+  migrateElevWallKeys();
+  const order = ['left','top','right','bottom'];
+  const names = {left:'左墙', top:'上墙', right:'右墙', bottom:'下墙'};
+  let used = {};
+  let linked = [];
+  order.forEach(w=>{
+    let e = elevations.find(x=>x.wall===w);
+    if (e) {
+      e.len = wallLenMm(w);
+      linked.push(e);
+      used[e.id] = true;
+    } else {
+      let n = {id:elevNextId++, wall:w, name:names[w], len:wallLenMm(w), wallH:2800, items:[], points:[], nextId:1};
+      linked.push(n);
+      used[n.id] = true;
+    }
+  });
+  elevations = linked.concat(elevations.filter(e=>!used[e.id]));
+}
+
+function openElevation(wallKey){
+  document.getElementById('elevOverlay').classList.add('show');
+  selectedId = null; selectedOpeningId = null; selectedPointId = null;
+  updateSidebar(); updateOpeningSidebar(); updatePointSidebar();
+  if (room) {
+    ensureRoomWalls();
+    assignPointWalls(false);
+  }
+  if (elevations.length===0) addElevWall(true);
+  if (wallKey) {
+    let e = elevations.find(x=>x.wall===wallKey);
+    if (e) curElevId = e.id;
+  }
+  if (!curElev()) curElevId = elevations[0].id;
+  buildElevBars();
+  resizeElevCanvas();
+  renderElev();
+  let e = curElev();
+  if (e && e.wall && WALL_META[e.wall]) {
+    showElevHint(WALL_META[e.wall].name+'立面：靠墙家具/门窗/点位来自平面图。点位可拖高度；红圈=被挡住。');
+  }
+}
+
+function closeElevation(){
+  document.getElementById('elevOverlay').classList.remove('show');
+  autoSave();
+  render();
+}
+
+function addElevWall(silent){
+  let len = room ? Math.round(Math.max(room.w, room.h)) : 4000;
+  let name = '墙' + String.fromCharCode(64+elevations.length+1);
+  elevations.push({id: elevNextId++, name, len, wallH: 2800, items: [], points: [], nextId: 1});
+  curElevId = elevations[elevations.length-1].id;
+  if (!silent){ buildElevBars(); renderElev(); }
+  autoSave();
+}
+
+function genWallsFromRoom(silent){
+  if (!room){ alert('没有自定义房间。请先在平面图里点"自定义房间"，或手动"+新增墙面"并填写墙长。'); return; }
+  ensureRoomWalls();
+  assignPointWalls(false);
+  curElevId = (elevations.find(e=>e.wall==='left') || elevations[0]).id;
+  if (!silent){ buildElevBars(); renderElev(); }
+  autoSave();
+}
+
+function deleteElevWall(){
+  let e = curElev();
+  if (!e) return;
+  if (!confirm('删除「'+e.name+'」及其上的家具和点位？')) return;
+  elevations = elevations.filter(x=>x.id!==curElevId);
+  curElevId = elevations.length ? elevations[0].id : null;
+  if (!elevations.length) addElevWall(true);
+  elevSelected = null;
+  updateElevSide();
+  buildElevBars();
+  renderElev();
+  autoSave();
+}
+
+function switchElevWall(id){
+  curElevId = id;
+  elevSelected = null;
+  elevPending = null;
+  updateElevSide();
+  buildElevBars();
+  renderElev();
+}
+
+function renameElevWall(){
+  let e = curElev();
+  if (!e) return;
+  let n = prompt('墙面名称：', e.name);
+  if (n){ e.name = n.trim() || e.name; buildElevBars(); renderElev(); autoSave(); }
+}
+
+function buildElevBars(){
+  // 墙 tabs
+  let tabs = document.getElementById('elevWallTabs');
+  tabs.innerHTML = '';
+  elevations.forEach(e=>{
+    let b = document.createElement('button');
+    b.textContent = e.name + ' ' + Math.round(e.len/10)/100 + 'm' + (e.wall?' ·平面':'');
+    b.className = e.id===curElevId ? 'cur' : '';
+    b.oncontextmenu = (ev)=>{ ev.preventDefault(); if (e.id===curElevId) renameElevWall(); };
+    b.title = e.wall ? '与平面图该墙联动' : '点击切换；当前墙可右键重命名';
+    b.onclick = ()=>switchElevWall(e.id);
+    tabs.appendChild(b);
+  });
+  // 家具 bar
+  let ib = document.getElementById('elevItemBar');
+  ib.innerHTML = '';
+  let l1 = document.createElement('span'); l1.className='group-label'; l1.textContent='家具/门窗(侧视)'; ib.appendChild(l1);
+  ELEV_ITEMS.forEach(d=>{
+    let b = document.createElement('button');
+    b.textContent = d.t;
+    b.title = '宽'+d.w+'×高'+d.h+'mm' + (d.y?'，底部距地'+d.y+'mm':'') + '，点击后到墙上点一下放置';
+    b.onclick = ()=>armElev('item', d, b);
+    ib.appendChild(b);
+  });
+  // 点位 bar
+  let pb = document.getElementById('elevPointBar');
+  pb.innerHTML = '';
+  let l2 = document.createElement('span'); l2.className='group-label'; l2.textContent='水电点位'; pb.appendChild(l2);
+  POINT_TYPES.forEach(pt=>{
+    let b = document.createElement('button');
+    b.textContent = pt.t;
+    b.title = '默认高'+pt.h+'mm，点击后到墙上点一下放置（点击高度即放置高度，可再精调）';
+    b.onclick = ()=>armElev('point', pt, b);
+    pb.appendChild(b);
+  });
+  let tip = document.createElement('span');
+  tip.style.cssText='font-size:11px;color:#999;margin-left:6px';
+  tip.textContent='靠墙家具已从平面带入；这里可再加挂墙电视等。红圈=被遮挡';
+  pb.appendChild(tip);
+  updateElevArmed();
+}
+
+function armElev(kind, def){
+  if (elevPending && elevPending.kind===kind && elevPending.def.t===def.t){ elevPending=null; updateElevArmed(); renderElev(); return; }
+  elevPending = {kind, def};
+  elevSelected = null;
+  updateElevSide();
+  updateElevArmed();
+  showElevHint((kind==='point'?'点位会同时出现在平面该墙上：':'仅加在立面、不改平面图：')+'点击放置「'+def.t+'」；Esc取消');
+  renderElev();
+}
+
+function updateElevArmed(){
+  document.querySelectorAll('#elevItemBar button, #elevPointBar button').forEach(b=>{
+    let active = elevPending && b.textContent===elevPending.def.t && (
+      (elevPending.kind==='item' && ELEV_ITEMS.some(d=>d.t===b.textContent)) ||
+      (elevPending.kind==='point' && POINT_TYPES.some(d=>d.t===b.textContent))
+    );
+    b.style.background = active ? '#185FA5' : '';
+    b.style.color = active ? '#fff' : '';
+  });
+}
+
+function showElevHint(msg){
+  let h = document.getElementById('elevHint');
+  h.textContent = msg;
+  h.style.display = 'block';
+}
+function hideElevHint(){ document.getElementById('elevHint').style.display='none'; }
+
+function elevGeom(){
+  let e = curElev();
+  let cv = document.getElementById('elevCanvas');
+  let W = cv.width, H = cv.height;
+  let marginL = 56, marginR = 24, marginT = 32, marginB = 44;
+  let scale = Math.min((W-marginL-marginR)/e.len, (H-marginT-marginB)/e.wallH);
+  return {W,H,marginL,marginT,marginB,scale,
+    toPxX: mm => marginL + mm*scale,
+    toPxY: mm => H - marginB - mm*scale,
+    toMmX: px => (px-marginL)/scale,
+    toMmY: px => (H-marginB-px)/scale};
+}
+
+function resizeElevCanvas(){
+  let cv = document.getElementById('elevCanvas');
+  let wrap = document.getElementById('elevWrap');
+  cv.width = wrap.clientWidth;
+  cv.height = wrap.clientHeight;
+  renderElev();
+}
+
+function elevBlocker(scene, p){
+  return scene.items.find(it=> p.x>it.x && p.x<it.x+it.w && p.h>it.y && p.h<it.y+it.h);
+}
+
+function renderElev(){
+  let e = curElev();
+  let cv = document.getElementById('elevCanvas');
+  if (!cv) return;
+  let ctx = cv.getContext('2d');
+  ctx.clearRect(0,0,cv.width,cv.height);
+  if (!e) return;
+  if (e.wallH) document.getElementById('elevWallH').value = e.wallH;
+  let g = elevGeom();
+  let scene = getElevScene(e);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(g.marginL, g.marginT, e.len*g.scale, e.wallH*g.scale);
+  ctx.strokeStyle = '#eee';
+  ctx.lineWidth = 1;
+  for (let mm=0; mm<=e.len; mm+=500){
+    let x = g.toPxX(mm);
+    ctx.beginPath(); ctx.moveTo(x, g.marginT); ctx.lineTo(x, g.toPxY(0)); ctx.stroke();
+  }
+  for (let mm=0; mm<=e.wallH; mm+=500){
+    let y = g.toPxY(mm);
+    ctx.beginPath(); ctx.moveTo(g.marginL, y); ctx.lineTo(g.marginL+e.len*g.scale, y); ctx.stroke();
+  }
+  ctx.strokeStyle = '#333';
+  ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(g.marginL, g.toPxY(0)); ctx.lineTo(g.marginL+e.len*g.scale, g.toPxY(0)); ctx.stroke();
+  ctx.strokeStyle = '#bbb';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(g.marginL, g.marginT); ctx.lineTo(g.marginL+e.len*g.scale, g.marginT); ctx.stroke();
+
+  if (e.wall && WALL_META[e.wall]) {
+    ctx.fillStyle = '#185FA5';
+    ctx.font = '12px sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(WALL_META[e.wall].face, g.marginL, 16);
+  }
+
+  ctx.fillStyle = '#888';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'right';
+  for (let mm=0; mm<=e.wallH; mm+=500){
+    ctx.fillText(mm===0?'0':''+mm, g.marginL-8, g.toPxY(mm)+4);
+  }
+  ctx.textAlign = 'center';
+  for (let mm=0; mm<=e.len; mm+=1000){
+    ctx.fillText(mm===0?'0':''+mm/1000+'m', g.toPxX(mm), g.toPxY(0)+20);
+    ctx.strokeStyle = '#bbb';
+    ctx.beginPath(); ctx.moveTo(g.toPxX(mm), g.toPxY(0)); ctx.lineTo(g.toPxX(mm), g.toPxY(0)+6); ctx.stroke();
+  }
+  ctx.fillStyle = '#999';
+  ctx.font = '11px sans-serif';
+  ctx.textAlign = 'left';
+  ctx.fillText('左', g.marginL, g.toPxY(0)+36);
+  ctx.textAlign = 'right';
+  ctx.fillText('右', g.marginL+e.len*g.scale, g.toPxY(0)+36);
+
+  scene.items.forEach(it=>{
+    let x = g.toPxX(it.x), y = g.toPxY(it.y+it.h), w = it.w*g.scale, h = it.h*g.scale;
+    let sel = isSelElevItem(it);
+    if (it.door || it.win){
+      ctx.fillStyle = it.door ? 'rgba(150,150,150,0.25)' : 'rgba(120,170,220,0.25)';
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeStyle = it.door ? '#888' : '#4A90C4';
+      ctx.setLineDash(it.win ? [6,4] : []);
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, w, h);
+      ctx.setLineDash([]);
+    } else {
+      let distant = it.dist != null && it.dist > 80;
+      if (it.color && !distant) ctx.fillStyle = it.color + '99';
+      else ctx.fillStyle = distant ? 'rgba(127,168,200,0.35)' : 'rgba(127,168,200,0.75)';
+      ctx.fillRect(x, y, w, h);
+      ctx.strokeStyle = sel ? '#185FA5' : '#5A7FA0';
+      ctx.lineWidth = sel ? 3 : 1.5;
+      ctx.strokeRect(x, y, w, h);
+    }
+    if (sel){
+      ctx.strokeStyle = '#185FA5';
+      ctx.setLineDash([5,4]);
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(x-3, y-3, w+6, h+6);
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle = '#2c3e50';
+    ctx.font = '700 12px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(it.t, x+w/2, y+h/2-6);
+    ctx.font = '11px sans-serif';
+    ctx.fillStyle = '#555';
+    ctx.fillText(Math.round(it.w)+'×'+it.h, x+w/2, y+h/2+10);
+    if (it.y>0){
+      ctx.fillStyle = '#B0742E';
+      ctx.fillText('底'+it.y, x+w/2, y+h+14);
+    }
+    if (it.linked && it.src==='furniture' && it.dist>0){
+      ctx.fillStyle = '#888';
+      ctx.font = '10px sans-serif';
+      ctx.fillText('离墙'+it.dist, x+w/2, y-6);
+    }
+  });
+
+  scene.points.forEach(p=>{
+    let px = g.toPxX(p.x), py = g.toPxY(p.h);
+    let blocker = elevBlocker(scene, p);
+    let blocked = !!blocker;
+    let sel = isSelElevPoint(p);
+    let r = 9;
+    if (sel || blocked){
+      ctx.strokeStyle = blocked ? '#E74C3C' : '#185FA5';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash(blocked ? [] : [4,3]);
+      ctx.beginPath(); ctx.arc(px, py, r+5, 0, Math.PI*2); ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.fillStyle = p.color;
+    ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI*2); ctx.fill();
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.fillStyle = '#fff';
+    ctx.font = '700 10px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(p.sym, px, py+0.5);
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = blocked ? '#E74C3C' : p.color;
+    ctx.font = '700 11px sans-serif';
+    ctx.fillText(p.name+' H'+p.h, px, py-r-8);
+    if (blocked){
+      ctx.font = '10px sans-serif';
+      ctx.fillText(blocker.door?'在门洞':(blocker.win?'在窗洞':'被遮挡'), px, py-r-20);
+    }
+  });
+
+  let blockedN = scene.points.filter(p=>elevBlocker(scene,p)).length;
+  let linkNote = e.wall ? ' | 平面联动' : '';
+  document.getElementById('elevInfo').textContent = e.name+' | 长'+Math.round(e.len)+'mm × 高'+e.wallH+'mm | 物件'+scene.items.length+' | 点位'+scene.points.length+(blockedN?' | ⚠遮挡'+blockedN:'')+linkNote;
+}
+
+function isElevBlocked(e, p){
+  return !!elevBlocker(getElevScene(e), p);
+}
+
+function countElevBlocked(e){
+  let scene = getElevScene(e);
+  return scene.points.filter(p=>elevBlocker(scene,p)).length;
+}
+
+function elevHitTest(px, py){
+  let e = curElev();
+  let g = elevGeom();
+  let scene = getElevScene(e);
+  for (let i=scene.points.length-1; i>=0; i--){
+    let p = scene.points[i];
+    let cx = g.toPxX(p.x), cy = g.toPxY(p.h);
+    if (Math.hypot(px-cx, py-cy)<12) {
+      if (p.linked) return {kind:'point', linked:true, src:'planPoint', srcId:p.srcId};
+      return {kind:'point', id:p.id};
+    }
+  }
+  for (let i=scene.items.length-1; i>=0; i--){
+    let it = scene.items[i];
+    let x = g.toPxX(it.x), y = g.toPxY(it.y+it.h), w = it.w*g.scale, h = it.h*g.scale;
+    if (px>=x && px<=x+w && py>=y && py<=y+h) {
+      if (it.linked) return {kind:'item', linked:true, src:it.src, srcId:it.srcId};
+      return {kind:'item', id:it.id};
+    }
+  }
+  return null;
+}
+
+function bindElevEvents(){
+  let cv = document.getElementById('elevCanvas');
+  let dragging = false, moved = false, sx=0, sy=0;
+  cv.addEventListener('mousedown', ev=>{
+    let e = curElev(); if (!e) return;
+    let rect = cv.getBoundingClientRect();
+    let px = ev.clientX-rect.left, py = ev.clientY-rect.top;
+    let g = elevGeom();
+    if (elevPending){
+      let mmx = Math.max(0, Math.min(e.len, g.toMmX(px)));
+      let mmy = Math.max(0, Math.min(e.wallH, g.toMmY(py)));
+      if (elevPending.kind==='item'){
+        let d = elevPending.def;
+        let it = {id: e.nextId++, t: d.t, w: d.w, h: d.h, x: Math.round(mmx-d.w/2), y: Math.round(d.y || mmy)};
+        it.x = Math.max(0, Math.min(e.len-it.w, it.x));
+        if (d.door) it.door = true;
+        if (d.win) it.win = true;
+        e.items.push(it);
+        elevSelected = {kind:'item', id: it.id};
+      } else {
+        let d = elevPending.def;
+        if (e.wall && room && pixelsPerMm) {
+          let p = {id: nextPointId++, name: d.t, sym: d.sym, h: Math.round(mmy), color: d.color, desc: '', wall: e.wall};
+          snapPointToWall(p, e.wall, elevXToPlanAlong(e.wall, mmx));
+          points.push(p);
+          elevSelected = {kind:'point', linked:true, src:'planPoint', srcId:p.id};
+        } else {
+          let pt = {id: e.nextId++, name: d.t, sym: d.sym, h: Math.round(mmy), color: d.color, x: Math.round(mmx), desc: ''};
+          e.points.push(pt);
+          elevSelected = {kind:'point', id: pt.id};
+        }
+      }
+      elevPending = null;
+      updateElevArmed();
+      hideElevHint();
+      updateElevSide();
+      renderElev();
+      autoSave();
+      return;
+    }
+    let hit = elevHitTest(px, py);
+    if (hit){
+      elevSelected = hit;
+      updateElevSide();
+      let scene = getElevScene(e);
+      elevDrag = null;
+      if (hit.kind==='item' && !(hit.linked && hit.src==='opening')){
+        let it = hit.linked
+          ? scene.items.find(x=>x.linked && x.src===hit.src && x.srcId===hit.srcId)
+          : e.items.find(x=>x.id===hit.id);
+        if (it) elevDrag = {kind:'item', linked:!!hit.linked, src:hit.src, srcId:hit.srcId, id:hit.id, ox: g.toMmX(px)-it.x, oy: g.toMmY(py)-it.y, lastX: it.x, w: it.w, h: it.h};
+      } else if (hit.kind==='point'){
+        let p = hit.linked
+          ? scene.points.find(x=>x.linked && x.srcId===hit.srcId)
+          : e.points.find(x=>x.id===hit.id);
+        if (p) elevDrag = {kind:'point', linked:!!hit.linked, srcId:hit.srcId, id:hit.id, ox: g.toMmX(px)-p.x, oy: g.toMmY(py)-p.h};
+      }
+      dragging = !!elevDrag; moved = false;
+      sx=px; sy=py;
+      renderElev();
+    } else {
+      elevSelected = null;
+      updateElevSide();
+      renderElev();
+    }
+  });
+  cv.addEventListener('mousemove', ev=>{
+    if (!dragging || !elevDrag) return;
+    let e = curElev(); if (!e) return;
+    let rect = cv.getBoundingClientRect();
+    let px = ev.clientX-rect.left, py = ev.clientY-rect.top;
+    if (Math.hypot(px-sx, py-sy)>3) moved = true;
+    let g = elevGeom();
+    if (elevDrag.kind==='item'){
+      if (elevDrag.linked && elevDrag.src==='furniture' && e.wall){
+        let f = furniture.find(x=>x.id===elevDrag.srcId);
+        if (f){
+          let newX = Math.round(Math.max(0, Math.min(e.len-elevDrag.w, g.toMmX(px)-elevDrag.ox)));
+          let newY = Math.round(Math.max(0, Math.min(e.wallH-elevDrag.h, g.toMmY(py)-elevDrag.oy)));
+          let dElevX = newX - elevDrag.lastX;
+          if (dElevX) {
+            moveFurnitureAlongWall(f, e.wall, (e.wall==='top'||e.wall==='left') ? -dElevX : dElevX);
+            elevDrag.lastX = newX;
+          }
+          f.elevY = newY;
+        }
+      } else if (!elevDrag.linked){
+        let it = e.items.find(x=>x.id===elevDrag.id);
+        if (it){
+          it.x = Math.round(Math.max(0, Math.min(e.len-it.w, g.toMmX(px)-elevDrag.ox)));
+          it.y = Math.round(Math.max(0, Math.min(e.wallH-it.h, g.toMmY(py)-elevDrag.oy)));
+        }
+      }
+    } else {
+      if (elevDrag.linked && e.wall){
+        let p = points.find(x=>x.id===elevDrag.srcId);
+        if (p){
+          let newX = Math.round(Math.max(0, Math.min(e.len, g.toMmX(px)-elevDrag.ox)));
+          p.h = Math.round(Math.max(0, Math.min(e.wallH, g.toMmY(py)-elevDrag.oy)));
+          snapPointToWall(p, e.wall, elevXToPlanAlong(e.wall, newX));
+        }
+      } else if (!elevDrag.linked){
+        let p = e.points.find(x=>x.id===elevDrag.id);
+        if (p){
+          p.x = Math.round(Math.max(0, Math.min(e.len, g.toMmX(px)-elevDrag.ox)));
+          p.h = Math.round(Math.max(0, Math.min(e.wallH, g.toMmY(py)-elevDrag.oy)));
+        }
+      }
+    }
+    renderElev();
+  });
+  window.addEventListener('mouseup', ()=>{
+    if (dragging){ dragging=false; elevDrag=null; updateElevSide(); autoSave(); }
+  });
+  document.addEventListener('keydown', ev=>{
+    if (!document.getElementById('elevOverlay').classList.contains('show')) return;
+    if (ev.key==='Escape' && elevPending){ elevPending=null; updateElevArmed(); hideElevHint(); renderElev(); return; }
+    if ((ev.key==='Delete'||ev.key==='Backspace') && elevSelected){
+      if (document.activeElement.tagName==='INPUT') return;
+      deleteElevSelected();
+    }
+  });
+  window.addEventListener('resize', ()=>{
+    if (document.getElementById('elevOverlay').classList.contains('show')) resizeElevCanvas();
+  });
+}
+
+function deleteElevSelected(){
+  let e = curElev(); if (!e || !elevSelected) return;
+  if (elevSelected.linked) {
+    if (elevSelected.src==='opening'){ alert('门窗请在平面图里删除'); return; }
+    if (elevSelected.src==='furniture'){
+      if (!confirm('从平面图删除这件家具？')) return;
+      furniture = furniture.filter(f=>f.id!==elevSelected.srcId);
+      if (selectedId===elevSelected.srcId) selectedId=null;
+    } else if (elevSelected.src==='planPoint'){
+      points = points.filter(p=>p.id!==elevSelected.srcId);
+      if (selectedPointId===elevSelected.srcId) selectedPointId=null;
+    }
+  } else if (elevSelected.kind==='item') {
+    e.items = e.items.filter(x=>x.id!==elevSelected.id);
+  } else {
+    e.points = e.points.filter(x=>x.id!==elevSelected.id);
+  }
+  elevSelected = null;
+  updateElevSide();
+  renderElev();
+  autoSave();
+}
+
+function updateElevSide(){
+  let side = document.getElementById('elevSide');
+  let e = curElev();
+  if (!e || !elevSelected){ side.classList.remove('show'); return; }
+  side.classList.add('show');
+  let html = '';
+  if (elevSelected.kind==='item' && elevSelected.linked && elevSelected.src==='opening'){
+    html += '<span style="font-weight:700;font-size:14px">门窗（平面联动）</span>';
+    html += '<div style="font-size:12px;color:#666;margin-top:8px;line-height:1.5">位置和宽度请回平面图修改。立面只用来核对插座是否落在门窗洞里。</div>';
+  } else if (elevSelected.kind==='item' && elevSelected.linked && elevSelected.src==='furniture'){
+    let f = furniture.find(x=>x.id===elevSelected.srcId);
+    if (!f){ side.classList.remove('show'); return; }
+    let scene = getElevScene(e);
+    let it = scene.items.find(x=>x.linked && x.src==='furniture' && x.srcId===f.id);
+    let sz = furnitureElevSize(f);
+    html += '<span style="font-weight:700;font-size:14px">'+escapeHtml(f.name)+' <span style="color:#185FA5;font-size:11px">平面联动</span></span>';
+    html += '<label>名称</label><input id="evEdit_t" value="'+escapeHtml(f.name)+'">';
+    html += '<label>高度 (mm)</label><input type="number" id="evEdit_h" value="'+sz.h+'">';
+    html += '<label>底部距地 (mm)</label><input type="number" id="evEdit_y" value="'+sz.y+'">';
+    html += '<label>左端距立面左端 (mm)</label><input type="number" id="evEdit_x" value="'+(it?Math.round(it.x):0)+'">';
+    html += '<div style="font-size:11px;color:#999;margin-top:4px">左右拖会沿墙挪平面位置；高度只影响立面。当前离墙 '+(it&&it.dist!=null?it.dist:0)+'mm</div>';
+    html += '<button class="side-del" onclick="deleteElevSelected()">从平面图删除</button>';
+  } else if (elevSelected.kind==='item'){
+    let it = e.items.find(x=>x.id===elevSelected.id);
+    if (!it){ side.classList.remove('show'); return; }
+    html += '<span style="font-weight:700;font-size:14px">'+escapeHtml(it.t)+'</span>';
+    html += '<label>名称</label><input id="evEdit_t" value="'+escapeHtml(it.t)+'">';
+    html += '<label>宽 (mm)</label><input type="number" id="evEdit_w" value="'+it.w+'">';
+    html += '<label>高 (mm)</label><input type="number" id="evEdit_h" value="'+it.h+'">';
+    html += '<label>左端距墙起点 (mm)</label><input type="number" id="evEdit_x" value="'+it.x+'">';
+    html += '<label>底部距地 (mm)</label><input type="number" id="evEdit_y" value="'+it.y+'">';
+    html += '<div style="font-size:11px;color:#999;margin-top:4px">挂墙电视/吊柜/空调等通过"底部距地"调离地高度</div>';
+    html += '<button class="side-del" onclick="deleteElevSelected()">删除</button>';
+  } else if (elevSelected.kind==='point' && elevSelected.linked){
+    let p = points.find(x=>x.id===elevSelected.srcId);
+    if (!p){ side.classList.remove('show'); return; }
+    html += '<span style="font-weight:700;font-size:14px">点位：'+escapeHtml(p.name)+' <span style="color:#185FA5;font-size:11px">平面联动</span></span>';
+    html += '<label>名称</label><input id="evEdit_t" value="'+escapeHtml(p.name)+'">';
+    html += '<label>高度 (mm，距地面完成面)</label><input type="number" id="evEdit_h" value="'+p.h+'">';
+    html += '<label>距立面左端 (mm)</label><input type="number" id="evEdit_x" value="'+pointElevX(p)+'">';
+    html += '<label>颜色</label><input type="color" id="evEdit_c" value="'+p.color+'">';
+    html += '<label>位置说明（给水电工）</label><input id="evEdit_d" value="'+escapeHtml(p.desc||'')+'">';
+    html += '<button class="side-del" onclick="deleteElevSelected()">删除</button>';
+  } else {
+    let p = e.points.find(x=>x.id===elevSelected.id);
+    if (!p){ side.classList.remove('show'); return; }
+    html += '<span style="font-weight:700;font-size:14px">点位：'+escapeHtml(p.name)+'</span>';
+    html += '<label>名称</label><input id="evEdit_t" value="'+escapeHtml(p.name)+'">';
+    html += '<label>高度 (mm，距地面完成面)</label><input type="number" id="evEdit_h" value="'+p.h+'">';
+    html += '<label>距墙左端 (mm)</label><input type="number" id="evEdit_x" value="'+p.x+'">';
+    html += '<label>颜色</label><input type="color" id="evEdit_c" value="'+p.color+'">';
+    html += '<label>位置说明（给水电工）</label><input id="evEdit_d" value="'+escapeHtml(p.desc||'')+'">';
+    html += '<button class="side-del" onclick="deleteElevSelected()">删除</button>';
+  }
+  side.innerHTML = html;
+  side.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('input', onElevEdit);
+  });
+}
+
+function onElevEdit(){
+  let e = curElev(); if (!e || !elevSelected) return;
+  let val = id => { let el=document.getElementById(id); return el?el.value:''; };
+  if (elevSelected.kind==='item' && elevSelected.linked && elevSelected.src==='furniture'){
+    let f = furniture.find(x=>x.id===elevSelected.srcId); if (!f) return;
+    f.name = val('evEdit_t') || f.name;
+    f.elevH = clampMm(val('evEdit_h'), 50, 4000, furnitureElevSize(f).h);
+    f.elevY = clampMm(val('evEdit_y'), 0, 4000, furnitureElevSize(f).y);
+    let scene = getElevScene(e);
+    let it = scene.items.find(x=>x.linked && x.src==='furniture' && x.srcId===f.id);
+    if (it && e.wall){
+      let newLeft = clampMm(val('evEdit_x'), 0, Math.max(0,e.len), it.x);
+      let dElev = newLeft - it.x;
+      if (dElev) moveFurnitureAlongWall(f, e.wall, (e.wall==='top'||e.wall==='left') ? -dElev : dElev);
+    }
+  } else if (elevSelected.kind==='item' && !elevSelected.linked){
+    let it = e.items.find(x=>x.id===elevSelected.id); if (!it) return;
+    it.t = val('evEdit_t') || '家具';
+    it.w = clampMm(val('evEdit_w'), 100, 5000, it.w);
+    it.h = clampMm(val('evEdit_h'), 50, 4000, it.h);
+    it.x = clampMm(val('evEdit_x'), 0, Math.max(0,e.len), it.x);
+    it.y = clampMm(val('evEdit_y'), 0, Math.max(0,e.wallH), it.y);
+  } else if (elevSelected.kind==='point' && elevSelected.linked){
+    let p = points.find(x=>x.id===elevSelected.srcId); if (!p) return;
+    p.name = val('evEdit_t') || '点位';
+    p.h = clampMm(val('evEdit_h'), 0, 4000, p.h);
+    p.color = val('evEdit_c') || p.color;
+    p.desc = val('evEdit_d');
+    if (e.wall){
+      let elevX = clampMm(val('evEdit_x'), 0, Math.max(0,e.len), pointElevX(p)||0);
+      snapPointToWall(p, e.wall, elevXToPlanAlong(e.wall, elevX));
+    }
+  } else if (elevSelected.kind==='point'){
+    let p = e.points.find(x=>x.id===elevSelected.id); if (!p) return;
+    p.name = val('evEdit_t') || '点位';
+    p.h = clampMm(val('evEdit_h'), 0, 4000, p.h);
+    p.x = clampMm(val('evEdit_x'), 0, Math.max(0,e.len), p.x);
+    p.color = val('evEdit_c') || p.color;
+    p.desc = val('evEdit_d');
+  }
+  renderElev();
+  autoSave();
+}
+
+function clampMm(v, lo, hi, fallback){
+  let n = parseFloat(v);
+  if (isNaN(n)) return fallback;
+  return Math.round(Math.max(lo, Math.min(hi, n)));
+}
+
+function onElevWallHEdit(){
+  let e = curElev(); if (!e) return;
+  let v = parseInt(document.getElementById('elevWallH').value);
+  if (!isNaN(v) && v>=2200 && v<=4000){ e.wallH = v; renderElev(); autoSave(); }
+}
+
+function editElevWallLen(){
+  let e = curElev(); if (!e) return;
+  if (e.wall && room){
+    alert('这面墙长度跟平面房间走（当前 '+wallLenMm(e.wall)+'mm）。要改长度请回平面图点「自定义房间」。');
+    return;
+  }
+  let v = prompt('这面墙的长度(mm)：', e.len);
+  if (v!==null){
+    let n = parseFloat(v);
+    if (!isNaN(n) && n>=500 && n<=20000){ e.len = Math.round(n); buildElevBars(); renderElev(); autoSave(); }
+    else alert('长度需在 500~20000mm 之间');
+  }
+}
+
+function runOcclusionCheck(){
+  if (room){ ensureRoomWalls(); assignPointWalls(false); }
+  let rows = [];
+  let ok = 0;
+  elevations.forEach(e=>{
+    let scene = getElevScene(e);
+    scene.points.forEach(p=>{
+      let blocker = elevBlocker(scene, p);
+      if (blocker){
+        let why = blocker.door ? '落在门洞范围内' : blocker.win ? '落在窗洞范围内' : ('被「'+escapeHtml(blocker.t)+'」遮挡');
+        if (blocker.dist!=null && blocker.dist>80) why += '（家具离墙'+blocker.dist+'mm，或许还能伸手）';
+        else if (!blocker.door && !blocker.win) why += ' (占位 '+Math.round(blocker.x)+'~'+Math.round(blocker.x+blocker.w)+'mm, 高'+blocker.y+'~'+(blocker.y+blocker.h)+')';
+        rows.push('<tr style="color:#C0392B"><td>'+escapeHtml(e.name)+'</td><td>'+escapeHtml(p.name)+'</td><td>'+p.h+'</td><td>'+why+'</td></tr>');
+      } else ok++;
+    });
+  });
+  let html = '<p style="margin-bottom:8px">共检查 '+(ok+rows.length)+' 个点位（含平面贴墙点位）：'+(rows.length? '<b style="color:#C0392B">'+rows.length+' 个被挡住</b>，建议挪高、挪开或改家具高度':'<b style="color:#27AE60">全部无遮挡 ✓</b>')+'</p>';
+  if (rows.length) html += '<table style="width:100%;border-collapse:collapse;font-size:12px"><tr><th style="border:1px solid #ddd;padding:5px 8px;background:#f5f5f5">墙面</th><th style="border:1px solid #ddd;padding:5px 8px;background:#f5f5f5">点位</th><th style="border:1px solid #ddd;padding:5px 8px;background:#f5f5f5">高度</th><th style="border:1px solid #ddd;padding:5px 8px;background:#f5f5f5">问题</th></tr>'+rows.join('')+'</table>';
+  document.getElementById('elevCheckBody').innerHTML = html;
+  document.getElementById('elevCheckModal').classList.add('show');
 }
 
 init();

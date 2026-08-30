@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>刘伟报价单分析报告</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1f2733; --sub:#5b6672; --line:#e5e9ef;
+    --red:#c0392b; --red-bg:#fdf0ee; --yellow:#b07d10; --yellow-bg:#fdf7e6;
+    --green:#1e7e4e; --green-bg:#eef8f2; --blue:#2563eb; --blue-bg:#eef4fe;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{background:var(--bg); color:var(--ink); font:15px/1.75 "Microsoft YaHei","PingFang SC",sans-serif; padding:32px 16px;}
+  .wrap{max-width:1080px; margin:0 auto;}
+  h1{font-size:26px; text-align:center; margin-bottom:6px;}
+  .meta{text-align:center; color:var(--sub); font-size:13px; margin-bottom:28px;}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:24px 28px; margin-bottom:20px;}
+  h2{font-size:19px; margin-bottom:14px; padding-left:10px; border-left:4px solid var(--blue);}
+  h3{font-size:16px; margin:16px 0 8px;}
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px;}
+  .kpi{background:var(--blue-bg); border-radius:10px; padding:14px 18px; text-align:center;}
+  .kpi b{display:block; font-size:24px; color:var(--blue);}
+  .kpi span{font-size:13px; color:var(--sub);}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin-top:8px;}
+  th{background:#f0f3f7; text-align:left; padding:8px 10px; border:1px solid var(--line); white-space:nowrap;}
+  td{padding:7px 10px; border:1px solid var(--line); vertical-align:top;}
+  tr.sec td{background:#f8fafc; font-weight:bold; color:var(--blue);}
+  .num{text-align:right; white-space:nowrap;}
+  .tag{display:inline-block; padding:1px 9px; border-radius:20px; font-size:12px; white-space:nowrap;}
+  .t-ok{background:var(--green-bg); color:var(--green);}
+  .t-warn{background:var(--yellow-bg); color:var(--yellow);}
+  .t-risk{background:var(--red-bg); color:var(--red);}
+  .note{color:var(--sub); font-size:12.5px;}
+  .verdict{display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:10px; margin-bottom:10px;}
+  .v-red{background:var(--red-bg); border-left:4px solid var(--red);}
+  .v-yellow{background:var(--yellow-bg); border-left:4px solid var(--yellow);}
+  .v-green{background:var(--green-bg); border-left:4px solid var(--green);}
+  .v-blue{background:var(--blue-bg); border-left:4px solid var(--blue);}
+  .verdict b{display:block; margin-bottom:2px;}
+  ol.qa{padding-left:22px;}
+  ol.qa li{margin-bottom:10px;}
+  .bar-wrap{margin:6px 0 14px;}
+  .bar-label{display:flex; justify-content:space-between; font-size:13px; margin-bottom:3px;}
+  .bar{height:22px; border-radius:5px; background:#e9edf2; overflow:hidden;}
+  .bar>div{height:100%; display:flex; align-items:center; padding-left:8px; color:#fff; font-size:12px; white-space:nowrap;}
+  .c1{background:#3b82f6;} .c2{background:#8b5cf6;} .c3{background:#14b8a6;}
+  .c4{background:#f59e0b;} .c5{background:#ef4444;} .c6{background:#64748b;}
+  @media print{ body{background:#fff; padding:0;} .card{border:none; padding:12px 0;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>刘伟基装报价单 · 合理性分析</h1>
+  <div class="meta">房屋：太原 · 20年+老房 · 建筑面积约110㎡（按报价反推）｜ 分析日期：2026-08-16｜ 参照：太原2026旧房翻新行情</div>
+
+  <div class="card">
+    <h2>一、报价总览与算术核对</h2>
+    <div class="kpis">
+      <div class="kpi"><b>73,607 元</b><span>基装总价（1-7项）</span></div>
+      <div class="kpi"><b>669 元/㎡</b><span>基装折合单价</span></div>
+      <div class="kpi"><b>✓ 全对</b><span>六大类小计与总和验算</span></div>
+      <div class="kpi"><b>口径：纯基装</b><span>不含瓷砖/橱柜/门/地板等主材</span></div>
+    </div>
+
+    <div class="bar-wrap" style="margin-top:18px;">
+      <div class="bar-label"><span>费用构成（元）</span><span>合计 73,607</span></div>
+      <div class="bar" style="display:flex;">
+        <div class="c1" style="width:26.7%;">水电+地暖 19,650</div>
+        <div class="c4" style="width:19.7%;">其它 14,850</div>
+        <div class="c2" style="width:19.7%;">油工 12,903</div>
+        <div class="c3" style="width:19.7%;">瓦工 14,510</div>
+        <div class="c6" style="width:13.8%;">个性化 10,149</div>
+        <div class="c5" style="width:2.1%;"></div>
+      </div>
+      <div class="note">木工仅1,545元（2.1%，吊平顶1.5㎡+窗帘盒8.9米），条太窄不标注。瓦工占比19.7%、个性化13.8%图上色块按顺序略有错位，以数值为准。</div>
+    </div>
+
+    <div class="verdict v-blue">
+      <b>总体判断：价格水平中等偏实在，结构规范，但有 1 个高风险项 + 6 个必须当面谈清的问题，签之前不能直接过。</b>
+      报价拆项清晰、大多写明品牌（伟星水管/管件/穿线管、离石电缆、安普超六类网线、立邦腻子+漆、西卡界面剂、欧普、潜水艇），算术无水分。折合 669 元/㎡ 的基装单价在太原属于中等偏下水平，整体不贵。问题集中在：<b>防水单价异常偏低</b>、<b>疑似漏掉铲墙皮</b>、<b>拆除是否含刨地没写死</b>。
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>二、逐项评估明细</h2>
+    <table>
+      <tr><th style="width:24%;">项目</th><th>工程量×单价</th><th class="num">合价</th><th style="width:10%;">评价</th><th>说明</th></tr>
+      <tr class="sec"><td colspan="5">一、水电改造（小计 19,650）</td></tr>
+      <tr><td>水电改造（全改）</td><td>110㎡ × 90</td><td class="num">9,900</td><td><span class="tag t-warn">存疑</span></td><td class="note">低于行情（全改按面积 150-200 元/㎡，老房还要上浮）。材料品牌真实、点位密度 0.55 个/㎡ 合理，但低价全改最容易后期按米数增项。<b>必须确认"一口价包死、不按实加钱"</b>。另：说明里写"接通原来暖气及地暖"，与实际（新铺地暖）不符，要改。</td></tr>
+      <tr><td>地暖改造</td><td>110㎡ × 85</td><td class="num">9,350</td><td><span class="tag t-warn">偏薄</span></td><td class="note">含伟星管+分水器+挤塑板+反射膜+回填，价格可以。但 20mm 挤塑板偏薄（北方建议 30mm，约+5-10元/㎡）；"免回填挤塑板另加20元/㎡"是开口项，要问清用哪种。</td></tr>
+      <tr><td>静音包管</td><td>2根 × 200</td><td class="num">400</td><td><span class="tag t-ok">合理</span></td><td class="note">阻尼片+吸音棉，行情 150-300 元/根。</td></tr>
+      <tr class="sec"><td colspan="5">二、瓦工部分（小计 14,510）</td></tr>
+      <tr><td>贴墙砖（含背胶）</td><td>44㎡ × 95</td><td class="num">4,180</td><td><span class="tag t-ok">合理</span></td><td class="note">400×800 含背胶，行情 80-110。44㎡ 面积需对照厨卫实际尺寸核一下。</td></tr>
+      <tr><td>贴地砖（含通铺）</td><td>81㎡ × 75</td><td class="num">6,075</td><td><span class="tag t-ok">合理</span></td><td class="note">800×800 通铺，行情 55-85。</td></tr>
+      <tr><td>墙面抹灰</td><td>44㎡ × 45</td><td class="num">1,980</td><td><span class="tag t-ok">合理</span></td><td class="note">与贴墙砖面积一致，对应厨卫墙面找平。</td></tr>
+      <tr><td>防水施工</td><td>25㎡ × 40</td><td class="num">1,000</td><td><span class="tag t-risk">高风险</span></td><td class="note"><b>全表最大问题。</b>行情 75-120 元/㎡（含两遍+闭水试验），40 元/㎡ 明显偏低；工艺说明只写"人工费、材料费"——无品牌、无涂刷遍数、无上翻高度、无闭水试验字样；25㎡ 面积也偏小（一个卫生间地面+1.8m 上翻就接近 25-30㎡，厨房 0.3m 上翻没算）。防水是隐蔽工程里的隐蔽工程，直接关系楼下邻里和地暖层安全，<b>必须重谈：品牌（东方雨虹/西卡类）、卫生间墙面上翻1.8m、两遍以上、48小时闭水试验写进合同</b>。</td></tr>
+      <tr><td>包下水管（砌块）</td><td>1支 × 375</td><td class="num">375</td><td><span class="tag t-ok">合理</span></td><td class="note">行情 300-500。</td></tr>
+      <tr><td>封门洞</td><td>2项 × 450</td><td class="num">900</td><td><span class="tag t-ok">合理</span></td><td class="note">小于2㎡双面抹灰。</td></tr>
+      <tr class="sec"><td colspan="5">三、木工部分（小计 1,545）</td></tr>
+      <tr><td>石膏板吊平顶</td><td>1.5㎡ × 140</td><td class="num">210</td><td><span class="tag t-ok">合理</span></td><td class="note">轻钢龙骨规范，面积很小（玄关？）。</td></tr>
+      <tr><td>石膏板窗帘盒</td><td>8.9米 × 150</td><td class="num">1,335</td><td><span class="tag t-ok">合理</span></td><td class="note">行情 120-180 元/米。</td></tr>
+      <tr class="sec"><td colspan="5">四、油工部分（小计 12,903）</td></tr>
+      <tr><td>界面剂</td><td>253㎡ × 3</td><td class="num">759</td><td><span class="tag t-ok">合理</span></td><td class="note">西卡，便宜。</td></tr>
+      <tr><td>刮腻子</td><td>253㎡ × 32</td><td class="num">8,096</td><td><span class="tag t-ok">合理</span></td><td class="note">立邦腻子 2-3 遍，含阴阳角/踢脚线找平，工艺描述规范。253㎡≈110㎡×2.3 系数正常。</td></tr>
+      <tr><td>乳胶漆</td><td>253㎡ × 10</td><td class="num">2,530</td><td><span class="tag t-ok">合理</span></td><td class="note">立邦金装五合一 18L，中档漆，顶喷墙滚，正常。</td></tr>
+      <tr><td>全屋挂网</td><td>253㎡ × 6</td><td class="num">1,518</td><td><span class="tag t-ok">好</span></td><td class="note">全屋纤维网格防开裂，20年老房很需要，这项报得好。但<b>没看到"铲墙皮"</b>——旧墙皮不铲直接挂网批腻子，空鼓起皮风险大，见下方漏项清单。</td></tr>
+      <tr class="sec"><td colspan="5">五、其它项目（小计 14,850）</td></tr>
+      <tr><td>成品保护</td><td>110㎡ × 12</td><td class="num">1,320</td><td><span class="tag t-ok">合理</span></td><td class="note">内容详细（地固、地膜、煤气表套、分水器套、打压），规范。</td></tr>
+      <tr><td>材料上楼费</td><td>110㎡ × 24</td><td class="num">2,640</td><td><span class="tag t-ok">合理</span></td><td class="note">3楼无电梯老小区，行情 15-30。</td></tr>
+      <tr><td>开荒保洁</td><td>110㎡ × 6</td><td class="num">660</td><td><span class="tag t-ok">合理</span></td><td class="note">行情 5-10。</td></tr>
+      <tr><td>拆除</td><td>110㎡ × 85</td><td class="num">9,350</td><td><span class="tag t-warn">要问死</span></td><td class="note">按面积打包在行情内（80-120），但备注"按实际工程量计费"是开口项。<b>铺地暖要刨掉原地砖和水泥层——必须确认这个价含不含地面刨除</b>，不含的话后期加 3000-5000 很常见。</td></tr>
+      <tr><td>垃圾清运</td><td>110㎡ × 8</td><td class="num">880</td><td><span class="tag t-ok">合理</span></td><td class="note">基础施工垃圾清运，正常。</td></tr>
+      <tr class="sec"><td colspan="5">七、个性化方案（小计 10,149）<span class="note">（注：原表序号从"五"直接跳到"七"，缺"六"，建议问一句是不是删过项）</span></td></tr>
+      <tr><td>开关插座</td><td>1项</td><td class="num">2,000</td><td><span class="tag t-warn">无品牌</span></td><td class="note">约60个点位折合33元/个，价格可以，但<b>没写品牌型号</b>，签前定死（西门子/施耐德/公牛普通款都行）。</td></tr>
+      <tr><td>集成吊顶</td><td>9.7㎡ × 150</td><td class="num">1,455</td><td><span class="tag t-ok">合理</span></td><td class="note">厨卫铝扣板 300×600，150 是行情上沿，问清含不含收边条。</td></tr>
+      <tr><td>美缝剂</td><td>125㎡ × 18</td><td class="num">2,250</td><td><span class="tag t-ok">合理</span></td><td class="note">125㎡ = 墙砖44+地砖81，数量对得上 ✓。</td></tr>
+      <tr><td>窗台板</td><td>11米 × 360</td><td class="num">3,960</td><td><span class="tag t-warn">偏贵</span></td><td class="note">行情 150-300 元/米，360 偏高。老窗户不换、预算有限，没必要上贵的——砍价或改普通石材/瓷砖铺窗台，这项能省 1000-2000。</td></tr>
+      <tr><td>浴霸</td><td>0套 × 800</td><td class="num">0</td><td><span class="tag t-ok">—</span></td><td class="note">数量为0未计。真要装建议自购奥普/松下，好太太是晾衣架牌子。</td></tr>
+      <tr><td>平板灯</td><td>1套 × 100</td><td class="num">100</td><td><span class="tag t-ok">合理</span></td><td class="note">欧普。注意家里已有新吸顶灯，别重复买。</td></tr>
+      <tr><td>地漏</td><td>3个 × 128</td><td class="num">384</td><td><span class="tag t-ok">合理</span></td><td class="note">潜水艇，行情 80-150。</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>三、疑似漏项（对照你家已定决策）</h2>
+    <table>
+      <tr><th style="width:26%;">漏项/待确认</th><th>为什么要紧</th><th style="width:22%;">参考价</th></tr>
+      <tr><td><b>铲墙皮（旧墙皮铲除）</b></td><td>20年老房，旧墙皮不铲直接挂网批腻子，空鼓起皮风险大。报价里界面剂、挂网、腻子都有，唯独没有铲墙。</td><td>8-15 元/㎡，约 2000-3800</td></tr>
+      <tr><td><b>地面刨除是否含在"拆除"里</b></td><td>铺地暖必须刨掉原地砖+水泥层。拆除备注"按实际工程量计费"，没写死。</td><td>若另算 30-50 元/㎡，约 3300-5500</td></tr>
+      <tr><td>门槛石/压条</td><td>客厅地砖通铺、卧室如铺木地板，交界处需要。报价未列。</td><td>按米计，几百元</td></tr>
+      <tr><td><b>小厨宝独立回路</b></td><td>你家明确要求小厨宝（1500-2000W）单独一路线。水电说明只有"卫生间、厨房、冰箱各1路"，没提小厨宝。</td><td>应含在水电内，要求加上</td></tr>
+      <tr><td>马桶旁防水插座</td><td>未来智能盖升级预留。开关插座是 2000 元打包项，需确认含这个点位。</td><td>应含在点位内</td></tr>
+      <tr><td>水浸传感器点位</td><td>厨房水槽柜下+卫生间各1个，需要插座/位置预留。</td><td>应含在点位内</td></tr>
+      <tr><td>马桶法兰圈换新</td><td>马桶保留沿用，法兰圈建议换新防臭。未列。</td><td>50-100 元</td></tr>
+      <tr><td>净水器水电预留</td><td>水槽柜下电源+下水，确认水电点位含。</td><td>应含在点位内</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>四、签合同前必问清单（按优先级）</h2>
+    <ol class="qa">
+      <li><b>防水重谈（最要紧）</b>：40 元/㎡ 不接受。要求写明：品牌（东方雨虹/西卡等）、卫生间墙面上翻 1.8m、厨房 0.3m、涂刷两遍以上、<b>48 小时闭水试验</b>写入合同。差价大概 1000-2000 元，这钱不能省。</li>
+      <li><b>水电是否一口价包死</b>：90 元/㎡ 全改低于行情，白纸黑字写"含全部开槽布管穿线，不再按米数加钱"。同时把小厨宝独立回路、马桶旁防水插座、水浸传感器两个点位、净水器预留加进水电说明。</li>
+      <li><b>拆除含不含地面刨除</b>：写进合同"含地暖铺设所需的地面刨除及渣土清运"。</li>
+      <li><b>铲墙皮补项</b>：问清楚是漏了还是包含在刮腻子里；不包含就补项，老房这步不能省。</li>
+      <li><b>地暖细节</b>：挤塑板能不能上 30mm（北方保温值得）；回填用的什么（豆石混凝土/水泥砂浆）；"免回填另加20元"到底用哪种方案，一次性定死。</li>
+      <li><b>窗台板砍价</b>：360 元/米降到 250 以内，或者自购石材只付安装费。</li>
+      <li><b>开关插座定品牌</b>：写入合同附件。</li>
+      <li><b>增项封顶条款</b>：约定全部增项不超过合同总价 5%，付款按节点（建议 30%/30%/30%/10% 或类似，尾款验收后付）。</li>
+      <li><b>顺手问一句</b>：序号"六"去哪了——是删过项还是模板没删干净。</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h2>五、与 12 万预算的匹配度</h2>
+    <table>
+      <tr><th>部分</th><th class="num">预估金额</th><th>说明</th></tr>
+      <tr><td>本基装报价</td><td class="num">73,607</td><td>含约 1000-3000 元必要补项/防水差价后约 7.5-7.7 万</td></tr>
+      <tr><td>瓷砖（客供，未含）</td><td class="num">8,000-12,000</td><td>125㎡ 贴砖面积，按 60-90 元/㎡ 中档砖估</td></tr>
+      <tr><td>橱柜（颗粒板+石英石）</td><td class="num">12,000-18,000</td><td>按 4-5 延米、1500-2500 元/延米估（你已定的方案）</td></tr>
+      <tr><td>室内门（2-3 樘）</td><td class="num">4,500-7,500</td><td>含门套，1500-2500 元/樘</td></tr>
+      <tr><td>卧室地面（如铺木地板）</td><td class="num">4,000-8,000</td><td>若卧室也铺地砖则并入瓷砖项，此项为 0</td></tr>
+      <tr><td>卫浴洁具/龙头花洒等</td><td class="num">3,000-6,000</td><td>马桶保留，主要是花洒、洗脸盆、五金</td></tr>
+      <tr><td>小厨宝+净水器</td><td class="num">2,500-4,000</td><td>电器类，自购</td></tr>
+      <tr><td><b>合计</b></td><td class="num"><b>约 11.2-13 万</b></td><td><b>贴着 12 万预算线，能装下来，但没有富裕量。</b></td></tr>
+    </table>
+    <div class="verdict v-yellow" style="margin-top:14px;">
+      <b>结论</b>
+      这份基装报价本身不算贵、结构也算规范，<b>可以谈，不必推倒重来</b>。核心动作就三件：①防水按行规重做重报；②水电/拆除/刨地三个"按实计算"的口子全部写死；③补上铲墙皮。这三件谈拢了，这单就能签；谈不拢，后面全是增项等着你。窗台板、浴霸这类小项顺手砍一砍，主材（瓷砖/橱柜/门）自己盯住，12 万能收得住。
+    </div>
+  </div>
+</div>
+</body>
+</html>
